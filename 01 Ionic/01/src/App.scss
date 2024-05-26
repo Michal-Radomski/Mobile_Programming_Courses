@@ -23,3 +23,12 @@ body {
   margin-right: auto;
   overflow-y: hidden;
 }
+
+:root {
+  --ion-color-tertiary: #800000;
+  --ion-color-tertiary-rgb: 128, 0, 0;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #710000;
+  --ion-color-tertiary-tint: #8d1a1a;
+}

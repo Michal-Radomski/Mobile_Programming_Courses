@@ -16,6 +16,10 @@ const App = (): JSX.Element => {
     });
   };
 
+  // React.useEffect(() => {
+  //   console.log("navigator.userAgent:", navigator.userAgent);
+  // }, []);
+
   return (
     <React.Fragment>
       <header>
