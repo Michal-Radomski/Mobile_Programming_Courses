@@ -1,5 +1,5 @@
 import React from "react";
-import { IonButton, setupIonicReact } from "@ionic/react";
+import { IonButton, setupIonicReact, useIonToast } from "@ionic/react";
 
 import "@ionic/react/css/core.css";
 import "./App.scss";
@@ -7,6 +7,15 @@ import "./App.scss";
 setupIonicReact();
 
 const App = (): JSX.Element => {
+  const [presentToast] = useIonToast();
+
+  const handleClick = () => {
+    presentToast({
+      message: "Hello world!",
+      duration: 1500,
+    });
+  };
+
   return (
     <React.Fragment>
       <header>
@@ -14,7 +23,14 @@ const App = (): JSX.Element => {
       </header>
 
       <main>
-        <IonButton placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <IonButton
+          color={"tertiary"}
+          shape="round"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+          onClick={handleClick}
+        >
           Click Me
         </IonButton>
       </main>
