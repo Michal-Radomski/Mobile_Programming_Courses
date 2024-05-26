@@ -1,5 +1,6 @@
 import React from "react";
-import { IonButton, setupIonicReact, useIonToast } from "@ionic/react";
+import { IonButton, IonIcon, setupIonicReact, useIonToast } from "@ionic/react";
+import { play as playIcon } from "ionicons/icons";
 
 import "@ionic/react/css/core.css";
 import "./App.scss";
@@ -35,6 +36,13 @@ const App = (): JSX.Element => {
           onPointerLeaveCapture={undefined}
           onClick={handleClick}
         >
+          <IonIcon
+            icon={playIcon}
+            slot="start"
+            placeholder={undefined}
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          />{" "}
           Click Me
         </IonButton>
       </main>
