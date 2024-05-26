@@ -1,10 +1,11 @@
 import React from "react";
-import { IonApp, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonTitle, IonToolbar } from "@ionic/react";
+import { IonApp, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToolbar } from "@ionic/react";
 
 import "./App.scss";
 
 const App = (): JSX.Element => {
   const [name, setName] = React.useState<string>("");
+  const [birthDate, setBirthDate] = React.useState<string>("");
 
   return (
     <React.Fragment>
@@ -15,16 +16,27 @@ const App = (): JSX.Element => {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-          <IonItem>
-            <IonLabel>Name: </IonLabel>
-            <IonInput
-              value={name}
-              onIonChange={(event) => setName(event.detail.value!)} //* normally: onChange
-            />
-          </IonItem>
+          <IonList>
+            <IonItem>
+              <IonLabel position="stacked">Name: </IonLabel>
+              <IonInput
+                type="text"
+                value={name}
+                onIonChange={(event) => setName(event.detail.value!)} //* normally: onChange
+              />
+            </IonItem>
+            <IonItem>
+              <IonLabel position="stacked">Date of Birth: </IonLabel>
+              <IonInput
+                type="date"
+                value={birthDate}
+                onIonChange={(event) => setBirthDate(event.detail.value!)} //* normally: onChange
+              />
+            </IonItem>
+          </IonList>
+
           <p>
-            You entered:
-            <b>{name}</b>
+            You entered: <b>{name}</b>, born on <b>{birthDate}</b>
           </p>
         </IonContent>
       </IonApp>
