@@ -1,5 +1,5 @@
 import React from "react";
-import { IonApp, IonContent, IonHeader, IonInput, IonTitle, IonToolbar } from "@ionic/react";
+import { IonApp, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonTitle, IonToolbar } from "@ionic/react";
 
 import "./App.scss";
 
@@ -9,26 +9,19 @@ const App = (): JSX.Element => {
   return (
     <React.Fragment>
       <IonApp>
-        <IonHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-          <IonToolbar placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-            <IonTitle placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-              My App
-            </IonTitle>
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>My App</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent
-          className="ion-padding"
-          placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
-        >
-          <IonInput
-            value={name}
-            onIonChange={(event) => setName(event.detail.value!)} //* normally: onChange
-            placeholder="Your name"
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          />
+        <IonContent className="ion-padding">
+          <IonItem>
+            <IonLabel>Name: </IonLabel>
+            <IonInput
+              value={name}
+              onIonChange={(event) => setName(event.detail.value!)} //* normally: onChange
+            />
+          </IonItem>
           <p>
             You entered:
             <b>{name}</b>

@@ -49,6 +49,7 @@ const App = (): JSX.Element => {
   return (
     <React.Fragment>
       <IonApp>
+        {/* //* React Types Bugs! */}
         <IonHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           <IonToolbar placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <IonTitle placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
