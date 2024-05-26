@@ -1,9 +1,11 @@
 import React from "react";
-import { IonApp, IonContent, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
+import { IonApp, IonContent, IonHeader, IonInput, IonTitle, IonToolbar } from "@ionic/react";
 
 import "./App.scss";
 
 const App = (): JSX.Element => {
+  const [name, setName] = React.useState<string>("");
+
   return (
     <React.Fragment>
       <IonApp>
@@ -20,7 +22,17 @@ const App = (): JSX.Element => {
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          <p>Add some content here…</p>
+          <IonInput
+            value={name}
+            onIonChange={(event) => setName(event.detail.value!)} //* normally: onChange
+            placeholder="Your name"
+            onPointerEnterCapture={undefined}
+            onPointerLeaveCapture={undefined}
+          />
+          <p>
+            You entered:
+            <b>{name}</b>
+          </p>
         </IonContent>
       </IonApp>
     </React.Fragment>
