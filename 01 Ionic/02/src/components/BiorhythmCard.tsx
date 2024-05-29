@@ -3,6 +3,7 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardTitle } from "@ionic/rea
 import dayjs from "dayjs";
 
 import { calculateBiorhythms } from "../lib/biorhythms";
+import BiorhythmChart from "./BiorhythmChart";
 
 function formatDate(isoString: string): string {
   const day = dayjs(isoString);
@@ -20,7 +21,7 @@ const BiorhythmCard = ({ birthDate, targetDate }: { birthDate: string; targetDat
           <IonCardTitle>{formatDate(targetDate)}</IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
-          {/* <BiorhythmChart birthDate={birthDate} targetDate={targetDate} /> */}
+          <BiorhythmChart birthDate={birthDate} targetDate={targetDate} />
           <p className="physical">Physical: {biorhythms.physical.toFixed(4)}</p>
           <p className="emotional">Emotional: {biorhythms.emotional.toFixed(4)}</p>
           <p className="intellectual">Intellectual: {biorhythms.intellectual.toFixed(4)}</p>
