@@ -17,7 +17,7 @@ const App = (): JSX.Element => {
       <IonApp>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>My App</IonTitle>
+            <IonTitle>React Ionic Course (biorhythms - pseudoscience)</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
@@ -40,7 +40,7 @@ const App = (): JSX.Element => {
             Born on <b>{birthDate}</b>, target date: <b>{targetDate}</b>
           </p> */}
 
-          <BiorhythmCard birthDate={birthDate} targetDate={targetDate} />
+          {Boolean(birthDate) ? <BiorhythmCard birthDate={birthDate} targetDate={targetDate} /> : null}
         </IonContent>
       </IonApp>
     </React.Fragment>
