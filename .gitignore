@@ -26,3 +26,4 @@ out
 build/
 dist/
 Temp/
+variables.scss
