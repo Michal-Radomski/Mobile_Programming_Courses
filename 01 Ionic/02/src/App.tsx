@@ -17,7 +17,7 @@ const App = (): JSX.Element => {
     <React.Fragment>
       <IonApp>
         <IonHeader>
-          <IonToolbar>
+          <IonToolbar color={"primary"}>
             <IonTitle>React Ionic Course (biorhythms - pseudoscience)</IonTitle>
           </IonToolbar>
         </IonHeader>
