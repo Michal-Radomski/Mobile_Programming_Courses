@@ -1,4 +1,5 @@
 import { IonPage, IonContent, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
+import { Link } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   return (
@@ -8,7 +9,11 @@ const HomePage: React.FC = () => {
           <IonTitle>Daily Moments - Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">Add some content here…</IonContent>
+      <IonContent className="ion-padding">
+        Go to <Link to={"/settings"}>Settings</Link>
+        <br />
+        Add some content here…
+      </IonContent>
     </IonPage>
   );
 };
