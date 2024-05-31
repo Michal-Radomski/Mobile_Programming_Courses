@@ -9,13 +9,13 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>React Ionic Course</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle size="large">React Ionic Course</IonTitle>
           </IonToolbar>
         </IonHeader>
         <ExploreContainer />
@@ -25,3 +25,7 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
+//* Temp
+// const value = 2;
+// console.log("value.toFixed(2):", value.toFixed(2));

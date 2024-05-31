@@ -1,9 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { SplashScreen } from "@capacitor/splash-screen";
+
+import App from "./App";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
