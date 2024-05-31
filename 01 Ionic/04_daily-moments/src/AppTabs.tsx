@@ -7,12 +7,11 @@ import { home as homeIcon, settings as settingsIcon } from "ionicons/icons";
 import HomePage from "./pages/HomePage";
 import SettingsPage from "./pages/SettingsPage";
 import EntryPage from "./pages/EntryPage";
+import { useAuth } from "./auth";
 
-interface Props {
-  loggedIn: boolean;
-}
+const AppTabs: React.FC<{}> = () => {
+  const { loggedIn } = useAuth();
 
-const AppTabs: React.FC<Props> = ({ loggedIn }) => {
   if (!loggedIn) {
     return <Redirect to="/login" />;
   }
