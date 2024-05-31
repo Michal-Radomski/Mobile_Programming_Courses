@@ -5,6 +5,7 @@ import { home as homeIcon, settings as settingsIcon } from "ionicons/icons";
 
 import HomePage from "./pages/HomePage";
 import SettingsPage from "./pages/SettingsPage";
+import EntryPage from "./pages/EntryPage";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,9 @@ const App: React.FC = () => {
           <IonRouterOutlet>
             <Route exact={true} path="/home">
               <HomePage />
+            </Route>
+            <Route path="/entries/:id">
+              <EntryPage />
             </Route>
             <Route path="/settings">
               <SettingsPage />
