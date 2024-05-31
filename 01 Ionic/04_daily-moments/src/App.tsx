@@ -10,7 +10,7 @@ import EntryPage from "./pages/EntryPage";
 import LoginPage from "./pages/LoginPage";
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = React.useState<boolean>(true);
   // console.log({ loggedIn });
 
   return (
@@ -19,28 +19,29 @@ const App: React.FC = () => {
         <IonTabs>
           <IonRouterOutlet>
             <Route exact={true} path="/login">
-              {loggedIn ? <Redirect to="/entries" /> : <LoginPage onLogin={() => setLoggedIn(true)} />}
+              {/* {loggedIn ? <Redirect to="/my/entries" /> : <LoginPage onLogin={() => setLoggedIn(true)} loggedIn={loggedIn} />} */}
+              <LoginPage onLogin={() => setLoggedIn(true)} loggedIn={loggedIn} />
             </Route>
 
-            <Route exact={true} path="/entries">
+            <Route exact={true} path="/my/entries">
               {loggedIn ? <HomePage /> : <Redirect to="/login" />}
             </Route>
-            <Route path="/entries/:id">
+            <Route path="/my/entries/:id">
               <EntryPage />
             </Route>
-            <Route path="/settings">
+            <Route path="/my/settings">
               <SettingsPage />
             </Route>
 
-            <Redirect exact={true} path="/" to="/entries" />
+            <Redirect exact={true} path="/" to="/my/entries" />
           </IonRouterOutlet>
 
           <IonTabBar slot="bottom">
-            <IonTabButton tab="home" href="/entries">
+            <IonTabButton tab="home" href="/my/entries">
               <IonIcon icon={homeIcon} />
               <IonLabel>Home</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="settings" href="/settings">
+            <IonTabButton tab="settings" href="/my/settings">
               <IonIcon icon={settingsIcon} />
               <IonLabel>Settings</IonLabel>
             </IonTabButton>

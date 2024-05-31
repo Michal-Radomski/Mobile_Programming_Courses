@@ -1,10 +1,16 @@
 import { IonPage, IonContent, IonHeader, IonTitle, IonToolbar, IonButton } from "@ionic/react";
+import { Redirect } from "react-router";
 
 interface Props {
+  loggedIn: boolean;
   onLogin: () => void;
 }
 
-const LoginPage: React.FC<Props> = ({ onLogin }) => {
+const LoginPage: React.FC<Props> = ({ onLogin, loggedIn }) => {
+  if (loggedIn) {
+    return <Redirect to="/my/entries" />;
+  }
+
   return (
     <IonPage>
       <IonHeader>
