@@ -1,14 +1,13 @@
-import { IonApp, IonContent, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
+import { IonApp } from "@ionic/react";
+
+import HomePage from "./pages/HomePage";
+import SettingsPage from "./pages/SettingsPage";
 
 const App: React.FC = () => {
   return (
     <IonApp>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>My App</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">Add some content here…</IonContent>
+      <HomePage />
+      <SettingsPage />
     </IonApp>
   );
 };
