@@ -28,3 +28,4 @@ dist/
 Temp/
 variables.scss
 notes.txt
+firebaseConfig.ts
