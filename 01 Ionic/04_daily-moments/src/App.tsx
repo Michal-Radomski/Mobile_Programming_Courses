@@ -7,10 +7,18 @@ import LoginPage from "./pages/LoginPage";
 import AppTabs from "./AppTabs";
 import { AuthContext } from "./auth";
 import NotFoundPage from "./pages/NotFoundPage";
+import { auth as firebaseAuth } from "./firebase";
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
   // console.log({ loggedIn });
+
+  React.useEffect(() => {
+    firebaseAuth.onAuthStateChanged((user) => {
+      console.log("user:", user);
+      setLoggedIn(Boolean(user));
+    });
+  }, []);
 
   return (
     <IonApp>
@@ -19,7 +27,7 @@ const App: React.FC = () => {
           <Switch>
             <Route exact={true} path="/login">
               {/* {loggedIn ? <Redirect to="/my/entries" /> : <LoginPage onLogin={() => setLoggedIn(true)} loggedIn={loggedIn} />} */}
-              <LoginPage onLogin={() => setLoggedIn(true)} />
+              <LoginPage />
             </Route>
 
             <Route path="/my">
