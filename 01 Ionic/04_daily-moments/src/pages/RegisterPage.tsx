@@ -19,6 +19,7 @@ import { createUserWithEmailAndPassword } from "@firebase/auth";
 // import { Auth, AuthContext } from "../auth";
 import { useAuth } from "../auth";
 import { auth } from "../firebase";
+import { ObjectI } from "../Interfaces";
 
 const RegisterPage: React.FC<{}> = () => {
   const { loggedIn } = useAuth();

@@ -36,7 +36,7 @@ const EntryPage: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         {/* Go to <IonRouterLink routerLink={"/home"}>Home</IonRouterLink> */}
-        {entry.description}
+        {entry?.description}
       </IonContent>
     </IonPage>
   );
