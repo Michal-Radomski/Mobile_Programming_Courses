@@ -5,29 +5,33 @@ import { IonReactRouter } from "@ionic/react-router";
 
 import LoginPage from "./pages/LoginPage";
 import AppTabs from "./AppTabs";
-import { AuthContext } from "./auth";
+import { Auth, AuthContext, useAuthInit } from "./auth";
 import NotFoundPage from "./pages/NotFoundPage";
-import { auth as firebaseAuth } from "./firebase";
 import RegisterPage from "./pages/RegisterPage";
 
 const App: React.FC = () => {
-  const [authState, setAuthState] = React.useState<ObjectI>({ loading: true, loggedIn: false });
-  // console.log({ authState });
+  // const [authState, setAuthState] = React.useState<ObjectI>({ loading: true, loggedIn: false });
+  // // console.log({ authState });
 
-  React.useEffect(() => {
-    firebaseAuth.onAuthStateChanged((user) => {
-      // console.log("user:", user);
-      setAuthState({ loading: false, loggedIn: Boolean(user) });
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   firebaseAuth.onAuthStateChanged((user) => {
+  //     // console.log("user:", user);
+  //     setAuthState({ loading: false, loggedIn: Boolean(user) });
+  //   });
+  // }, []);
 
-  if (authState.loading) {
+  // if (authState.loading) {
+  //   return <IonLoading isOpen />;
+  // }
+
+  const { loading, auth } = useAuthInit();
+  if (loading) {
     return <IonLoading isOpen />;
   }
 
   return (
     <IonApp>
-      <AuthContext.Provider value={{ loggedIn: authState.loggedIn as boolean }}>
+      <AuthContext.Provider value={auth as Auth}>
         <IonReactRouter>
           <Switch>
             <Route exact={true} path="/login">
