@@ -26,18 +26,19 @@ interface Props {
 
 const LoginPage: React.FC<Props> = ({ onLogin }) => {
   const { loggedIn } = useAuth();
-  const [email, setEmail] = React.useState(process.env.REACT_APP_USER as string);
-  const [password, setPassword] = React.useState(process.env.REACT_APP_PASSWORD as string);
-  // const [status, setStatus] = React.useState({ loading: false, error: false });
+  const [email, setEmail] = React.useState<string>(process.env.REACT_APP_USER as string);
+  const [password, setPassword] = React.useState<string>(process.env.REACT_APP_PASSWORD as string);
+  const [status, setStatus] = React.useState({ loading: false, error: false });
 
   const handleLogin = async () => {
     try {
-      // setStatus({ loading: true, error: false });
+      setStatus({ loading: true, error: false });
       const credential = await signInWithEmailAndPassword(auth, email, password);
       console.log("credential:", credential);
+      setStatus({ loading: false, error: false });
       onLogin();
     } catch (error) {
-      // setStatus({ loading: false, error: true });
+      setStatus({ loading: false, error: true });
       console.log("error:", error);
     }
   };
@@ -64,14 +65,14 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
             <IonInput type="password" value={password} onIonChange={(event) => setPassword(event.detail.value!)} />
           </IonItem>
         </IonList>
-        {/* {status.error && <IonText color="danger">Invalid credentials</IonText>} */}
+        {status.error && <IonText color="danger">Invalid credentials</IonText>}
         <IonButton expand="block" onClick={handleLogin}>
           Login
         </IonButton>
         <IonButton expand="block" fill="clear" routerLink="/register">
           Don't have an account?
         </IonButton>
-        {/* <IonLoading isOpen={status.loading} /> */}
+        <IonLoading isOpen={status.loading} />
       </IonContent>
     </IonPage>
   );
