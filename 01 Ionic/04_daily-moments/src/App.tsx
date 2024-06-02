@@ -1,5 +1,5 @@
 import React from "react";
-import { IonApp } from "@ionic/react";
+import { IonApp, IonLoading } from "@ionic/react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 
@@ -10,19 +10,23 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { auth as firebaseAuth } from "./firebase";
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = React.useState<boolean>(false);
-  // console.log({ loggedIn });
+  const [authState, setAuthState] = React.useState<ObjectI>({ loading: true, loggedIn: false });
+  // console.log({ authState });
 
   React.useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
       console.log("user:", user);
-      setLoggedIn(Boolean(user));
+      setAuthState({ loading: false, loggedIn: Boolean(user) });
     });
   }, []);
 
+  if (authState.loading) {
+    return <IonLoading isOpen />;
+  }
+
   return (
     <IonApp>
-      <AuthContext.Provider value={{ loggedIn }}>
+      <AuthContext.Provider value={{ loggedIn: authState.loggedIn as boolean }}>
         <IonReactRouter>
           <Switch>
             <Route exact={true} path="/login">
