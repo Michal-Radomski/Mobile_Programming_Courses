@@ -14,22 +14,22 @@ import {
   IonLoading,
 } from "@ionic/react";
 import { Redirect } from "react-router";
-import { signInWithEmailAndPassword } from "@firebase/auth";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
 
 // import { Auth, AuthContext } from "../auth";
 import { useAuth } from "../auth";
 import { auth } from "../firebase";
 
-const LoginPage: React.FC<{}> = () => {
+const RegisterPage: React.FC<{}> = () => {
   const { loggedIn } = useAuth();
-  const [email, setEmail] = React.useState<string>(process.env.REACT_APP_USER as string);
-  const [password, setPassword] = React.useState<string>(process.env.REACT_APP_PASSWORD as string);
-  const [status, setStatus] = React.useState({ loading: false, error: false });
+  const [email, setEmail] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+  const [status, setStatus] = React.useState<ObjectI>({ loading: false, error: false });
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       setStatus({ loading: true, error: false });
-      const credential = await signInWithEmailAndPassword(auth, email, password);
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
       console.log("credential:", credential);
     } catch (error) {
       setStatus({ loading: false, error: true });
@@ -40,12 +40,11 @@ const LoginPage: React.FC<{}> = () => {
   if (loggedIn) {
     return <Redirect to="/my/entries" />;
   }
-
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -59,17 +58,17 @@ const LoginPage: React.FC<{}> = () => {
             <IonInput type="password" value={password} onIonChange={(event) => setPassword(event.detail.value!)} />
           </IonItem>
         </IonList>
-        {status.error && <IonText color="danger">Invalid credentials</IonText>}
-        <IonButton expand="block" onClick={handleLogin}>
-          Login
+        {status.error && <IonText color="danger">Registration failed</IonText>}
+        <IonButton expand="block" onClick={handleRegister}>
+          Create Account
         </IonButton>
-        <IonButton expand="block" fill="clear" routerLink="/register">
-          Don't have an account?
+        <IonButton expand="block" fill="clear" routerLink="/login">
+          Already have an account?
         </IonButton>
-        <IonLoading isOpen={status.loading} />
+        <IonLoading isOpen={status.loading as boolean} />
       </IonContent>
     </IonPage>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -8,6 +8,7 @@ import AppTabs from "./AppTabs";
 import { AuthContext } from "./auth";
 import NotFoundPage from "./pages/NotFoundPage";
 import { auth as firebaseAuth } from "./firebase";
+import RegisterPage from "./pages/RegisterPage";
 
 const App: React.FC = () => {
   const [authState, setAuthState] = React.useState<ObjectI>({ loading: true, loggedIn: false });
@@ -15,7 +16,7 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     firebaseAuth.onAuthStateChanged((user) => {
-      console.log("user:", user);
+      // console.log("user:", user);
       setAuthState({ loading: false, loggedIn: Boolean(user) });
     });
   }, []);
@@ -32,6 +33,9 @@ const App: React.FC = () => {
             <Route exact={true} path="/login">
               {/* {loggedIn ? <Redirect to="/my/entries" /> : <LoginPage onLogin={() => setLoggedIn(true)} loggedIn={loggedIn} />} */}
               <LoginPage />
+            </Route>
+            <Route exact={true} path="/register">
+              <RegisterPage />
             </Route>
 
             <Route path="/my">
