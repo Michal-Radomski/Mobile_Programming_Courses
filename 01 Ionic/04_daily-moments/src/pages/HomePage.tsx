@@ -1,6 +1,19 @@
 import React from "react";
-import { IonPage, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonLabel, IonItem } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonLabel,
+  IonItem,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+} from "@ionic/react";
 import { collection, query, onSnapshot } from "@firebase/firestore";
+import { add as addIcon } from "ionicons/icons";
 
 // import { entries } from "../data";
 import { firestore } from "../firebase";
@@ -36,6 +49,11 @@ const HomePage: React.FC = () => {
             );
           })}
         </IonList>
+        <IonFab vertical="bottom" horizontal="end">
+          <IonFabButton routerLink="/my/entries/add">
+            <IonIcon icon={addIcon} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
