@@ -5,15 +5,17 @@ import { collection, query, onSnapshot } from "@firebase/firestore";
 // import { entries } from "../data";
 import { firestore } from "../firebase";
 import { Entry, toEntry } from "../Interfaces.d";
+import { useAuth } from "../auth";
 
 const HomePage: React.FC = () => {
   const [entries, setEntries] = React.useState<Entry[]>([]);
+  const { userId } = useAuth();
 
   React.useEffect(() => {
-    const entriesRef = collection(firestore, "entries");
+    const entriesRef = collection(firestore, "users", userId!, "entries");
     const entriesQuery = query(entriesRef);
     return onSnapshot(entriesQuery, ({ docs }) => setEntries(docs.map(toEntry)));
-  }, []);
+  }, [userId]);
 
   return (
     <IonPage>
