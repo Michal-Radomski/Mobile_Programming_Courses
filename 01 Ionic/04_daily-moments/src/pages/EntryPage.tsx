@@ -16,7 +16,7 @@ const EntryPage: React.FC = () => {
   const [entry, setEntry] = React.useState<Entry>({} as Entry);
 
   React.useEffect(() => {
-    const entryRef = doc(firestore, "entries", id);
+    const entryRef = doc(firestore, "entries", id); // Temp: change here
     getDoc(entryRef).then((doc) => setEntry(toEntry(doc)));
   }, [id]);
 
