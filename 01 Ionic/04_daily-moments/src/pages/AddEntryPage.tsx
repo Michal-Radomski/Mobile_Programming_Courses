@@ -23,15 +23,17 @@ import { useHistory } from "react-router";
 import { useAuth } from "../auth";
 import { firestore, storage } from "../firebase";
 
-// async function savePicture(blobUrl, userId) {
-//   const pictureRef = storageRef(storage, `/users/${userId}/pictures/${Date.now()}`);
-//   const response = await fetch(blobUrl);
-//   const blob = await response.blob();
-//   const snapshot = await uploadBytes(pictureRef, blob);
-//   const url = getDownloadURL(snapshot.ref);
-//   console.log('saved picture:', url);
-//   return url;
-// }
+async function savePicture(blobUrl: string, userId: string): Promise<string> {
+  const pictureRef = storageRef(storage, `/users/${userId}/pictures/${Date.now()}`);
+  const response = (await fetch(blobUrl)) as Response;
+  // console.log("response:", response);
+  const blob = (await response.blob()) as Blob;
+  // console.log("blob:", blob);s
+  const snapshot = await uploadBytes(pictureRef, blob);
+  const url = getDownloadURL(snapshot.ref) as Promise<string>;
+  // console.log("saved picture url:", url);
+  return url;
+}
 
 const AddEntryPage: React.FC = () => {
   const { userId } = useAuth();
@@ -45,12 +47,16 @@ const AddEntryPage: React.FC = () => {
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
-    if (pictureUrl.startsWith("blob:")) {
-      URL.revokeObjectURL(pictureUrl);
-      // console.log(2, "pictureUrl:", pictureUrl);
-    }
-  }, [pictureUrl]);
+  React.useEffect(
+    //* Function return a function
+    () => () => {
+      if (pictureUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(pictureUrl);
+        // console.log(2, "pictureUrl:", pictureUrl);
+      }
+    },
+    [pictureUrl]
+  );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files!.length > 0) {
@@ -61,29 +67,32 @@ const AddEntryPage: React.FC = () => {
     }
   };
 
-  // const handlePictureClick = async () => {
-  //   if (isPlatform('capacitor')) {
-  //     try {
-  //       const photo = await Camera.getPhoto({
-  //         resultType: CameraResultType.Uri,
-  //         source: CameraSource.Prompt,
-  //         width: 600,
-  //       });
-  //       setPictureUrl(photo.webPath);
-  //     } catch (error) {
-  //       console.log('Camera error:', error);
-  //     }
-  //   } else {
-  //     fileInputRef.current.click();
-  //   }
-  // };
+  const handlePictureClick = async () => {
+    fileInputRef.current?.click();
+    // if (isPlatform('capacitor')) {
+    //   try {
+    //     const photo = await Camera.getPhoto({
+    //       resultType: CameraResultType.Uri,
+    //       source: CameraSource.Prompt,
+    //       width: 600,
+    //     });
+    //     setPictureUrl(photo.webPath);
+    //   } catch (error) {
+    //     console.log('Camera error:', error);
+    //   }
+    // } else {
+    //   fileInputRef.current.click();
+    // }
+  };
 
   const handleSave = async () => {
     const entriesRef = collection(firestore, "users", userId!, "entries");
     const entryData = { date, title, pictureUrl, description };
-    // if (!pictureUrl.startsWith("/assets")) {
-    //   entryData.pictureUrl = await savePicture(pictureUrl, userId);
-    // }
+
+    if (!pictureUrl.startsWith("/assets")) {
+      entryData.pictureUrl = await savePicture(pictureUrl, userId!);
+    }
+
     const entryRef = await addDoc(entriesRef, entryData);
     console.log("saved:", entryRef.id);
     history.goBack();
@@ -117,7 +126,7 @@ const AddEntryPage: React.FC = () => {
               src={pictureUrl}
               alt="Placeholder pic"
               style={{ cursor: "pointer" }}
-              // onClick={handlePictureClick}
+              onClick={handlePictureClick}
               height="150px"
               width="auto"
             />
