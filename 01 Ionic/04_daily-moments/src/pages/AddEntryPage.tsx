@@ -1,7 +1,7 @@
 import React from "react";
 import { addDoc, collection } from "@firebase/firestore";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "@firebase/storage";
-// import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import {
   IonBackButton,
   IonButton,
