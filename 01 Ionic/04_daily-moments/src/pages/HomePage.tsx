@@ -19,6 +19,7 @@ import { add as addIcon } from "ionicons/icons";
 import { firestore } from "../firebase";
 import { Entry, toEntry } from "../Interfaces.d";
 import { useAuth } from "../auth";
+import { formatDate } from "../date";
 
 const HomePage: React.FC = () => {
   const [entries, setEntries] = React.useState<Entry[]>([]);
@@ -44,7 +45,10 @@ const HomePage: React.FC = () => {
           {entries.map((entry, index) => {
             return (
               <IonItem key={entry.id + index} button={true} routerLink={`/my/entries/view/${entry.id}`}>
-                <IonLabel>{entry.title}</IonLabel>
+                <IonLabel>
+                  <h2>{entry?.date ? formatDate(entry?.date) : "n/a"}</h2>
+                  <h3>{entry.title}</h3>
+                </IonLabel>
               </IonItem>
             );
           })}

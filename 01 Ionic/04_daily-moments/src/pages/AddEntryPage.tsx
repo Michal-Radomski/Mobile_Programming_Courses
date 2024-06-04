@@ -19,6 +19,7 @@ import {
   isPlatform,
 } from "@ionic/react";
 import { useHistory } from "react-router";
+
 import { useAuth } from "../auth";
 import { firestore, storage } from "../firebase";
 
