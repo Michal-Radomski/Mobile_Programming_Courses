@@ -41,25 +41,25 @@ const AddEntryPage: React.FC = () => {
   const [title, setTitle] = React.useState<string>("");
   const [pictureUrl, setPictureUrl] = React.useState<string>("/assets/placeholder.png");
   const [description, setDescription] = React.useState<string>("");
+  // console.log("pictureUrl:", pictureUrl);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  React.useEffect(
-    () => () => {
-      if (pictureUrl.startsWith("blob:")) {
-        URL.revokeObjectURL(pictureUrl);
-      }
-    },
-    [pictureUrl]
-  );
+  React.useEffect(() => {
+    if (pictureUrl.startsWith("blob:")) {
+      URL.revokeObjectURL(pictureUrl);
+      // console.log(2, "pictureUrl:", pictureUrl);
+    }
+  }, [pictureUrl]);
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files.item(0);
-  //     const pictureUrl = URL.createObjectURL(file);
-  //     setPictureUrl(pictureUrl);
-  //   }
-  // };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    if (event.target.files!.length > 0) {
+      const file = event.target.files!.item(0) as File;
+      const pictureUrl = URL.createObjectURL(file!) as string;
+      // console.log(1, "pictureUrl:", pictureUrl);
+      setPictureUrl(pictureUrl);
+    }
+  };
 
   // const handlePictureClick = async () => {
   //   if (isPlatform('capacitor')) {
@@ -112,18 +112,14 @@ const AddEntryPage: React.FC = () => {
           <IonItem>
             <IonLabel position="stacked">Picture</IonLabel>
             <br />
-            <input
-              type="file"
-              accept="image/*"
-              hidden
-              ref={fileInputRef}
-              // onChange={handleFileChange}
-            />
+            <input type="file" accept="image/*" hidden={true} ref={fileInputRef} onChange={handleFileChange} />
             <img
               src={pictureUrl}
-              alt=""
+              alt="Placeholder pic"
               style={{ cursor: "pointer" }}
               // onClick={handlePictureClick}
+              height="150px"
+              width="auto"
             />
           </IonItem>
           <IonItem>
