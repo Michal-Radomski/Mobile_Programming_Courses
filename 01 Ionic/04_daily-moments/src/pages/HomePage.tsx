@@ -12,7 +12,7 @@ import {
   IonFabButton,
   IonIcon,
 } from "@ionic/react";
-import { collection, query, onSnapshot } from "@firebase/firestore";
+import { collection, query, onSnapshot, orderBy, limit } from "@firebase/firestore";
 import { add as addIcon } from "ionicons/icons";
 
 // import { entries } from "../data";
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
 
   React.useEffect(() => {
     const entriesRef = collection(firestore, "users", userId!, "entries");
-    const entriesQuery = query(entriesRef);
+    const entriesQuery = query(entriesRef, orderBy("date", "desc"), limit(7));
     return onSnapshot(entriesQuery, ({ docs }) => setEntries(docs.map(toEntry)));
   }, [userId]);
 
@@ -48,6 +48,7 @@ const HomePage: React.FC = () => {
                 <IonLabel>
                   <h2>{entry?.date ? formatDate(entry?.date) : "n/a"}</h2>
                   <h3>{entry.title}</h3>
+                  <>{entry.description}</>
                 </IonLabel>
               </IonItem>
             );
