@@ -11,6 +11,8 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
+  IonThumbnail,
+  IonImg,
 } from "@ionic/react";
 import { collection, query, onSnapshot, orderBy, limit } from "@firebase/firestore";
 import { add as addIcon } from "ionicons/icons";
@@ -42,9 +44,12 @@ const HomePage: React.FC = () => {
         {/* Go to <IonRouterLink routerLink={"/settings"}>Settings</IonRouterLink> */}
         HomePage
         <IonList>
-          {entries.map((entry, index) => {
+          {entries.map((entry: Entry, index: number) => {
             return (
               <IonItem key={entry.id + index} button={true} routerLink={`/my/entries/view/${entry.id}`}>
+                <IonThumbnail slot="end">
+                  <IonImg src={entry.pictureUrl} />
+                </IonThumbnail>
                 <IonLabel>
                   <h2>{entry?.date ? formatDate(entry?.date) : "n/a"}</h2>
                   <h3>{entry.title}</h3>

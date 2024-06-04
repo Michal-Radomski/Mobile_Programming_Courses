@@ -61,8 +61,9 @@ const EntryPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        {/* Go to <IonRouterLink routerLink={"/home"}>Home</IonRouterLink> */}
-        {entry?.description}
+        <h2>{entry?.title}</h2>
+        <img src={entry?.pictureUrl} alt={entry?.title} />
+        <p>{entry?.description}</p>
       </IonContent>
     </IonPage>
   );

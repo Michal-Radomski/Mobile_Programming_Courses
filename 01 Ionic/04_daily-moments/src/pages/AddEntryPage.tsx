@@ -16,7 +16,6 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
-  isPlatform,
 } from "@ionic/react";
 import { useHistory } from "react-router";
 
