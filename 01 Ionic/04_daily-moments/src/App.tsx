@@ -46,11 +46,11 @@ const App: React.FC = () => {
               <AppTabs />
             </Route>
 
+            <Redirect exact={true} path="/" to="/my/entries" />
+
             <Route>
               <NotFoundPage />
             </Route>
-
-            <Redirect exact={true} path="/" to="/my/entries" />
           </Switch>
         </IonReactRouter>
       </AuthContext.Provider>

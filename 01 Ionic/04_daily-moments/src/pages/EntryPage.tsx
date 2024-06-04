@@ -6,9 +6,11 @@ import { doc, getDoc } from "@firebase/firestore";
 // import { entries } from "../data";
 import { Entry, RouteParams, toEntry } from "../Interfaces.d";
 import { firestore } from "../firebase";
+import { useAuth } from "../auth";
 
 const EntryPage: React.FC = () => {
   const { id } = useParams<RouteParams>();
+  const { userId } = useAuth();
 
   // const entry = entries.find((entry) => entry.id === id);
   // console.log({ entry });
@@ -16,9 +18,9 @@ const EntryPage: React.FC = () => {
   const [entry, setEntry] = React.useState<Entry>({} as Entry);
 
   React.useEffect(() => {
-    const entryRef = doc(firestore, "entries", id); // Temp: change here
+    const entryRef = doc(firestore, "users", userId!, "entries", id);
     getDoc(entryRef).then((doc) => setEntry(toEntry(doc)));
-  }, [id]);
+  }, [id, userId]);
 
   if (!entry) {
     throw new Error(`No such entry: ${id}`);
