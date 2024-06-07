@@ -1,4 +1,4 @@
-Firebase Security Rules (Common Expression Language)
+// Firebase Security Rules (Common Expression Language)
 rules_version = '2';
 
 service cloud.firestore {
@@ -12,9 +12,6 @@ service cloud.firestore {
 
 rules_version = '2';
 
-// Craft rules based on data in your Firestore database
-// allow write: if firestore.get(
-//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
   match /b/{bucket}/o {
   match /users/{userId}/{allPaths=**} {

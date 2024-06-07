@@ -1,7 +1,7 @@
 import React from "react";
 import { addDoc, collection } from "@firebase/firestore";
 import { getDownloadURL, ref as storageRef, uploadBytes } from "@firebase/storage";
-import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+import { Camera, CameraResultType, CameraSource, Photo } from "@capacitor/camera";
 import {
   IonBackButton,
   IonButton,
@@ -71,7 +71,7 @@ const AddEntryPage: React.FC = () => {
     // fileInputRef.current?.click();
     if (isPlatform("capacitor")) {
       try {
-        const photo = await Camera.getPhoto({
+        const photo: Photo = await Camera.getPhoto({
           resultType: CameraResultType.Uri,
           source: CameraSource.Prompt,
           width: 600,
