@@ -67,8 +67,9 @@ const AddEntryPage: React.FC = () => {
     }
   };
 
-  const handlePictureClick = async () => {
+  const handlePictureClick = async (): Promise<void> => {
     // fileInputRef.current?.click();
+    // console.log("getPlatforms():", getPlatforms());
     if (isPlatform("capacitor")) {
       try {
         const photo: Photo = await Camera.getPhoto({
@@ -85,7 +86,7 @@ const AddEntryPage: React.FC = () => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<void> => {
     const entriesRef = collection(firestore, "users", userId!, "entries");
     const entryData = { date, title, pictureUrl, description };
 

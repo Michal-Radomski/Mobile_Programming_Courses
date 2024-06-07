@@ -53,7 +53,7 @@ const HomePage: React.FC = () => {
                 <IonLabel>
                   <h2>{entry?.date ? formatDate(entry?.date) : "n/a"}</h2>
                   <h3>{entry.title}</h3>
-                  <>{entry.description}</>
+                  <p>{entry.description}</p>
                 </IonLabel>
               </IonItem>
             );

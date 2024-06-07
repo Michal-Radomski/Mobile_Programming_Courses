@@ -29,8 +29,9 @@ const LoginPage: React.FC<{}> = () => {
   const handleLogin = async () => {
     try {
       setStatus({ loading: true, error: false });
-      const credential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("credential:", credential);
+      // const credential = await signInWithEmailAndPassword(auth, email, password);
+      // console.log("credential:", credential);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       setStatus({ loading: false, error: true });
       console.log("error:", error);
