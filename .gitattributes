@@ -2,4 +2,4 @@
 *.xml linguist-language=xml
 
 *.rules linguist-detectable=true
-*.rules linguist-language="Cloud Firestore Security Rules"
+*.rules linguist-language=rules

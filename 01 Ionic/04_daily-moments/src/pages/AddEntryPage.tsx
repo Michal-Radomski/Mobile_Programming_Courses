@@ -16,6 +16,7 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
+  isPlatform,
 } from "@ionic/react";
 import { useHistory } from "react-router";
 
@@ -67,21 +68,21 @@ const AddEntryPage: React.FC = () => {
   };
 
   const handlePictureClick = async () => {
-    fileInputRef.current?.click();
-    // if (isPlatform('capacitor')) {
-    //   try {
-    //     const photo = await Camera.getPhoto({
-    //       resultType: CameraResultType.Uri,
-    //       source: CameraSource.Prompt,
-    //       width: 600,
-    //     });
-    //     setPictureUrl(photo.webPath);
-    //   } catch (error) {
-    //     console.log('Camera error:', error);
-    //   }
-    // } else {
-    //   fileInputRef.current.click();
-    // }
+    // fileInputRef.current?.click();
+    if (isPlatform("capacitor")) {
+      try {
+        const photo = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Prompt,
+          width: 600,
+        });
+        setPictureUrl(photo.webPath as string);
+      } catch (error) {
+        console.log("Camera error:", error);
+      }
+    } else {
+      fileInputRef.current?.click();
+    }
   };
 
   const handleSave = async () => {
