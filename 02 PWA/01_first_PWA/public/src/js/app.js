@@ -6,7 +6,7 @@ navigator.serviceWorker?.register("/sw.js");
 
 function animate() {
   title.classList.remove("animate-in");
-  for (var i = 0; i < courseFeatureElements.length; i++) {
+  for (let i = 0; i < courseFeatureElements.length; i++) {
     courseFeatureElements[i].classList.remove("animate-in");
   }
   button.classList.remove("animate-in");
