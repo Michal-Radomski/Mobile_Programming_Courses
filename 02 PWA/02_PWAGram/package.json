@@ -4,33 +4,28 @@
   "description": "PWA course",
   "scripts": {
     "dev": "clear && gulp",
-    "start": "http-server -c-1"
+    "server": "http-server -c-1 -p 3000",
+    "start": "concurrently \"npm run dev\" \"npm run server\""
   },
   "keywords": [
     "pwa"
   ],
-  "author": "MichRad",
   "license": "ISC",
   "devDependencies": {
-    "@types/browser-sync": "^2.29.0",
     "@types/gulp": "^4.0.17",
     "@types/gulp-copy": "^0.0.7",
     "@types/gulp-sass": "^5.0.4",
-    "@types/gulp-sourcemaps": "^0.0.38",
     "@types/gulp-uglify": "^3.0.11",
-    "@types/leaflet": "^1.9.8",
     "@types/node": "^20.11.3",
-    "browser-sync": "^3.0.2",
+    "concurrently": "^8.2.2",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
     "gulp-copy": "^4.0.1",
     "gulp-sass": "^5.1.0",
-    "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
     "sass": "^1.69.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {}
+  }
 }

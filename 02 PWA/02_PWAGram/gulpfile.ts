@@ -1,10 +1,8 @@
-import { src, dest, watch, parallel } from "gulp";
+import { src, dest, watch } from "gulp";
 
 const gulpCopy = require("gulp-copy");
-// const sourcemaps = require("gulp-sourcemaps");
 const sass = require("gulp-sass")(require("sass"));
 const uglify = require("gulp-uglify");
-const browserSync = require("browser-sync").create();
 const ts = require("gulp-typescript");
 
 const tsProject = ts.createProject("tsconfig.json");
@@ -23,45 +21,29 @@ const files = {
 function htmlTask() {
   return src([files.htmlPath, files.favIcon])
     .pipe(gulpCopy("public", { prefix: 1 }))
-    .pipe(dest("public"))
-    .pipe(browserSync.stream());
+    .pipe(dest("public"));
 }
 
 function helpTask() {
   return src([files.helpPath])
     .pipe(gulpCopy("public", { prefix: 1 }))
-    .pipe(dest("public/help"))
-    .pipe(browserSync.stream());
+    .pipe(dest("public/help"));
 }
 
 function imgTask() {
-  return src(files.images).pipe(dest("public/src/images")).pipe(browserSync.stream());
+  return src(files.images).pipe(dest("public/src/images"));
 }
 
 //* Sass to CSS
 function sassTask() {
   return src(files.sassPath)
     .pipe(sass({ outputStyle: "compressed" })) // Compile SCSS to CSS; empty object causes error
-    .pipe(dest("public/src/css"))
-    .pipe(browserSync.stream());
+    .pipe(dest("public/src/css"));
 }
 
 //* TS
 function tsTask() {
-  return src(files.tsPath).pipe(tsProject()).pipe(uglify()).pipe(dest("public/src/js")).pipe(browserSync.stream());
-}
-
-//* Browser Sync
-function browser_Sync() {
-  browserSync.init({
-    files: ["./dist/**/*."],
-    notify: false,
-    open: false,
-    server: {
-      baseDir: "./dist",
-    },
-    port: 3000,
-  });
+  return src(files.tsPath).pipe(tsProject()).pipe(uglify()).pipe(dest("public/src/js"));
 }
 
 //* Watch files
@@ -74,4 +56,4 @@ function watchFiles() {
 }
 
 //* Export
-exports.default = parallel(watchFiles, browser_Sync);
+exports.default = watchFiles;
