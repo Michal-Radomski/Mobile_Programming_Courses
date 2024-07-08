@@ -1,6 +1,6 @@
-const shareImageButton = document.querySelector("#share-image-button");
-const createPostArea = document.querySelector("#create-post");
-const closeCreatePostModalButton = document.querySelector("#close-create-post-modal-btn");
+const shareImageButton = document.querySelector("#share-image-button") as HTMLButtonElement;
+const createPostArea = document.querySelector("#create-post") as HTMLTextAreaElement;
+const closeCreatePostModalButton = document.querySelector("#close-create-post-modal-btn") as HTMLButtonElement;
 
 function openCreatePostModal() {
   createPostArea.style.display = "block";
