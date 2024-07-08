@@ -14,12 +14,13 @@ const files = {
   tsPath: "src/src/ts/*.ts",
   htmlPath: "src/index.html",
   favIcon: "src/favicon.ico",
+  manifestFile: "src/manifest.json",
   helpPath: "src/help/index.html",
 };
 
 //* HTML
 function htmlTask() {
-  return src([files.htmlPath, files.favIcon])
+  return src([files.htmlPath, files.favIcon, files.manifestFile])
     .pipe(gulpCopy("public", { prefix: 1 }))
     .pipe(dest("public"));
 }
@@ -49,6 +50,7 @@ function tsTask() {
 //* Watch files
 function watchFiles() {
   watch(files.htmlPath, htmlTask);
+  watch(files.manifestFile, htmlTask);
   watch(files.helpPath, helpTask);
   watch(files.images, imgTask);
   watch(files.sassPath, sassTask);
