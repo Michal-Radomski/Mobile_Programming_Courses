@@ -16,6 +16,7 @@ const files = {
   favIcon: "src/favicon.ico",
   manifestFile: "src/manifest.json",
   helpPath: "src/help/index.html",
+  swPath: "src/sw.ts",
 };
 
 //* HTML
@@ -47,9 +48,14 @@ function tsTask() {
   return src(files.tsPath).pipe(tsProject()).pipe(uglify()).pipe(dest("public/src/js"));
 }
 
+function swTask() {
+  return src(files.swPath).pipe(tsProject()).pipe(uglify()).pipe(dest("public"));
+}
+
 //* Watch files
 function watchFiles() {
   watch(files.htmlPath, htmlTask);
+  watch(files.swPath, swTask);
   watch(files.manifestFile, htmlTask);
   watch(files.helpPath, helpTask);
   watch(files.images, imgTask);
