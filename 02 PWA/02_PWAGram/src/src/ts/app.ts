@@ -53,20 +53,29 @@ if ("serviceWorker" in navigator) {
 
 // console.log(2, "After setTimeout");
 
-const promise = new Promise<string>(function (_resolve, _reject) {
-  setTimeout(() => {
-    _resolve("setTimeout");
-    // _reject("reject");
-  }, 2000);
-});
+// const promise = new Promise<string>(function (_resolve, _reject): void {
+//   setTimeout(() => {
+//     _resolve("setTimeout");
+//     // _reject("reject");
+//   }, 2000);
+// }) as Promise<string>;
 
-// promise.then((text) => console.log(text));
-promise
-  .then((text: string) => {
-    return text;
+// // promise.then((text) => console.log(text));
+// promise
+//   .then((text: string) => {
+//     return text;
+//   })
+//   .then((newText: string) => {
+//     return newText;
+//   })
+//   .then((newText2: string) => console.log({ newText2 }))
+//   .catch((err: Error) => console.log({ err }));
+
+//* Fetch API
+fetch("https://httpbin.org/ip")
+  .then((data) => {
+    console.log("data:", data);
+    return data.json();
   })
-  .then((newText: string) => {
-    return newText;
-  })
-  .then((newText2: string) => console.log({ newText2 }))
-  .catch((err: Error) => console.log({ err }));
+  .then((res) => console.log("res:", res))
+  .catch((err: Error) => console.log("err:", err));
