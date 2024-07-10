@@ -80,19 +80,35 @@ if ("serviceWorker" in navigator) {
 //   .then((res) => console.log("res:", res))
 //   .catch((err: Error) => console.log("err:", err));
 
-const data = {
-  key1: "value1",
-  key2: "value2",
+// const data = {
+//   key1: "value1",
+//   key2: "value2",
+// };
+
+// fetch("https://httpbin.org/post", {
+//   method: "POST",
+//   headers: { "Content-Type": "application/json", Accept: "application/json" },
+//   mode: "cors",
+//   body: JSON.stringify(data),
+// })
+//   .then((data) => {
+//     // console.log("data:", data);
+//     return data.json();
+//   })
+//   .then((res) => console.log("res:", res))
+//   .catch((err: Error) => console.log("err:", err));
+
+//* AJAX
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://httpbin.org/ip");
+xhr.responseType = "json";
+
+xhr.onload = function (): void {
+  console.log("xhr.response:", xhr.response);
 };
 
-fetch("https://httpbin.org/post", {
-  method: "POST",
-  headers: { "Content-Type": "application/json", Accept: "application/json" },
-  body: JSON.stringify(data),
-})
-  .then((data) => {
-    // console.log("data:", data);
-    return data.json();
-  })
-  .then((res) => console.log("res:", res))
-  .catch((err: Error) => console.log("err:", err));
+xhr.onerror = function (): void {
+  console.log("Error!");
+};
+
+xhr.send();
