@@ -35,6 +35,13 @@ if ("serviceWorker" in navigator) {
   console.log("beforeinstallprompt fired");
   event.preventDefault();
   deferredPrompt = event;
-  console.log("deferredPrompt:", deferredPrompt);
+  // console.log("deferredPrompt:", deferredPrompt);
   return false;
 });
+
+//* Unregister serviceWorker
+// navigator.serviceWorker.getRegistrations().then(function (registrations) {
+//   for (let registration of registrations) {
+//     registration.unregister();
+//   }
+// });
