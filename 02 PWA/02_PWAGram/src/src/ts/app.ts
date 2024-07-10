@@ -23,6 +23,11 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+// * Check if browser has Promise, if not use polyfills!
+if (!window.Promise) {
+  window.Promise = Promise;
+}
+
 let deferredPrompt: BeforeInstallPromptEvent | null;
 
 if ("serviceWorker" in navigator) {
@@ -46,6 +51,7 @@ if ("serviceWorker" in navigator) {
 //   }
 // });
 
+//@ Refresher
 //* Async JS
 // setTimeout(() => {
 //   console.log(1, "setTimeout");
@@ -99,16 +105,32 @@ if ("serviceWorker" in navigator) {
 //   .catch((err: Error) => console.log("err:", err));
 
 //* AJAX
-const xhr = new XMLHttpRequest();
-xhr.open("GET", "https://httpbin.org/ip");
-xhr.responseType = "json";
+// const xhr = new XMLHttpRequest();
+// xhr.open("GET", "https://httpbin.org/ip");
+// xhr.responseType = "json";
 
-xhr.onload = function (): void {
-  console.log("xhr.response:", xhr.response);
-};
+// xhr.onload = function (): void {
+//   console.log("xhr.response:", xhr.response);
+// };
 
-xhr.onerror = function (): void {
-  console.log("Error!");
-};
+// xhr.onerror = function (): void {
+//   console.log("Error!");
+// };
 
-xhr.send();
+// xhr.send();
+
+//* Fetch with async/await
+// (async function getData() {
+//   const url = "https://httpbin.org/ip";
+//   try {
+//     const response = await fetch(url);
+//     if (!response.ok) {
+//       throw new Error(`Response status: ${response.status}`);
+//     }
+
+//     const json = await response.json();
+//     console.log({ json });
+//   } catch (error) {
+//     console.error("(error as Error).message:", (error as Error).message);
+//   }
+// })();
