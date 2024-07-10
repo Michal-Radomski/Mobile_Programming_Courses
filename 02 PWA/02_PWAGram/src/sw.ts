@@ -9,5 +9,6 @@ self.addEventListener("activate", function (event: Event) {
 
 (self as any).addEventListener("fetch", function (event: CustomEvent) {
   console.log("[Service Worker] Fetching something ....", event);
+  // console.log("event.request:", event.request);
   event.respondWith?.(fetch(event.request!));
 });
