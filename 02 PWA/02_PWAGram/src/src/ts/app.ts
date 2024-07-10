@@ -49,15 +49,15 @@ if ("serviceWorker" in navigator) {
 //* Async JS
 // setTimeout(() => {
 //   console.log(1, "setTimeout");
-// }, 3000);
+// }, 2000);
 
 // console.log(2, "After setTimeout");
 
-const promise = new Promise<string>(function (_resolve, reject) {
+const promise = new Promise<string>(function (_resolve, _reject) {
   setTimeout(() => {
-    // resolve("setTimeout");
-    reject("reject");
-  }, 3000);
+    _resolve("setTimeout");
+    // _reject("reject");
+  }, 2000);
 });
 
 // promise.then((text) => console.log(text));
@@ -65,5 +65,8 @@ promise
   .then((text: string) => {
     return text;
   })
-  .then((newText: string) => console.log({ newText }))
+  .then((newText: string) => {
+    return newText;
+  })
+  .then((newText2: string) => console.log({ newText2 }))
   .catch((err: Error) => console.log({ err }));
