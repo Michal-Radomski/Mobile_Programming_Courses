@@ -72,9 +72,26 @@ if ("serviceWorker" in navigator) {
 //   .catch((err: Error) => console.log({ err }));
 
 //* Fetch API
-fetch("https://httpbin.org/ip")
+// fetch("https://httpbin.org/ip")
+//   .then((data) => {
+//     console.log("data:", data);
+//     return data.json();
+//   })
+//   .then((res) => console.log("res:", res))
+//   .catch((err: Error) => console.log("err:", err));
+
+const data = {
+  key1: "value1",
+  key2: "value2",
+};
+
+fetch("https://httpbin.org/post", {
+  method: "POST",
+  headers: { "Content-Type": "application/json", Accept: "application/json" },
+  body: JSON.stringify(data),
+})
   .then((data) => {
-    console.log("data:", data);
+    // console.log("data:", data);
     return data.json();
   })
   .then((res) => console.log("res:", res))
