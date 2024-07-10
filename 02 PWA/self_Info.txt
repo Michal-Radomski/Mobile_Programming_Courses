@@ -1,0 +1,45 @@
+In JavaScript, `self` is not a reserved keyword or a standard built-in object. However, it has a few common uses and meanings:
+
+1. Global object reference:
+In browser environments, `self` refers to the global `window` object[1][5]. It can be used interchangeably with `window` in most cases. For example:
+
+```javascript
+console.log(self === window); // true
+```
+
+This usage is particularly useful for writing code that works in both browser and Web Worker contexts, as `self` is also available in Web Workers[5].
+
+2. Maintaining object context:
+Developers often use `self` as a variable name to store a reference to the current object context, especially when dealing with nested functions or callbacks[1]. This is a convention, not a language feature. For example:
+
+```javascript
+function SomeObject() {
+  var self = this;
+  this.someMethod = function() {
+    // 'self' refers to the SomeObject instance
+    setTimeout(function() {
+      console.log(self);
+    }, 100);
+  };
+}
+```
+
+3. In comparison to Python:
+It's worth noting that `self` in JavaScript is not equivalent to `self` in Python. In Python, `self` is conventionally used as the first parameter in method definitions to refer to the instance of the class. JavaScript uses `this` for a similar purpose, but its behavior is more complex and context-dependent[2][3].
+
+Key differences between JavaScript's `this` and Python's `self`:
+
+- `this` in JavaScript is dynamically bound at runtime, while `self` in Python is statically bound[2].
+- JavaScript's `this` can change based on how a function is called, whereas Python's `self` always refers to the instance of the class[2][3].
+- `self` is not a reserved keyword in JavaScript and can be used as a regular variable name[2].
+
+In modern JavaScript, arrow functions provide a way to lexically bind `this`, which can sometimes eliminate the need for the `self = this` pattern[2].
+
+To summarize, while `self` is not a special keyword in JavaScript, it's often used either to refer to the global object (in browser contexts) or as a convention for maintaining object context in certain situations.
+
+Citations:
+[1] https://stackoverflow.com/questions/3216428/what-does-self-mean-in-javascript
+[2] https://dev.to/ibtesum/this-in-javascript-and-self-in-python-any-difference-38fm
+[3] https://realpython.com/lessons/javascript-this-python-self/
+[4] https://www.geeksforgeeks.org/what-is-the-difference-between-self-and-this/
+[5] https://developer.mozilla.org/en-US/docs/Web/API/Window/self
