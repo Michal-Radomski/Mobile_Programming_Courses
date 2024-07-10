@@ -45,3 +45,10 @@ if ("serviceWorker" in navigator) {
 //     registration.unregister();
 //   }
 // });
+
+//* Async JS
+setTimeout(() => {
+  console.log(1, "setTimeout");
+}, 3000);
+
+console.log(2, "After setTimeout");
