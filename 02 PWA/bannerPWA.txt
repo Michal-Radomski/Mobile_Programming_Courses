@@ -1,0 +1,45 @@
+Here are some key ways to show a PWA install banner:
+
+1. Meet the installability criteria:
+- Have a valid web app manifest file with required fields like name, icons, start_url etc.
+- Be served over HTTPS
+- Register a service worker with a fetch event handler
+- Meet engagement heuristics (e.g. user visits site twice in two weeks)[1]
+
+2. Let the browser show its automatic install promotion:
+- Most browsers will automatically show an install banner or button when the criteria are met
+- For example, Chrome shows an install button in the address bar on desktop[1]
+
+3. Create a custom in-app install promotion:
+- Add your own install button or banner within your PWA's UI
+- Trigger the install prompt programmatically when the user clicks your custom button[1]
+
+4. Use strategic placement:
+- Show the install promotion after the user has engaged with your site
+- Place it outside of critical user flows
+- Consider using a banner at the top of the page or in the navigation[1]
+
+5. Provide context:
+- Explain the benefits of installing the PWA
+- Highlight that it uses minimal storage and installs instantly[1]
+
+6. Allow dismissal:
+- Let users dismiss or decline the install promotion
+- Remember their preference and don't show it again immediately[1]
+
+7. Test thoroughly:
+- Use Chrome DevTools to debug issues with the install banner
+- Test on real devices, as emulators can be unreliable for PWA install prompts[4]
+
+8. Consider platform differences:
+- iOS requires adding to home screen manually, so provide instructions
+- Android allows automatic install banners in supported browsers[5]
+
+The key is to meet the technical criteria, create a compelling install experience, and test thoroughly across devices and platforms. Avoid being overly aggressive with promotions, and focus on highlighting the benefits to users.
+
+Citations:
+[1] https://web.dev/articles/promote-install
+[2] https://stackoverflow.com/questions/43003424/why-is-my-add-to-home-screen-web-app-install-banner-not-showing-up-in-my-web-a
+[3] https://meta.discourse.org/t/install-pwa-and-native-app-install-banner-not-appearing/234774
+[4] https://www.youtube.com/watch?v=9whdWJ4q7jE
+[5] https://forums.mobirise.com/discussion/27823/show-banner-only-iphone-ipad-to-explainn-how-install-pwa
