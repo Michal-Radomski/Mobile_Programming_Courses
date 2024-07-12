@@ -4,6 +4,9 @@ declare global {
     componentHandler: any;
     sharedMomentsArea: any;
   }
+  interface CustomEvent extends Event {
+    waitUntil: Function;
+  }
 }
 
 export {};

@@ -1,9 +1,16 @@
-self.addEventListener("install", function (event: Event) {
+(self as any).addEventListener("install", function (event: CustomEvent) {
   // console.log("[Service Worker] Installing Service Worker ...", event);
+  event.waitUntil(
+    caches.open("static").then(function (cache: Cache) {
+      // console.log("cache:", cache);
+      console.log("[Service Worker] Precaching App Shell");
+      cache.add("/src/js/app.js");
+    })
+  );
 });
 
-self.addEventListener("activate", function (event: Event) {
-  // console.log("[Service Worker] Activating Service Worker ...", event);
+self.addEventListener("activate", function (_event: Event) {
+  // console.log("[Service Worker] Activating Service Worker ...", _event);
   return self.clients.claim();
 });
 
