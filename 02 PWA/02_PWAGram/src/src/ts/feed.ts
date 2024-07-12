@@ -1,6 +1,7 @@
 const shareImageButton = document.querySelector("#share-image-button") as HTMLButtonElement;
 const createPostArea = document.querySelector("#create-post") as HTMLTextAreaElement;
 const closeCreatePostModalButton = document.querySelector("#close-create-post-modal-btn") as HTMLButtonElement;
+const sharedMomentsArea = document.querySelector("#shared-moments") as HTMLDivElement;
 
 function openCreatePostModal(): void {
   createPostArea.style.display = "block";
@@ -30,8 +31,8 @@ shareImageButton.addEventListener("click", openCreatePostModal);
 closeCreatePostModalButton.addEventListener("click", closeCreatePostModal);
 
 function createCard(): void {
-  const { componentHandler, sharedMomentsArea } = window;
-  // console.log(componentHandler, sharedMomentsArea);
+  const { componentHandler } = window;
+  // console.log(componentHandler);
 
   const cardWrapper = document.createElement("div");
   cardWrapper.className = "shared-moment-card mdl-card mdl-shadow--2dp";

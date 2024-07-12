@@ -1,8 +1,7 @@
 declare global {
   interface Window {
     clients: { claim: () => void };
-    componentHandler: any;
-    sharedMomentsArea: any;
+    componentHandler: Function;
   }
   interface CustomEvent extends Event {
     waitUntil: Function;

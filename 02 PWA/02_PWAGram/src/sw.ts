@@ -17,5 +17,18 @@ self.addEventListener("activate", function (_event: Event) {
 (self as any).addEventListener("fetch", function (event: FetchEvent) {
   // console.log("[Service Worker] Fetching something ....", event);
   // console.log("event.request:", event.request);
-  event.respondWith?.(fetch(event.request!));
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      if (response) {
+        return response;
+      } else {
+        return fetch(event.request).then(function (res) {
+          return caches.open("dynamic").then(function (cache) {
+            cache.put(event.request.url, res.clone());
+            return res;
+          });
+        });
+      }
+    })
+  );
 });
