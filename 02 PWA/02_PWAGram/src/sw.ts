@@ -1,7 +1,7 @@
-(self as any).addEventListener("install", function (event: CustomEvent) {
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("install", function (event: ExtendableEvent) {
   // console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
-    caches.open("static").then(function (cache) {
+    caches.open("static").then(function (cache: Cache) {
       // console.log("cache:", cache);
       console.log("[Service Worker] Precaching App Shell");
       // cache.add("/src/js/app.js");
@@ -10,8 +10,8 @@
         "/index.html",
         "/src/js/app.js",
         "/src/js/feed.js",
-        "/src/js/promise.js",
-        "/src/js/fetch.js",
+        // "/src/js/promise.js",
+        // "/src/js/fetch.js",
         "/src/css/app.css",
         "/src/css/feed.css",
         "/src/images/main-image.jpg",
@@ -24,12 +24,12 @@
   );
 });
 
-self.addEventListener("activate", function (_event: Event) {
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("activate", function (_event: ExtendableEvent) {
   // console.log("[Service Worker] Activating Service Worker ...", _event);
   return self.clients.claim();
 });
 
-(self as any).addEventListener("fetch", function (event: FetchEvent) {
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
   // console.log("[Service Worker] Fetching something ....", event);
   // console.log("event.request:", event.request);
   event.respondWith(
