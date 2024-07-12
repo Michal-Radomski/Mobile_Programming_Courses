@@ -1,7 +1,10 @@
+const CACHE_STATIC_NAME = "static-v2";
+const CACHE_DYNAMIC_NAME = "dynamic-v2";
+
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("install", function (event: ExtendableEvent) {
   // console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
-    caches.open("static").then(function (cache: Cache) {
+    caches.open(CACHE_STATIC_NAME).then(function (cache: Cache) {
       // console.log("cache:", cache);
       console.log("[Service Worker] Precaching App Shell");
       // cache.add("/src/js/app.js");
@@ -24,9 +27,6 @@
   );
 });
 
-const CACHE_STATIC_NAME = "static-v4";
-const CACHE_DYNAMIC_NAME = "dynamic-v2";
-
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("activate", function (event: ExtendableEvent) {
   console.log("[Service Worker] Activating Service Worker ....", event);
   event.waitUntil(
@@ -41,7 +41,7 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
       );
     })
   );
-  return self.clients.claim();
+  return (self as unknown as ServiceWorkerGlobalScope).clients.claim();
 });
 
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
@@ -55,7 +55,7 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
           return response;
         } else {
           return fetch(event.request).then(function (res: Response) {
-            return caches.open("dynamic").then(function (cache: Cache) {
+            return caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
               cache.put(event.request.url, res.clone());
               return res as any;
             });
