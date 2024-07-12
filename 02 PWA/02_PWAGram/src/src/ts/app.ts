@@ -142,7 +142,7 @@ if ("serviceWorker" in navigator) {
 //     }, 1000);
 //   })
 //     .then(function (url) {
-//       console.log({ url });
+//       // console.log({ url });
 //       return fetch(url as string, {
 //         method: "GET",
 //         headers: {
