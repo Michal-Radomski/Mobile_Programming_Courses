@@ -1,0 +1,30 @@
+Service workers are a powerful web technology that provide several key capabilities for web applications:
+
+1. Offline functionality: Service workers can cache resources and handle network requests, allowing web apps to work offline or with poor network connectivity[2][3].
+
+2. Performance improvements: By intercepting network requests, service workers can serve cached content quickly, improving load times and overall performance[2][4].
+
+3. Background processing: Service workers can run in the background, separate from web pages, enabling features like background sync and push notifications[3][5].
+
+4. Network proxy: They act as a programmable network proxy between web applications, the browser, and the network, allowing fine-grained control over network requests[2].
+
+5. Resource caching: Service workers can implement sophisticated caching strategies, including precaching critical assets and runtime caching of dynamic content[4].
+
+6. Progressive enhancement: They provide app-like capabilities to websites without breaking functionality for users on unsupported browsers[4].
+
+7. Push notifications: Service workers enable web apps to receive push notifications, even when the app is not actively running[3][5].
+
+8. Update management: They have a lifecycle that includes installation, activation, and updating, allowing for smooth updates to web applications[3][4].
+
+9. Thread isolation: Service workers run on their own thread, separate from the main JavaScript thread, which helps improve performance and responsiveness[4].
+
+10. Custom offline experiences: Developers can create tailored offline experiences, serving custom offline pages or cached content when there's no network connection[2].
+
+Service workers are particularly useful for creating Progressive Web Apps (PWAs) that offer native app-like experiences within web browsers[3]. They enhance reliability, speed, and user engagement by providing these advanced capabilities to web applications.
+
+Citations:
+[1] https://en.wikipedia.org/wiki/Service_worker
+[2] https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+[3] https://web.dev/learn/pwa/service-workers
+[4] https://developer.chrome.com/docs/workbox/service-worker-overview
+[5] https://chromium.googlesource.com/chromium/src/%2B/refs/heads/main/content/browser/service_worker/README.md

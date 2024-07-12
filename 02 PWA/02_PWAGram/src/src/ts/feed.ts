@@ -31,8 +31,7 @@ closeCreatePostModalButton.addEventListener("click", closeCreatePostModal);
 
 function createCard(): void {
   const { componentHandler, sharedMomentsArea } = window;
-
-  console.log(componentHandler, sharedMomentsArea);
+  // console.log(componentHandler, sharedMomentsArea);
 
   const cardWrapper = document.createElement("div");
   cardWrapper.className = "shared-moment-card mdl-card mdl-shadow--2dp";
@@ -60,5 +59,6 @@ fetch("https://httpbin.org/get")
     return res.json();
   })
   .then(function (data) {
+    console.log("data:", data);
     createCard();
   });
