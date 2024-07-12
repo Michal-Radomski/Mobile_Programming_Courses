@@ -134,3 +134,30 @@ if ("serviceWorker" in navigator) {
 //     console.error("(error as Error).message:", (error as Error).message);
 //   }
 // })();
+
+// (function getData(): void {
+//   new Promise(function (resolve, _reject) {
+//     setTimeout(function () {
+//       resolve("https://httpbin.org/get");
+//     }, 1000);
+//   })
+//     .then(function (url) {
+//       console.log({ url });
+//       return fetch(url as string, {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "application/json",
+//         },
+//       });
+//     })
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       console.log("data.origin:", data.origin);
+//     })
+//     .catch(function (err) {
+//       console.log(err);
+//     });
+// })();
