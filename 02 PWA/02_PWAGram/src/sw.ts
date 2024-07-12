@@ -24,8 +24,23 @@
   );
 });
 
-(self as unknown as ServiceWorkerGlobalScope).addEventListener("activate", function (_event: ExtendableEvent) {
-  // console.log("[Service Worker] Activating Service Worker ...", _event);
+const CACHE_STATIC_NAME = "static-v4";
+const CACHE_DYNAMIC_NAME = "dynamic-v2";
+
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("activate", function (event: ExtendableEvent) {
+  console.log("[Service Worker] Activating Service Worker ....", event);
+  event.waitUntil(
+    caches.keys().then(function (keyList) {
+      return Promise.all(
+        keyList.map(function (key) {
+          if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME) {
+            console.log("[Service Worker] Removing old cache.", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
   return self.clients.claim();
 });
 
@@ -33,17 +48,20 @@
   // console.log("[Service Worker] Fetching something ....", event);
   // console.log("event.request:", event.request);
   event.respondWith(
-    caches.match(event.request).then(function (response) {
-      if (response) {
-        return response;
-      } else {
-        return fetch(event.request).then(function (res) {
-          return caches.open("dynamic").then(function (cache) {
-            cache.put(event.request.url, res.clone());
-            return res;
+    caches
+      .match(event.request)
+      .then(function (response: Response | undefined) {
+        if (response) {
+          return response;
+        } else {
+          return fetch(event.request).then(function (res: Response) {
+            return caches.open("dynamic").then(function (cache: Cache) {
+              cache.put(event.request.url, res.clone());
+              return res as any;
+            });
           });
-        });
-      }
-    })
+        }
+      })
+      .catch((error: Error) => console.log(error))
   );
 });
