@@ -45,6 +45,45 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
   return (self as unknown as ServiceWorkerGlobalScope).clients.claim();
 });
 
+//* Cache then Network & Dynamic Caching / Cache then Network with Offline Support for one url -> very useful!!!
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
+  const url = "https://httpbin.org/get";
+
+  if (event.request.url.indexOf(url) > -1) {
+    event.respondWith(
+      caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
+        return fetch(event.request).then(function (res: Response) {
+          cache.put(event.request, res.clone());
+          return res;
+        });
+      })
+    );
+  } else {
+    event.respondWith(
+      caches.match(event.request).then(function (response) {
+        if (response) {
+          return response;
+        } else {
+          return fetch(event.request)
+            .then(function (res) {
+              return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
+                cache.put(event.request.url, res.clone());
+                return res as any;
+              });
+            })
+            .catch(function (err) {
+              console.log("err:", err);
+              return caches.open(CACHE_STATIC_NAME).then(function (cache) {
+                return cache.match("/offline.html");
+              });
+            });
+        }
+      })
+    );
+  }
+});
+
+//* Cache then Network Strategy!
 // (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
 //   event.respondWith(
 //     caches.match(event.request).then(function (response: Response | undefined) {
@@ -80,18 +119,18 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
 // });
 
 //* Network with Cache Fallback Strategy
-(self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
-  event.respondWith(
-    fetch(event.request)
-      .then(function (res: Response) {
-        return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
-          cache.put(event.request.url, res.clone());
-          return res as any;
-        });
-      })
-      .catch(function (err) {
-        console.log("err:", err);
-        return caches.match(event.request);
-      })
-  );
-});
+// (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
+//   event.respondWith(
+//     fetch(event.request)
+//       .then(function (res: Response) {
+//         return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
+//           cache.put(event.request.url, res.clone());
+//           return res as any;
+//         });
+//       })
+//       .catch(function (err) {
+//         console.log("err:", err);
+//         return caches.match(event.request);
+//       })
+//   );
+// });
