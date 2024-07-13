@@ -69,7 +69,8 @@ function isInArray(string: string, array: string[]): boolean {
 }
 
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
-  const url = "https://httpbin.org/get";
+  // const url = "https://httpbin.org/get";
+  const url = "https://pwagram-cf0e1-default-rtdb.europe-west1.firebasedatabase.app/posts.json"; // Temp
 
   if (event.request.url.indexOf(url) > -1) {
     event.respondWith(
