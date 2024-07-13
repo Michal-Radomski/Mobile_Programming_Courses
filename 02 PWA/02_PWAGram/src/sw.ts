@@ -45,26 +45,53 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
   return (self as unknown as ServiceWorkerGlobalScope).clients.claim();
 });
 
+// (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
+//   event.respondWith(
+//     caches.match(event.request).then(function (response: Response | undefined) {
+//       if (response) {
+//         return response;
+//       } else {
+//         return fetch(event.request)
+//           .then(function (res: Response) {
+//             return caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
+//               cache.put(event.request.url, res.clone());
+//               return res as any;
+//             });
+//           })
+//           .catch(function (err: Error) {
+//             console.log("err:", err);
+//             return caches.open(CACHE_STATIC_NAME).then(function (cache: Cache) {
+//               return cache.match("/offline.html");
+//             });
+//           });
+//       }
+//     })
+//   );
+// });
+
+//* Cache-only strategy: not good!
+// (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
+//   (event as any).respondWith(caches.match(event.request));
+// });
+
+//* Network-only strategy: not good!
+// (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
+//   event.respondWith(fetch(event.request));
+// });
+
+//* Network with Cache Fallback Strategy
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
   event.respondWith(
-    caches.match(event.request).then(function (response: Response | undefined) {
-      if (response) {
-        return response;
-      } else {
-        return fetch(event.request)
-          .then(function (res: Response) {
-            return caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
-              cache.put(event.request.url, res.clone());
-              return res as any;
-            });
-          })
-          .catch(function (err: Error) {
-            console.log("err:", err);
-            return caches.open(CACHE_STATIC_NAME).then(function (cache: Cache) {
-              return cache.match("/offline.html");
-            });
-          });
-      }
-    })
+    fetch(event.request)
+      .then(function (res) {
+        return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
+          cache.put(event.request.url, res.clone());
+          return res as any;
+        });
+      })
+      .catch(function (err) {
+        console.log("err:", err);
+        return caches.match(event.request);
+      })
   );
 });
