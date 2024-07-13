@@ -161,3 +161,24 @@ if ("serviceWorker" in navigator) {
 //       console.log(err);
 //     });
 // })();
+
+//* Function to check if an element has child nodes
+// function checkForChildNodes(elementId: string): void {
+//   // Get the element by its ID
+//   const element = document.getElementById(elementId);
+
+//   if (element) {
+//     // Check if the element has child nodes
+//     if (element.hasChildNodes()) {
+//       console.log(`The element with ID "${elementId}" has child nodes.`);
+//       console.log(`Number of child nodes: ${element.childNodes.length}`);
+//     } else {
+//       console.log(`The element with ID "${elementId}" has no child nodes.`);
+//     }
+//   } else {
+//     console.log(`No element found with ID "${elementId}".`);
+//   }
+// }
+
+// // Usage example
+// console.log("checkForChildNodes('app')", checkForChildNodes("app"));

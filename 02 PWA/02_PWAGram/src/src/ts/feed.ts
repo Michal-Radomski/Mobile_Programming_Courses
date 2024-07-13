@@ -43,7 +43,7 @@ closeCreatePostModalButton.addEventListener("click", closeCreatePostModal);
 // }
 
 function createCard(): void {
-  const { componentHandler } = window;
+  const { componentHandler } = window as any;
   // console.log(componentHandler);
 
   const cardWrapper = document.createElement("div");
@@ -68,15 +68,46 @@ function createCard(): void {
   // cardSaveButton.addEventListener("click", onSaveButtonClicked);
   // cardSupportingText.appendChild(cardSaveButton);
   cardWrapper.appendChild(cardSupportingText);
+
   componentHandler.upgradeElement(cardWrapper);
   sharedMomentsArea?.appendChild(cardWrapper);
 }
 
-fetch("https://httpbin.org/get")
+function clearCards(): void {
+  while (sharedMomentsArea.hasChildNodes()) {
+    sharedMomentsArea.removeChild(sharedMomentsArea.lastChild!);
+  }
+}
+
+const url: string = "https://httpbin.org/get";
+let networkDataReceived: boolean = false;
+
+fetch(url)
   .then(function (res) {
     return res.json();
   })
   .then(function (data) {
-    console.log("data:", data);
+    //     console.log("data:", data);
+    networkDataReceived = true;
+    console.log("From web", data);
+    clearCards();
     createCard();
   });
+
+if ("caches" in window) {
+  // console.log("caches:", caches);
+  caches
+    .match(url)
+    .then(function (response) {
+      if (response) {
+        return response.json();
+      }
+    })
+    .then(function (data) {
+      console.log("From cache", data);
+      if (!networkDataReceived) {
+        clearCards();
+        createCard();
+      }
+    });
+}

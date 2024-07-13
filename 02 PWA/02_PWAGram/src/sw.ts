@@ -83,7 +83,7 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
   event.respondWith(
     fetch(event.request)
-      .then(function (res) {
+      .then(function (res: Response) {
         return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
           cache.put(event.request.url, res.clone());
           return res as any;
