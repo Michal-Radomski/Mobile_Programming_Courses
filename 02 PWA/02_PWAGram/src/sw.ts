@@ -1,5 +1,21 @@
 const CACHE_STATIC_NAME = "static-v2";
 const CACHE_DYNAMIC_NAME = "dynamic-v2";
+const STATIC_FILES = [
+  "/",
+  "/index.html",
+  "/offline.html",
+  "/src/js/app.js",
+  "/src/js/feed.js",
+  // "/src/js/promise.js",
+  // "/src/js/fetch.js",
+  "/src/css/app.css",
+  "/src/css/feed.css",
+  "/src/images/main-image.jpg",
+  "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js",
+  "https://fonts.googleapis.com/css?family=Roboto:400,700",
+  "https://fonts.googleapis.com/icon?family=Material+Icons",
+  "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css",
+];
 
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("install", function (event: ExtendableEvent) {
   // console.log("[Service Worker] Installing Service Worker ...", event);
@@ -8,22 +24,7 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
       // console.log("cache:", cache);
       console.log("[Service Worker] Precaching App Shell");
       // cache.add("/src/js/app.js");
-      cache.addAll([
-        "/",
-        "/index.html",
-        "/offline.html",
-        "/src/js/app.js",
-        "/src/js/feed.js",
-        // "/src/js/promise.js",
-        // "/src/js/fetch.js",
-        "/src/css/app.css",
-        "/src/css/feed.css",
-        "/src/images/main-image.jpg",
-        "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js",
-        "https://fonts.googleapis.com/css?family=Roboto:400,700",
-        "https://fonts.googleapis.com/icon?family=Material+Icons",
-        "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css",
-      ]);
+      cache.addAll(STATIC_FILES);
     })
   );
 });
@@ -45,7 +46,6 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
   return (self as unknown as ServiceWorkerGlobalScope).clients.claim();
 });
 
-//* Cache then Network & Dynamic Caching / Cache then Network with Offline Support for one url -> very useful!!!
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
   const url = "https://httpbin.org/get";
 
@@ -58,6 +58,8 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
         });
       })
     );
+  } else if (new RegExp("\\b" + STATIC_FILES.join("\\b|\\b") + "\\b").test(event.request.url)) {
+    (event as any).respondWith(caches.match(event.request));
   } else {
     event.respondWith(
       caches.match(event.request).then(function (response) {
@@ -74,7 +76,9 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
             .catch(function (err) {
               console.log("err:", err);
               return caches.open(CACHE_STATIC_NAME).then(function (cache) {
-                return cache.match("/offline.html");
+                if (event.request.url.indexOf("/help")) {
+                  return cache.match("/offline.html");
+                }
               });
             });
         }
@@ -82,6 +86,44 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
     );
   }
 });
+
+//* Cache then Network & Dynamic Caching / Cache then Network with Offline Support for one url -> very useful!!!
+// (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
+//   const url = "https://httpbin.org/get";
+
+//   if (event.request.url.indexOf(url) > -1) {
+//     event.respondWith(
+//       caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
+//         return fetch(event.request).then(function (res: Response) {
+//           cache.put(event.request, res.clone());
+//           return res;
+//         });
+//       })
+//     );
+//   } else {
+//     event.respondWith(
+//       caches.match(event.request).then(function (response) {
+//         if (response) {
+//           return response;
+//         } else {
+//           return fetch(event.request)
+//             .then(function (res) {
+//               return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
+//                 cache.put(event.request.url, res.clone());
+//                 return res as any;
+//               });
+//             })
+//             .catch(function (err) {
+//               console.log("err:", err);
+//               return caches.open(CACHE_STATIC_NAME).then(function (cache) {
+//                 return cache.match("/offline.html");
+//               });
+//             });
+//         }
+//       })
+//     );
+//   }
+// });
 
 //* Cache then Network Strategy!
 // (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
