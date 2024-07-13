@@ -13,6 +13,7 @@ const files = {
   sassPath: "src/src/scss/**/*.scss",
   tsPath: "src/src/ts/*.ts",
   htmlPath: "src/index.html",
+  offlinePath: "src/offline.html",
   favIcon: "src/favicon.ico",
   manifestFile: "src/manifest.json",
   helpPath: "src/help/index.html",
@@ -21,7 +22,7 @@ const files = {
 
 //* HTML
 function htmlTask() {
-  return src([files.htmlPath, files.favIcon, files.manifestFile])
+  return src([files.htmlPath, files.favIcon, files.manifestFile, files.offlinePath])
     .pipe(gulpCopy("public", { prefix: 1 }))
     .pipe(dest("public"));
 }
@@ -57,6 +58,7 @@ function watchFiles() {
   watch(files.htmlPath, htmlTask);
   watch(files.swPath, swTask);
   watch(files.manifestFile, htmlTask);
+  watch(files.offlinePath, htmlTask);
   watch(files.helpPath, helpTask);
   watch(files.images, imgTask);
   watch(files.sassPath, sassTask);

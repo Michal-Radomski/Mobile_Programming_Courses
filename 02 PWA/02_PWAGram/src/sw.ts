@@ -11,6 +11,7 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
       cache.addAll([
         "/",
         "/index.html",
+        "/offline.html",
         "/src/js/app.js",
         "/src/js/feed.js",
         // "/src/js/promise.js",
@@ -45,23 +46,25 @@ const CACHE_DYNAMIC_NAME = "dynamic-v2";
 });
 
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
-  // console.log("[Service Worker] Fetching something ....", event);
-  // console.log("event.request:", event.request);
   event.respondWith(
-    caches
-      .match(event.request)
-      .then(function (response: Response | undefined) {
-        if (response) {
-          return response;
-        } else {
-          return fetch(event.request).then(function (res: Response) {
+    caches.match(event.request).then(function (response: Response | undefined) {
+      if (response) {
+        return response;
+      } else {
+        return fetch(event.request)
+          .then(function (res: Response) {
             return caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
               cache.put(event.request.url, res.clone());
               return res as any;
             });
+          })
+          .catch(function (err: Error) {
+            console.log("err:", err);
+            return caches.open(CACHE_STATIC_NAME).then(function (cache: Cache) {
+              return cache.match("/offline.html");
+            });
           });
-        }
-      })
-      .catch((error: Error) => console.log(error))
+      }
+    })
   );
 });
