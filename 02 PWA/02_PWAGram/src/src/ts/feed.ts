@@ -20,6 +20,15 @@ function openCreatePostModal(): void {
 
     deferredPrompt = null;
   }
+
+  //* Unregister serviceWorker
+  // if ("serviceWorker" in navigator) {
+  //   navigator.serviceWorker.getRegistrations().then(function (registrations) {
+  //     for (var i = 0; i < registrations.length; i++) {
+  //       registrations[i].unregister();
+  //     }
+  //   });
+  // }
 }
 
 function closeCreatePostModal(): void {
@@ -43,6 +52,7 @@ closeCreatePostModalButton.addEventListener("click", closeCreatePostModal);
 // }
 
 function createCard(): void {
+  // @ ts-ignore -> for gulp-TS only
   const { componentHandler } = window as any;
   // console.log(componentHandler);
 
