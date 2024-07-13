@@ -17,6 +17,16 @@ const STATIC_FILES = [
   "https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css",
 ];
 
+// function trimCache(cacheName: string, maxItems: number) {
+//   caches.open(cacheName).then(function (cache) {
+//     return cache.keys().then(function (keys) {
+//       if (keys.length > maxItems) {
+//         cache.delete(keys[0]).then(trimCache(cacheName, maxItems) as any);
+//       }
+//     });
+//   });
+// }
+
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("install", function (event: ExtendableEvent) {
   // console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
@@ -65,6 +75,7 @@ function isInArray(string: string, array: string[]): boolean {
     event.respondWith(
       caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
         return fetch(event.request).then(function (res: Response) {
+          //  trimCache(CACHE_DYNAMIC_NAME, 3);
           cache.put(event.request, res.clone());
           return res;
         });
@@ -84,6 +95,7 @@ function isInArray(string: string, array: string[]): boolean {
           return fetch(event.request)
             .then(function (res) {
               return caches.open(CACHE_DYNAMIC_NAME).then(function (cache) {
+                // trimCache(CACHE_DYNAMIC_NAME, 3);
                 cache.put(event.request.url, res.clone());
                 return res as any;
               });
