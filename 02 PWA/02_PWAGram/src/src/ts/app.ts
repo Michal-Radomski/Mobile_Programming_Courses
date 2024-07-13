@@ -182,3 +182,5 @@ if ("serviceWorker" in navigator) {
 
 // // Usage example
 // console.log("checkForChildNodes('app')", checkForChildNodes("app"));
+
+// console.log("window.origin:", window.origin);

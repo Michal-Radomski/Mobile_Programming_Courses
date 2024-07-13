@@ -46,6 +46,18 @@ const STATIC_FILES = [
   return (self as unknown as ServiceWorkerGlobalScope).clients.claim();
 });
 
+function isInArray(string: string, array: string[]): boolean {
+  let cachePath;
+  if (string.indexOf(self.origin) === 0) {
+    // request targets domain where we serve the page from (i.e. NOT a CDN)
+    console.log("matched ", string);
+    cachePath = string.substring(self.origin.length); // take the part of the URL AFTER the domain (e.g. after localhost:8080)
+  } else {
+    cachePath = string; // store the full request (for CDNs)
+  }
+  return array.indexOf(cachePath) > -1;
+}
+
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
   const url = "https://httpbin.org/get";
 
@@ -58,7 +70,10 @@ const STATIC_FILES = [
         });
       })
     );
-  } else if (new RegExp("\\b" + STATIC_FILES.join("\\b|\\b") + "\\b").test(event.request.url)) {
+  } else if (
+    // (new RegExp("\\b" + STATIC_FILES.join("\\b|\\b") + "\\b").test(event.request.url))
+    isInArray(event.request.url, STATIC_FILES)
+  ) {
     (event as any).respondWith(caches.match(event.request));
   } else {
     event.respondWith(
@@ -76,7 +91,10 @@ const STATIC_FILES = [
             .catch(function (err) {
               console.log("err:", err);
               return caches.open(CACHE_STATIC_NAME).then(function (cache) {
-                if (event.request.url.indexOf("/help")) {
+                // if (event.request.url.indexOf("/help")) {
+                //   return cache.match("/offline.html");
+                // }
+                if (event.request.headers.get("accept")?.includes("text/html")) {
                   return cache.match("/offline.html");
                 }
               });
