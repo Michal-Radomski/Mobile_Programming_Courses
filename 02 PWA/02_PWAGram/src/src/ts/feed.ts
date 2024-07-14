@@ -67,7 +67,7 @@ function createCard(data: ObjectI): void {
   // cardTitle.style.backgroundImage = 'url("/src/images/sf-boat.jpg")';
   cardTitle.style.backgroundImage = `url(${data.image})`;
   cardTitle.style.backgroundSize = "cover";
-  cardTitle.style.height = "180px";
+  // cardTitle.style.height = "180px";
   cardWrapper.appendChild(cardTitle);
   const cardTitleTextElement = document.createElement("h2");
   cardTitleTextElement.style.color = "black";
