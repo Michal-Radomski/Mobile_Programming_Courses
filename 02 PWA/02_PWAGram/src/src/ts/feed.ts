@@ -67,6 +67,7 @@ function createCard(data: ObjectI): void {
   // cardTitle.style.backgroundImage = 'url("/src/images/sf-boat.jpg")';
   cardTitle.style.backgroundImage = `url(${data.image})`;
   cardTitle.style.backgroundSize = "cover";
+  cardTitle.style.backgroundPosition = "center"; // Or try 'center'
   // cardTitle.style.height = "180px";
   cardWrapper.appendChild(cardTitle);
   const cardTitleTextElement = document.createElement("h2");
