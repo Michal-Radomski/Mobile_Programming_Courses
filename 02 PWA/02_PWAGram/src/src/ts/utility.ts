@@ -23,3 +23,25 @@ function readAllData(st: string) {
     return store.getAll();
   });
 }
+
+function clearAllData(st: string) {
+  return dbPromise.then(function (db: IDBDatabase) {
+    var tx = db.transaction(st, "readwrite");
+    var store = tx.objectStore(st);
+    store.clear();
+    // return tx.complete;
+  });
+}
+
+function deleteItemFromData(st: string, id: string) {
+  dbPromise
+    .then(function (db: IDBDatabase) {
+      var tx = db.transaction(st, "readwrite");
+      var store = tx.objectStore(st);
+      store.delete(id);
+      // return tx.complete;
+    })
+    .then(function () {
+      console.log("Item deleted!");
+    });
+}

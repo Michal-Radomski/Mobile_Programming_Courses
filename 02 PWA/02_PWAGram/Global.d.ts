@@ -6,6 +6,7 @@ declare global {
     componentHandler: { upgradeElement: Function };
     idb: IDBFactory | any;
     writeData: Function;
+    clearAllData: Function;
   }
 }
 

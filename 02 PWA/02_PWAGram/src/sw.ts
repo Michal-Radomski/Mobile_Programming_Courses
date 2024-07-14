@@ -77,8 +77,8 @@ function isInArray(string: string, array: string[]): boolean {
   const url = "https://pwagram-cf0e1-default-rtdb.europe-west1.firebasedatabase.app/posts.json"; // Temp
 
   if (event.request.url.indexOf(url) > -1) {
-    const { idb, writeData } = typeof window !== "undefined" && (window as any);
-    // console.log({ idb });
+    const { idb, writeData, clearAllData } = typeof window !== "undefined" && (window as any);
+    // console.log({ idb }); //* idb undefined
 
     // event.respondWith(
     //   caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
@@ -91,13 +91,30 @@ function isInArray(string: string, array: string[]): boolean {
     // );
     event.respondWith(
       fetch(event.request).then(function (res) {
+        // console.log("res:", res);
         const clonedRes = res.clone();
+        // console.log("clonedRes:", clonedRes);
+        // console.log({ idb });
+
+        // idb &&
+        //   clonedRes.json().then(function (data) {
+        //     // console.log("data:", data);
+        //     for (let key in data) {
+        //       writeData("posts", data[key]); //* Doesn't work
+        //     }
+        //   });
+
         idb &&
-          clonedRes.json().then(function (data) {
-            for (let key in data) {
-              writeData("posts", data[key]);
-            }
-          });
+          clearAllData("posts")
+            .then(function () {
+              return clonedRes.json();
+            })
+            .then(function (data: { [x: string]: any }) {
+              for (let key in data) {
+                writeData("posts", data[key]);
+              }
+            });
+
         return res;
       })
     );
