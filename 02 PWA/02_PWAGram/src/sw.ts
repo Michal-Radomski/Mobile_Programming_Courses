@@ -8,6 +8,7 @@ const STATIC_FILES = [
   "/src/js/feed.js",
   // "/src/js/promise.js",
   // "/src/js/fetch.js",
+  // "/src/js/idb.js",
   "/src/css/app.css",
   "/src/css/feed.css",
   "/src/images/main-image.jpg",
