@@ -248,9 +248,7 @@ function isInArray(string: string, array: string[]): boolean {
 
 // @ts-ignore
 (self as any).addEventListener("sync", function (event: SyncEvent) {
-  const { FB_URL, readAllData, deleteItemFromData } = typeof window !== "undefined" && (window as any); //* Doesn't work!
-  // console.log({ FB_URL });
-  const url = FB_URL || "";
+  const { readAllData, deleteItemFromData } = typeof window !== "undefined" && (window as any); //* Doesn't work!
 
   console.log("[Service Worker] Background syncing", event);
   if (event.tag === "sync-new-posts") {
@@ -258,7 +256,8 @@ function isInArray(string: string, array: string[]): boolean {
     event.waitUntil(
       readAllData("sync-posts").then(function (data: any) {
         for (let dt of data) {
-          fetch(url, {
+          // Temp
+          fetch("Temp Url", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -274,7 +273,11 @@ function isInArray(string: string, array: string[]): boolean {
             .then(function (res) {
               console.log("Sent data", res);
               if (res.ok) {
-                deleteItemFromData("sync-posts", dt.id); // Isn't working correctly!
+                if (res.ok) {
+                  res.json().then(function (resData) {
+                    deleteItemFromData("sync-posts", resData.id);
+                  });
+                }
               }
             })
             .catch(function (err) {
