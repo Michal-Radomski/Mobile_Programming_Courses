@@ -16,6 +16,7 @@
     "@types/gulp-copy": "^0.0.7",
     "@types/gulp-sass": "^5.0.4",
     "@types/gulp-uglify": "^3.0.11",
+    "@types/material-design-lite": "^1.1.22",
     "@types/node": "^20.11.3",
     "concurrently": "^8.2.2",
     "gulp": "^4.0.2",

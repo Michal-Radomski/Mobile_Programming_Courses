@@ -162,6 +162,25 @@ if ("indexedDB" in window) {
   });
 }
 
+function sendData(): void {
+  fetch(FB_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      id: new Date().toISOString(),
+      title: titleInput.value,
+      location: locationInput.value,
+      image: "image URL", // Temp url
+    }),
+  }).then(function (res) {
+    console.log("Sent data", res);
+    // updateUI(res); // Temp ???
+  });
+}
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -186,14 +205,14 @@ form.addEventListener("submit", function (event) {
         .then(function () {
           const snackbackContainer = document.querySelector("#confirmation-toast") as HTMLDivElement;
           const data = { message: "Your Post was saved for syncing!" };
-          // @ts-ignore
+          // @ts-ignore (material-design-lite)
           snackbackContainer?.MaterialSnackback?.showSnackbar(data);
         })
         .catch(function (err: Error) {
-          console.log(err);
+          console.log({ err });
         });
     });
   } else {
-    // sendData();
+    sendData();
   }
 });
