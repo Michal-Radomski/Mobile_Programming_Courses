@@ -6,6 +6,9 @@ const shareImageButton = document.querySelector("#share-image-button") as HTMLBu
 const createPostArea = document.querySelector("#create-post") as HTMLTextAreaElement;
 const closeCreatePostModalButton = document.querySelector("#close-create-post-modal-btn") as HTMLButtonElement;
 const sharedMomentsArea = document.querySelector("#shared-moments") as HTMLDivElement;
+const form = document.querySelector("form") as HTMLFormElement;
+const titleInput = document.querySelector("#title") as HTMLInputElement;
+const locationInput = document.querySelector("#location") as HTMLInputElement;
 
 function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
@@ -158,3 +161,39 @@ if ("indexedDB" in window) {
     }
   });
 }
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  if (titleInput.value.trim() === "" || locationInput.value.trim() === "") {
+    alert("Please enter valid data!");
+    return;
+  }
+
+  closeCreatePostModal();
+
+  if ("serviceWorker" in navigator && "SyncManager" in window) {
+    navigator.serviceWorker.ready.then(function (sw: ServiceWorkerRegistration) {
+      const post = {
+        id: new Date().toISOString(),
+        title: titleInput.value,
+        location: locationInput.value,
+      };
+      writeData("sync-posts", post)
+        .then(function () {
+          return sw.sync.register("sync-new-post");
+        })
+        .then(function () {
+          const snackbackContainer = document.querySelector("#confirmation-toast") as HTMLDivElement;
+          const data = { message: "Your Post was saved for syncing!" };
+          // @ts-ignore
+          snackbackContainer?.MaterialSnackback?.showSnackbar(data);
+        })
+        .catch(function (err: Error) {
+          console.log(err);
+        });
+    });
+  } else {
+    // sendData();
+  }
+});
