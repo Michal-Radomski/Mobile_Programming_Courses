@@ -23,11 +23,6 @@ declare global {
   }
 }
 
-interface SyncManager {
-  getTags(): Promise<string[]>;
-  register(tag: string): Promise<void>;
-}
-
 declare const self: ServiceWorkerGlobalScope;
 
 export {};

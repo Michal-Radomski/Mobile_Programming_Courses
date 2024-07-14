@@ -245,3 +245,43 @@ function isInArray(string: string, array: string[]): boolean {
 //       })
 //   );
 // });
+
+// @ts-ignore
+(self as any).addEventListener("sync", function (event: SyncEvent) {
+  const { FB_URL, readAllData, deleteItemFromData } = typeof window !== "undefined" && (window as any); //* Doesn't work!
+  // console.log({ FB_URL });
+  const url = FB_URL || "";
+
+  console.log("[Service Worker] Background syncing", event);
+  if (event.tag === "sync-new-posts") {
+    console.log("[Service Worker] Syncing new Posts");
+    event.waitUntil(
+      readAllData("sync-posts").then(function (data: any) {
+        for (let dt of data) {
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              id: dt.id,
+              title: dt.title,
+              location: dt.location,
+              image: "Image URL", // Temp
+            }),
+          })
+            .then(function (res) {
+              console.log("Sent data", res);
+              if (res.ok) {
+                deleteItemFromData("sync-posts", dt.id); // Isn't working correctly!
+              }
+            })
+            .catch(function (err) {
+              console.log("Error while sending data", err);
+            });
+        }
+      })
+    );
+  }
+});
