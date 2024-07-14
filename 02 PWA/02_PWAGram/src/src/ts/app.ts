@@ -31,9 +31,11 @@ if (!window.Promise) {
 let deferredPrompt: BeforeInstallPromptEvent | null;
 
 if ("serviceWorker" in navigator) {
-  (navigator as Navigator).serviceWorker.register("/sw.js", { scope: "." }).then(function (): void {
-    console.log("Service worker registered!");
-  });
+  setTimeout(() => {
+    (navigator as Navigator).serviceWorker.register("/sw.js", { scope: "." }).then(function (): void {
+      console.log("Service worker registered!");
+    });
+  }, 500);
 }
 
 (window as any).addEventListener("beforeinstallprompt", function (event: BeforeInstallPromptEvent) {

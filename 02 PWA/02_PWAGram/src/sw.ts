@@ -74,7 +74,9 @@ function isInArray(string: string, array: string[]): boolean {
 
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("fetch", function (event: FetchEvent) {
   // const url = "https://httpbin.org/get";
-  const url = "https://pwagram-cf0e1-default-rtdb.europe-west1.firebasedatabase.app/posts.json"; // Temp
+  const { FB_URL } = typeof window !== "undefined" && (window as any); //* Doesn't work!
+  // console.log({ FB_URL });
+  const url = FB_URL || "";
 
   if (event.request.url.indexOf(url) > -1) {
     const { idb, writeData, clearAllData } = typeof window !== "undefined" && (window as any);

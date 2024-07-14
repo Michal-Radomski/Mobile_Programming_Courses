@@ -104,7 +104,9 @@ function updateUI(data: any[]) {
 }
 
 // const url: string = "https://httpbin.org/get";
-const url = "https://pwagram-cf0e1-default-rtdb.europe-west1.firebasedatabase.app/posts.json"; // Temp
+const url = FB_URL;
+// console.log({ FB_URL });
+
 let networkDataReceived: boolean = false;
 
 fetch(url)

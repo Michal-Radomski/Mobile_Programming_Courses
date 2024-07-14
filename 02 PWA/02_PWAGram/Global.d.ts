@@ -7,6 +7,7 @@ declare global {
     idb: IDBFactory | any;
     writeData: Function;
     clearAllData: Function;
+    FB_URL: string;
   }
 }
 
