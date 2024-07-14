@@ -1,3 +1,6 @@
+importScripts("/src/js/idb.js");
+importScripts("/src/js/utility.js");
+
 const CACHE_STATIC_NAME = "static-v2";
 const CACHE_DYNAMIC_NAME = "dynamic-v2";
 const STATIC_FILES = [
@@ -6,9 +9,9 @@ const STATIC_FILES = [
   "/offline.html",
   "/src/js/app.js",
   "/src/js/feed.js",
-  // "/src/js/promise.js",
-  // "/src/js/fetch.js",
-  // "/src/js/idb.js",
+  "/src/js/promise.js",
+  "/src/js/fetch.js",
+  "/src/js/idb.js",
   "/src/css/app.css",
   "/src/css/feed.css",
   "/src/images/main-image.jpg",
@@ -74,13 +77,28 @@ function isInArray(string: string, array: string[]): boolean {
   const url = "https://pwagram-cf0e1-default-rtdb.europe-west1.firebasedatabase.app/posts.json"; // Temp
 
   if (event.request.url.indexOf(url) > -1) {
+    const { idb, writeData } = typeof window !== "undefined" && (window as any);
+    // console.log({ idb });
+
+    // event.respondWith(
+    //   caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
+    //     return fetch(event.request).then(function (res: Response) {
+    //       //  trimCache(CACHE_DYNAMIC_NAME, 3);
+    //       cache.put(event.request, res.clone());
+    //       return res;
+    //     });
+    //   })
+    // );
     event.respondWith(
-      caches.open(CACHE_DYNAMIC_NAME).then(function (cache: Cache) {
-        return fetch(event.request).then(function (res: Response) {
-          //  trimCache(CACHE_DYNAMIC_NAME, 3);
-          cache.put(event.request, res.clone());
-          return res;
-        });
+      fetch(event.request).then(function (res) {
+        const clonedRes = res.clone();
+        idb &&
+          clonedRes.json().then(function (data) {
+            for (let key in data) {
+              writeData("posts", data[key]);
+            }
+          });
+        return res;
       })
     );
   } else if (
