@@ -64,7 +64,7 @@ function displayConfirmNotification(): void {
         { action: "confirm", title: "Okay", icon: "/src/images/icons/app-icon-96x96.png" },
         { action: "cancel", title: "Cancel", icon: "/src/images/icons/app-icon-96x96.png" },
       ],
-    };
+    } as NotificationOptions;
 
     //* V1 - JS/TS
     // const notification = new Notification("Successfully subscribed!", options);
