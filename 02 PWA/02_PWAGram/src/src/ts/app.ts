@@ -23,6 +23,8 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
+const enableNotificationsButtons = document.querySelectorAll(".enable-notifications") as NodeListOf<HTMLButtonElement>;
+
 // * Check if browser has Promise, if not use polyfills!
 if (!window.Promise) {
   window.Promise = Promise;
@@ -45,6 +47,24 @@ if ("serviceWorker" in navigator) {
   // console.log("deferredPrompt:", deferredPrompt);
   return false;
 });
+
+function askForNotificationPermission(): void {
+  Notification.requestPermission(function (result) {
+    console.log("User Choice", { result });
+    if (result !== "granted") {
+      console.log("No notification permission granted!");
+    } else {
+    }
+  });
+}
+
+if ("Notification" in window) {
+  // console.log("Notification:", Notification);
+  for (let i = 0; i < enableNotificationsButtons.length; i++) {
+    enableNotificationsButtons[i].style.display = "inline-block";
+    enableNotificationsButtons[i].addEventListener("click", askForNotificationPermission);
+  }
+}
 
 //* Unregister serviceWorker
 // navigator.serviceWorker.getRegistrations().then(function (registrations) {
