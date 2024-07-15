@@ -78,18 +78,69 @@ function displayConfirmNotification(): void {
   }
 }
 
+function configurePushSub(): void {
+  if (!("serviceWorker" in navigator)) {
+    return;
+  }
+
+  let reg: ServiceWorkerRegistration;
+
+  navigator.serviceWorker.ready
+    .then(function (swreg) {
+      reg = swreg;
+      return swreg.pushManager.getSubscription();
+    })
+    .then(function (sub) {
+      if (sub === null) {
+        // Create a new subscription
+
+        //^ https://blog.mozilla.org/services/2016/08/23/sending-vapid-identified-webpush-notifications-via-mozillas-push-service/
+
+        //* npx web-push generate-vapid-keys [--json]
+        const vapidPublicKey = "BD-Ecf1SoP24QN_2Vr7wBrkYdKTmw1sAxsJjWFPgyjpEiJ374GSePACIOsrH7VYAQbi1J7qoN68_lg8X2Uhj_rA";
+        const convertedVapidPublicKey = urlBase64ToUint8Array(vapidPublicKey);
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidPublicKey,
+        });
+      } else {
+        // We have a subscription
+      }
+    })
+    .then(function (newSub) {
+      return fetch("url", {
+        // Temp
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(newSub),
+      });
+    })
+    .then(function (res) {
+      if (res.ok) {
+        displayConfirmNotification();
+      }
+    })
+    .catch(function (err) {
+      console.log({ err });
+    });
+}
+
 function askForNotificationPermission(): void {
   Notification.requestPermission(function (result) {
     console.log("User Choice", { result });
     if (result !== "granted") {
       console.log("No notification permission granted!");
     } else {
-      displayConfirmNotification();
+      configurePushSub();
+      // displayConfirmNotification();
     }
   });
 }
 
-if ("Notification" in window) {
+if ("Notification" in window && "serviceWorker" in navigator) {
   // console.log("Notification:", Notification);
   for (let i = 0; i < enableNotificationsButtons.length; i++) {
     enableNotificationsButtons[i].style.display = "inline-block";
