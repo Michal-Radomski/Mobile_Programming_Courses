@@ -247,7 +247,7 @@ function isInArray(string: string, array: string[]): boolean {
 // });
 
 // @ts-ignore
-(self as any).addEventListener("sync", function (event: SyncEvent) {
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("sync", function (event: SyncEvent) {
   const { readAllData, deleteItemFromData } = typeof window !== "undefined" && (window as any); //* Doesn't work!
 
   console.log("[Service Worker] Background syncing", event);
@@ -287,4 +287,23 @@ function isInArray(string: string, array: string[]): boolean {
       })
     );
   }
+});
+
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("notificationclick", function (event: NotificationEvent) {
+  const notification = event.notification;
+  const action = event.action;
+
+  console.log({ notification });
+
+  if (action === "confirm") {
+    console.log("Confirm was chosen");
+    notification.close();
+  } else {
+    console.log(action);
+    notification.close();
+  }
+});
+
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("notificationclose", function (event: NotificationEvent) {
+  console.log("Notification was closed", event);
 });
