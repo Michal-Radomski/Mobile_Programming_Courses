@@ -48,12 +48,43 @@ if ("serviceWorker" in navigator) {
   return false;
 });
 
+function displayConfirmNotification(): void {
+  if ("serviceWorker" in navigator) {
+    const options = {
+      body: "You successfully subscribed to our Notification service!",
+      icon: "/src/images/icons/app-icon-96x96.png",
+      image: "/src/images/sf-boat.jpg",
+      dir: "ltr" as const,
+      lang: "en-US", // BCP 47,
+      vibrate: [100, 50, 200],
+      badge: "/src/images/icons/app-icon-96x96.png",
+      tag: "confirm-notification",
+      renotify: true,
+      actions: [
+        { action: "confirm", title: "Okay", icon: "/src/images/icons/app-icon-96x96.png" },
+        { action: "cancel", title: "Cancel", icon: "/src/images/icons/app-icon-96x96.png" },
+      ],
+    };
+
+    //* V1 - JS/TS
+    // const notification = new Notification("Successfully subscribed!", options);
+    // console.log({ notification });
+    // new Notification("Successfully subscribed!", options);
+
+    //* V2 - ServiceWorker
+    navigator.serviceWorker.ready.then(function (swreg: ServiceWorkerRegistration) {
+      swreg.showNotification("Successfully subscribed (from SW)!", options);
+    });
+  }
+}
+
 function askForNotificationPermission(): void {
   Notification.requestPermission(function (result) {
     console.log("User Choice", { result });
     if (result !== "granted") {
       console.log("No notification permission granted!");
     } else {
+      displayConfirmNotification();
     }
   });
 }

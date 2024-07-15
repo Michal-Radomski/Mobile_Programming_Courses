@@ -200,6 +200,7 @@ form.addEventListener("submit", function (event) {
       };
       writeData("sync-posts", post)
         .then(function () {
+          // @ts-ignore
           return sw.sync.register("sync-new-post");
         })
         .then(function () {
