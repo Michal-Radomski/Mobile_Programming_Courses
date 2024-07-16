@@ -33,7 +33,36 @@ function initializeMedia(): void {
       });
     };
   }
+
+  navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then(function (stream: MediaStream) {
+      videoPlayer.srcObject = stream;
+      videoPlayer.style.display = "block";
+    })
+    .catch(function (error) {
+      console.log("error:", error);
+      imagePickerArea.style.display = "block";
+    });
 }
+
+captureButton.addEventListener("click", function (_event) {
+  // console.log("_event:", _event);
+  canvasElement.style.display = "block";
+  videoPlayer.style.display = "none";
+  captureButton.style.display = "none";
+  const context = canvasElement.getContext("2d");
+  context?.drawImage(
+    videoPlayer,
+    0,
+    0,
+    canvasElement.width,
+    videoPlayer.videoHeight / (videoPlayer.videoWidth / canvasElement.width)
+  );
+  // videoPlayer?.srcObject?.getVideoTracks().forEach(function (track: Track) {
+  //   track.stop();
+  // });
+});
 
 function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
