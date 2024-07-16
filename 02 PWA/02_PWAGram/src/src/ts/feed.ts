@@ -94,8 +94,11 @@ function openCreatePostModal(): void {
 }
 
 function closeCreatePostModal(): void {
-  // createPostArea.style.display = "none";
   createPostArea.style.transform = "translateY(100vh)";
+  imagePickerArea.style.display = "none";
+  videoPlayer.style.display = "none";
+  canvasElement.style.display = "none";
+  // createPostArea.style.display = 'none';
 }
 
 shareImageButton.addEventListener("click", openCreatePostModal);
