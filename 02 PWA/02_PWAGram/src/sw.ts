@@ -299,8 +299,24 @@ function isInArray(string: string, array: string[]): boolean {
     console.log("Confirm was chosen");
     notification.close();
   } else {
-    console.log(action);
-    notification.close();
+    console.log({ action });
+    event.waitUntil(
+      // @ts-ignore - bad types? https://developer.mozilla.org/en-US/docs/Web/API/NotificationEvent
+      clients.matchAll().then(function (clis: any[]) {
+        const client = clis.find(function (c) {
+          return c.visibilityState === "visible";
+        });
+
+        if (client !== undefined) {
+          client.navigate(notification.data.url);
+          client.focus();
+        } else {
+          // @ts-ignore - bad types? https://developer.mozilla.org/en-US/docs/Web/API/NotificationEvent
+          clients.openWindow(notification.data.url);
+        }
+        notification.close();
+      })
+    );
   }
 });
 
@@ -311,7 +327,7 @@ function isInArray(string: string, array: string[]): boolean {
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("push", function (event: PushEvent) {
   console.log("Push Notification received", event);
 
-  let data = { title: "New!", content: "Something new happened!" };
+  let data = { title: "New!", content: "Something new happened!", openUrl: "/" };
 
   if (event.data) {
     data = JSON.parse(event.data.text());
@@ -321,6 +337,9 @@ function isInArray(string: string, array: string[]): boolean {
     body: data.content,
     icon: "/src/images/icons/app-icon-96x96.png",
     badge: "/src/images/icons/app-icon-96x96.png",
+    data: {
+      url: data.openUrl,
+    },
   };
 
   event.waitUntil((self as unknown as ServiceWorkerGlobalScope).registration.showNotification(data.title, options));
