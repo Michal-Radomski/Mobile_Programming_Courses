@@ -307,3 +307,21 @@ function isInArray(string: string, array: string[]): boolean {
 (self as unknown as ServiceWorkerGlobalScope).addEventListener("notificationclose", function (event: NotificationEvent) {
   console.log("Notification was closed", event);
 });
+
+(self as unknown as ServiceWorkerGlobalScope).addEventListener("push", function (event: PushEvent) {
+  console.log("Push Notification received", event);
+
+  let data = { title: "New!", content: "Something new happened!" };
+
+  if (event.data) {
+    data = JSON.parse(event.data.text());
+  }
+
+  const options = {
+    body: data.content,
+    icon: "/src/images/icons/app-icon-96x96.png",
+    badge: "/src/images/icons/app-icon-96x96.png",
+  };
+
+  event.waitUntil((self as unknown as ServiceWorkerGlobalScope).registration.showNotification(data.title, options));
+});
