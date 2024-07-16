@@ -9,6 +9,31 @@ const sharedMomentsArea = document.querySelector("#shared-moments") as HTMLDivEl
 const form = document.querySelector("form") as HTMLFormElement;
 const titleInput = document.querySelector("#title") as HTMLInputElement;
 const locationInput = document.querySelector("#location") as HTMLInputElement;
+const videoPlayer = document.querySelector("#player") as HTMLVideoElement;
+const canvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
+const captureButton = document.querySelector("#capture-btn") as HTMLButtonElement;
+const imagePicker = document.querySelector("#image-picker") as HTMLInputElement;
+const imagePickerArea = document.querySelector("#pick-image") as HTMLDivElement;
+
+function initializeMedia(): void {
+  if (!("mediaDevices" in navigator)) {
+    (navigator as any).mediaDevices = {};
+  }
+
+  if (!("getUserMedia" in navigator.mediaDevices)) {
+    (navigator as any).mediaDevices.getUserMedia = function (constraints: any) {
+      const getUserMedia = (navigator as any).webkitGetUserMedia || (navigator as any).mozGetUserMedia;
+
+      if (!getUserMedia) {
+        return Promise.reject(new Error("getUserMedia is not implemented!"));
+      }
+
+      return new Promise(function (resolve, reject) {
+        getUserMedia.call(navigator, constraints, resolve, reject);
+      });
+    };
+  }
+}
 
 function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
