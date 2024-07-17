@@ -16,6 +16,11 @@ const imagePicker = document.querySelector("#image-picker") as HTMLInputElement;
 const imagePickerArea = document.querySelector("#pick-image") as HTMLDivElement;
 
 function initializeMedia(): void {
+  // if ("mediaDevices" in navigator) {
+  //   console.log("navigator:", navigator);
+  //   console.log("mediaDevices:", navigator.mediaDevices as MediaDevices);
+  // }
+
   if (!("mediaDevices" in navigator)) {
     (navigator as any).mediaDevices = {};
   }
@@ -67,6 +72,8 @@ captureButton.addEventListener("click", function (_event) {
 function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
   createPostArea.style.transform = "translateY(0)";
+  initializeMedia();
+
   if (deferredPrompt) {
     deferredPrompt.prompt();
 
