@@ -14,6 +14,7 @@ const canvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
 const captureButton = document.querySelector("#capture-btn") as HTMLButtonElement;
 const imagePicker = document.querySelector("#image-picker") as HTMLInputElement;
 const imagePickerArea = document.querySelector("#pick-image") as HTMLDivElement;
+let picture;
 
 function initializeMedia(): void {
   // if ("mediaDevices" in navigator) {
@@ -51,7 +52,7 @@ function initializeMedia(): void {
     });
 }
 
-captureButton.addEventListener("click", function (_event) {
+captureButton.addEventListener("click", function (_event: MouseEvent) {
   // console.log("_event:", _event);
   canvasElement.style.display = "block";
   videoPlayer.style.display = "none";
@@ -64,9 +65,16 @@ captureButton.addEventListener("click", function (_event) {
     canvasElement.width,
     videoPlayer.videoHeight / (videoPlayer.videoWidth / canvasElement.width)
   );
-  // videoPlayer?.srcObject?.getVideoTracks().forEach(function (track: Track) {
-  //   track.stop();
-  // });
+  // @ts-ignore
+  videoPlayer?.srcObject?.getVideoTracks().forEach(function (track: MediaStreamTrack) {
+    // console.log("track:", track);
+    track.stop();
+  });
+  const dataURL: string = canvasElement.toDataURL();
+  // console.log({ dataURL });
+
+  picture = dataURItoBlob(dataURL);
+  // console.log("picture:", picture);
 });
 
 function openCreatePostModal(): void {
