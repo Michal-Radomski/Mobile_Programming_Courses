@@ -21,11 +21,6 @@ declare global {
   interface ServiceWorkerGlobalScopeEventMap {
     sync: SyncEvent;
   }
-
-  interface LatLng {
-    lat: null | number;
-    lng: null | number;
-  }
 }
 
 declare const self: ServiceWorkerGlobalScope;

@@ -2,6 +2,11 @@ interface ObjectI {
   [key: string]: string | number;
 }
 
+interface LatLng {
+  lat: null | number;
+  lng: null | number;
+}
+
 const shareImageButton = document.querySelector("#share-image-button") as HTMLButtonElement;
 const createPostArea = document.querySelector("#create-post") as HTMLTextAreaElement;
 const closeCreatePostModalButton = document.querySelector("#close-create-post-modal-btn") as HTMLButtonElement;
@@ -18,7 +23,6 @@ const locationBtn = document.querySelector("#location-btn") as HTMLButtonElement
 const locationLoader = document.querySelector("#location-loader") as HTMLDivElement;
 
 let picture: Blob;
-// @ts-ignore
 let fetchedLocation: LatLng;
 
 locationBtn.addEventListener("click", function (_event) {
@@ -285,18 +289,28 @@ if ("indexedDB" in window) {
 }
 
 function sendData(): void {
+  const id = new Date().toISOString();
+  const postData = new FormData();
+  postData.append("id", id);
+  postData.append("title", titleInput.value);
+  postData.append("location", locationInput.value);
+  postData.append("rawLocationLat", (fetchedLocation.lat as number).toString());
+  postData.append("rawLocationLng", (fetchedLocation.lng as number).toString());
+  postData.append("file", picture, id + ".png");
+
   fetch(FB_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
-    body: JSON.stringify({
-      id: new Date().toISOString(),
-      title: titleInput.value,
-      location: locationInput.value,
-      image: "image URL", // Temp url
-    }),
+    // body: JSON.stringify({
+    //   id: new Date().toISOString(),
+    //   title: titleInput.value,
+    //   location: locationInput.value,
+    //   image: "image URL", // Temp url
+    // }),
+    body: postData,
   }).then(function (res) {
     console.log("Sent data", res);
     // updateUI(res); // Temp ???
@@ -319,6 +333,8 @@ form.addEventListener("submit", function (event) {
         id: new Date().toISOString(),
         title: titleInput.value,
         location: locationInput.value,
+        picture: picture,
+        rawLocation: fetchedLocation,
       };
       writeData("sync-posts", post)
         .then(function () {
