@@ -256,6 +256,12 @@ function isInArray(string: string, array: string[]): boolean {
     event.waitUntil(
       readAllData("sync-posts").then(function (data: any) {
         for (let dt of data) {
+          const postData = new FormData();
+          postData.append("id", dt.id);
+          postData.append("title", dt.title);
+          postData.append("location", dt.location);
+          postData.append("file", dt.picture, dt.id + ".png");
+
           // Temp
           fetch("Temp Url", {
             method: "POST",
@@ -263,12 +269,13 @@ function isInArray(string: string, array: string[]): boolean {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
-            body: JSON.stringify({
-              id: dt.id,
-              title: dt.title,
-              location: dt.location,
-              image: "Image URL", // Temp
-            }),
+            // body: JSON.stringify({
+            //   id: dt.id,
+            //   title: dt.title,
+            //   location: dt.location,
+            //   image: "Image URL",
+            // }),
+            body: postData,
           })
             .then(function (res) {
               console.log("Sent data", res);

@@ -14,7 +14,8 @@ const canvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
 const captureButton = document.querySelector("#capture-btn") as HTMLButtonElement;
 const imagePicker = document.querySelector("#image-picker") as HTMLInputElement;
 const imagePickerArea = document.querySelector("#pick-image") as HTMLDivElement;
-let picture;
+
+let picture: Blob;
 
 function initializeMedia(): void {
   // if ("mediaDevices" in navigator) {
@@ -73,7 +74,7 @@ captureButton.addEventListener("click", function (_event: MouseEvent) {
   const dataURL: string = canvasElement.toDataURL();
   // console.log({ dataURL });
 
-  picture = dataURItoBlob(dataURL);
+  picture = dataURItoBlob(dataURL) as Blob;
   // console.log("picture:", picture);
 });
 
