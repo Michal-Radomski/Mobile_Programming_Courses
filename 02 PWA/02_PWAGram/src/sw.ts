@@ -8,6 +8,7 @@ const STATIC_FILES = [
   "/index.html",
   "/offline.html",
   "/src/js/app.js",
+  "/src/js/utility.js",
   "/src/js/feed.js",
   "/src/js/promise.js",
   "/src/js/fetch.js",

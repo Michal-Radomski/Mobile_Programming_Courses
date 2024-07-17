@@ -78,6 +78,10 @@ captureButton.addEventListener("click", function (_event: MouseEvent) {
   // console.log("picture:", picture);
 });
 
+imagePicker.addEventListener("change", function (event: Event) {
+  picture = (event?.target as HTMLInputElement)?.files?.[0] as Blob;
+});
+
 function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
   createPostArea.style.transform = "translateY(0)";
