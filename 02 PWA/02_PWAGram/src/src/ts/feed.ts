@@ -14,8 +14,50 @@ const canvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
 const captureButton = document.querySelector("#capture-btn") as HTMLButtonElement;
 const imagePicker = document.querySelector("#image-picker") as HTMLInputElement;
 const imagePickerArea = document.querySelector("#pick-image") as HTMLDivElement;
+const locationBtn = document.querySelector("#location-btn") as HTMLButtonElement;
+const locationLoader = document.querySelector("#location-loader") as HTMLDivElement;
 
 let picture: Blob;
+// @ts-ignore
+let fetchedLocation: LatLng;
+
+locationBtn.addEventListener("click", function (_event) {
+  if (!("geolocation" in navigator)) {
+    return;
+  }
+
+  // if ("geolocation" in navigator) {
+  //   console.log("navigator?.geolocation:", navigator?.geolocation);
+  // }
+
+  locationBtn.style.display = "none";
+  locationLoader.style.display = "block";
+
+  navigator.geolocation.getCurrentPosition(
+    function (position: GeolocationPosition) {
+      // console.log("position:", position);
+      locationBtn.style.display = "inline";
+      locationLoader.style.display = "none";
+      fetchedLocation = { lat: position.coords.latitude, lng: 0 };
+      locationInput.value = "In Gdansk";
+      (document.querySelector("#manual-location") as HTMLDivElement).classList.add("is-focused");
+    },
+    function (err) {
+      console.log("err:", err);
+      locationBtn.style.display = "inline";
+      locationLoader.style.display = "none";
+      alert("Couldn't fetch location, please enter manually!");
+      fetchedLocation = { lat: null, lng: null };
+    },
+    { timeout: 7000 }
+  );
+});
+
+function initializeLocation(): void {
+  if (!("geolocation" in navigator)) {
+    locationBtn.style.display = "none";
+  }
+}
 
 function initializeMedia(): void {
   // if ("mediaDevices" in navigator) {
@@ -86,6 +128,7 @@ function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
   createPostArea.style.transform = "translateY(0)";
   initializeMedia();
+  initializeLocation();
 
   if (deferredPrompt) {
     deferredPrompt.prompt();
@@ -118,6 +161,8 @@ function closeCreatePostModal(): void {
   imagePickerArea.style.display = "none";
   videoPlayer.style.display = "none";
   canvasElement.style.display = "none";
+  locationBtn.style.display = "inline";
+  locationLoader.style.display = "none";
   // createPostArea.style.display = 'none';
 }
 
