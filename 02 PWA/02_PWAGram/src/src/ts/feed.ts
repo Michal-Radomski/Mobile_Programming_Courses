@@ -3,8 +3,8 @@ interface ObjectI {
 }
 
 interface LatLng {
-  lat: null | number;
-  lng: null | number;
+  lat: number;
+  lng: number;
 }
 
 const shareImageButton = document.querySelector("#share-image-button") as HTMLButtonElement;
@@ -23,12 +23,14 @@ const locationBtn = document.querySelector("#location-btn") as HTMLButtonElement
 const locationLoader = document.querySelector("#location-loader") as HTMLDivElement;
 
 let picture: Blob;
-let fetchedLocation: LatLng;
+let fetchedLocation: LatLng = { lat: 0, lng: 0 };
 
 locationBtn.addEventListener("click", function (_event) {
   if (!("geolocation" in navigator)) {
     return;
   }
+
+  let sawAlert = false;
 
   // if ("geolocation" in navigator) {
   //   console.log("navigator?.geolocation:", navigator?.geolocation);
@@ -50,8 +52,13 @@ locationBtn.addEventListener("click", function (_event) {
       console.log("err:", err);
       locationBtn.style.display = "inline";
       locationLoader.style.display = "none";
-      alert("Couldn't fetch location, please enter manually!");
-      fetchedLocation = { lat: null, lng: null };
+
+      if (!sawAlert) {
+        alert("Couldn't fetch location, please enter manually!");
+        sawAlert = true;
+      }
+
+      fetchedLocation = { lat: 0, lng: 0 };
     },
     { timeout: 7000 }
   );
@@ -130,7 +137,11 @@ imagePicker.addEventListener("change", function (event: Event) {
 
 function openCreatePostModal(): void {
   // createPostArea.style.display = "block";
-  createPostArea.style.transform = "translateY(0)";
+
+  setTimeout(function () {
+    createPostArea.style.transform = "translateY(0)";
+  }, 1);
+
   initializeMedia();
   initializeLocation();
 
@@ -161,13 +172,24 @@ function openCreatePostModal(): void {
 }
 
 function closeCreatePostModal(): void {
+  // createPostArea.style.display = 'none';
   createPostArea.style.transform = "translateY(100vh)";
   imagePickerArea.style.display = "none";
   videoPlayer.style.display = "none";
   canvasElement.style.display = "none";
   locationBtn.style.display = "inline";
   locationLoader.style.display = "none";
-  // createPostArea.style.display = 'none';
+  captureButton.style.display = "inline";
+
+  if (videoPlayer.srcObject) {
+    // @ts-ignore
+    videoPlayer.srcObject.getVideoTracks().forEach(function (track: MediaStreamTrack) {
+      track.stop();
+    });
+  }
+  setTimeout(function () {
+    createPostArea.style.transform = "translateY(100vh)";
+  }, 1);
 }
 
 shareImageButton.addEventListener("click", openCreatePostModal);
