@@ -21,6 +21,19 @@ jspm_packages/
 .next
 out
 
+# Expo
+.expo/
+dist/
+web-build/
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
 # My Entries
 .vscode/
 build/
