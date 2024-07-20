@@ -1,3 +1,4 @@
+// Workbox not done
 module.exports = {
   globDirectory: "public/",
   globPatterns: ["**/*.{html,ico,json,css,js}", "src/images/*.{jpg,png}"],
