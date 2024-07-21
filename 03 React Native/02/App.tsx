@@ -14,6 +14,12 @@ export default function App(): JSX.Element {
     setCourseGoals((prevState) => [...prevState, { text: enteredGoalText, id: Math.random().toString() }]);
   }
 
+  function deleteGoalHandler(id: string): void {
+    setCourseGoals((currentCourseGoals) => {
+      return currentCourseGoals.filter((goal: ItemList) => goal.id !== id);
+    });
+  }
+
   return (
     // <Flex />
     // <View style={styles.appContainer}>
@@ -51,7 +57,7 @@ export default function App(): JSX.Element {
         <FlatList
           data={courseGoals}
           renderItem={(itemData: ListRenderItemInfo<ItemList>) => {
-            return <GoalItem text={itemData.item.text} />;
+            return <GoalItem text={itemData.item.text} id={itemData.item.id} onDeleteItem={deleteGoalHandler} />;
           }}
           keyExtractor={(item: ItemList) => {
             return item.id;
