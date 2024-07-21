@@ -1,12 +1,12 @@
 import { StyleSheet, View, Text } from "react-native";
 
-function GoalItem({ text }: { text: string }): JSX.Element {
+const GoalItem = ({ text }: { text: string }): JSX.Element => {
   return (
     <View style={styles.goalItem}>
       <Text style={styles.goalText}>{text}</Text>
     </View>
   );
-}
+};
 
 export default GoalItem;
 
