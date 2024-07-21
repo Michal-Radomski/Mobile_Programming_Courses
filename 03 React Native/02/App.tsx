@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, ScrollView } from "react-native";
 
 // import Flex from "./Flex";
 
@@ -25,11 +25,13 @@ export default function App(): JSX.Element {
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal: string, index: number) => (
-          <View key={goal + String(index)} style={styles.goalItem}>
-            <Text style={styles.goalText}>{goal}</Text>
-          </View>
-        ))}
+        <ScrollView alwaysBounceVertical={true}>
+          {courseGoals.map((goal: string, index: number) => (
+            <View key={goal + String(index)} style={styles.goalItem}>
+              <Text style={styles.goalText}>{goal}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
