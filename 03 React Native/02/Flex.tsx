@@ -5,12 +5,14 @@ export default function Flex(): JSX.Element {
   return (
     <View
       style={{
+        marginLeft: 10,
+        marginTop: 20,
         padding: 50,
-        // flexDirection: "row",
-        flexDirection: "column",
-        width: "80%",
-        height: 300,
-        justifyContent: "space-around",
+        flexDirection: "row",
+        // flexDirection: "column",
+        width: "90%",
+        height: 500,
+        justifyContent: "space-between",
         alignItems: "stretch",
       }}
     >
@@ -36,7 +38,7 @@ export default function Flex(): JSX.Element {
       </View>
       <View
         style={{
-          flex: 1,
+          flex: 0.5,
           backgroundColor: "green",
           justifyContent: "center",
           alignItems: "center",
