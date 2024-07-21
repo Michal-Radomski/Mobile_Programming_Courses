@@ -1,16 +1,19 @@
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 
+import Flex from "./Flex";
+
 export default function App(): JSX.Element {
   return (
-    <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.textInput} placeholder="Your course goal!" />
-        <Button title="Add Goal" />
-      </View>
-      <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
-      </View>
-    </View>
+    <Flex />
+    //  <View style={styles.appContainer}>
+    //   <View style={styles.inputContainer}>
+    //     <TextInput style={styles.textInput} placeholder="Your course goal!" />
+    //     <Button title="Add Goal" />
+    //   </View>
+    //   <View style={styles.goalsContainer}>
+    //     <Text>List of goals...</Text>
+    //   </View>
+    // </View>
   );
 }
 
