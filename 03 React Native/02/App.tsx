@@ -1,20 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput, FlatList, ListRenderItemInfo } from "react-native";
 
 // import Flex from "./Flex";
 
 export default function App(): JSX.Element {
   const [enteredGoalText, setEnteredGoalText] = React.useState<string>("");
-  const [courseGoals, setCourseGoals] = React.useState([] as string[]);
+  const [courseGoals, setCourseGoals] = React.useState([] as ItemList[]);
 
   function goalInputHandler(enteredText: React.SetStateAction<string>): void {
-    // function goalInputHandler(enteredText: string): void {
+    // function goalInputHandler(enteredText: ItemList): void {
     setEnteredGoalText(enteredText);
   }
 
   function addGoalHandler(): void {
     // console.log("enteredGoalText:", enteredGoalText);
-    setCourseGoals((prevState: string[]) => [...prevState, enteredGoalText]);
+    // setCourseGoals((prevState: string[]) => [...prevState, enteredGoalText]);
+    setCourseGoals((currentCourseGoals: ItemList[]) => [
+      ...currentCourseGoals,
+      { text: enteredGoalText, id: Math.random().toString() },
+    ]);
   }
 
   return (
@@ -24,7 +28,7 @@ export default function App(): JSX.Element {
         <TextInput style={styles.textInput} placeholder="Your course goal!" onChangeText={goalInputHandler} />
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
-      <View style={styles.goalsContainer}>
+      {/* <View style={styles.goalsContainer}>
         <ScrollView alwaysBounceVertical={true}>
           {courseGoals.map((goal: string, index: number) => (
             <View key={goal + String(index)} style={styles.goalItem}>
@@ -32,6 +36,26 @@ export default function App(): JSX.Element {
             </View>
           ))}
         </ScrollView>
+      </View> */}
+      <View style={styles.goalsContainer}>
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData: ListRenderItemInfo<ItemList>) => {
+            // console.log("itemData:", itemData);
+            return (
+              <View style={styles.goalItem}>
+                <Text style={styles.goalText}>
+                  {itemData.item.id} {itemData.item.text}
+                </Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item: ItemList) => {
+            // console.log("item:", item);
+            return item.id;
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
     </View>
   );
