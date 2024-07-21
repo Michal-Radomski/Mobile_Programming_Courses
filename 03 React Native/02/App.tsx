@@ -1,5 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput, FlatList, ListRenderItemInfo } from "react-native";
+import { StyleSheet, View, Button, TextInput, FlatList, ListRenderItemInfo } from "react-native";
+
+import GoalItem from "./components/GoalItem";
 
 // import Flex from "./Flex";
 
@@ -42,13 +44,7 @@ export default function App(): JSX.Element {
           data={courseGoals}
           renderItem={(itemData: ListRenderItemInfo<ItemList>) => {
             // console.log("itemData:", itemData);
-            return (
-              <View style={styles.goalItem}>
-                <Text style={styles.goalText}>
-                  {itemData.item.id} {itemData.item.text}
-                </Text>
-              </View>
-            );
+            return <GoalItem text={itemData?.item?.text} />;
           }}
           keyExtractor={(item: ItemList) => {
             // console.log("item:", item);
@@ -85,15 +81,6 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
-  },
-  goalItem: {
-    margin: 8,
-    padding: 8,
-    borderRadius: 6, //* No borderRadius on iOS!
-    backgroundColor: "#5e0acc",
-  },
-  goalText: {
-    color: "white", //* Styles don't cascade!!!, no style inheritance here
   },
 });
 
