@@ -11,18 +11,23 @@ export default function App(): JSX.Element {
   const [courseGoals, setCourseGoals] = React.useState([] as ItemList[]);
   const [modalIsVisible, setModalIsVisible] = React.useState<boolean>(false);
 
+  function startAddGoalHandler(): void {
+    setModalIsVisible(true);
+  }
+
+  function endAddGoalHandler(): void {
+    setModalIsVisible(false);
+  }
+
   function addGoalHandler(enteredGoalText: string): void {
     setCourseGoals((prevState) => [...prevState, { text: enteredGoalText, id: Math.random().toString() }]);
+    endAddGoalHandler();
   }
 
   function deleteGoalHandler(id: string): void {
     setCourseGoals((currentCourseGoals) => {
       return currentCourseGoals.filter((goal: ItemList) => goal.id !== id);
     });
-  }
-
-  function startAddGoalHandler(): void {
-    setModalIsVisible(true);
   }
 
   return (
@@ -58,7 +63,7 @@ export default function App(): JSX.Element {
     // </View>
     <View style={styles.appContainer}>
       <Button title="Add New Goal" color="#5e0acc" onPress={startAddGoalHandler} />
-      <GoalInput onAddGoal={addGoalHandler} visible={modalIsVisible} />
+      <GoalInput onAddGoal={addGoalHandler} visible={modalIsVisible} onCancel={endAddGoalHandler} />
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}

@@ -1,7 +1,15 @@
 import React from "react";
 import { View, TextInput, Button, StyleSheet, Modal } from "react-native";
 
-const GoalInput = ({ onAddGoal, visible }: { onAddGoal: Function; visible: boolean }): JSX.Element => {
+const GoalInput = ({
+  onAddGoal,
+  visible,
+  onCancel,
+}: {
+  onAddGoal: Function;
+  visible: boolean;
+  onCancel: Function;
+}): JSX.Element => {
   const [enteredGoalText, setEnteredGoalText] = React.useState<string>("");
 
   function addGoalHandler(): void {
@@ -35,7 +43,7 @@ const GoalInput = ({ onAddGoal, visible }: { onAddGoal: Function; visible: boole
             <Button title="Add Goal" onPress={addGoalHandler} />
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" />
+            <Button title="Cancel" onPress={() => onCancel()} />
           </View>
         </View>
       </View>
@@ -48,6 +56,7 @@ export default GoalInput;
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 24,
