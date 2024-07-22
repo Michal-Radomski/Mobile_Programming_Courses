@@ -11,6 +11,7 @@ export default function App(): JSX.Element {
   // const [enteredGoalText, setEnteredGoalText] = React.useState<string>("");
   const [courseGoals, setCourseGoals] = React.useState([] as ItemList[]);
   const [modalIsVisible, setModalIsVisible] = React.useState<boolean>(false);
+  // console.log({ modalIsVisible });
 
   function startAddGoalHandler(): void {
     setModalIsVisible(true);
