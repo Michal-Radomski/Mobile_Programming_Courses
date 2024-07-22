@@ -41,10 +41,10 @@ const GoalInput = ({
         />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="Add Goal" onPress={addGoalHandler} />
+            <Button title="Cancel" onPress={() => onCancel()} color="#f31282" />
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" onPress={() => onCancel()} />
+            <Button title="Add Goal" onPress={addGoalHandler} color="#5e0acc" />
           </View>
         </View>
       </View>
