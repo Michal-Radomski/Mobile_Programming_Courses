@@ -7,7 +7,13 @@ const StartGameScreen = (): JSX.Element => {
   return (
     <React.Fragment>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.numberInput} maxLength={2} />
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
         <PrimaryButton>Reset</PrimaryButton>
         <PrimaryButton>Confirm</PrimaryButton>
       </View>
@@ -24,7 +30,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#72063c",
     borderRadius: 8,
-    elevation: 4,
+    elevation: 4, //* Instead of shadow, only for android!
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
