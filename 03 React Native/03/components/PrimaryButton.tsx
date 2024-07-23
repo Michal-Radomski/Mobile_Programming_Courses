@@ -1,10 +1,11 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
 //* Custom Button
-const PrimaryButton = ({ children }: { children: string }): JSX.Element => {
-  function pressHandler(): void {
-    console.log("Pressed!");
-  }
+const PrimaryButton = ({ children, onPress }: { children: string; onPress: () => void }): JSX.Element => {
+  // function pressHandler(): void {
+  //   // console.log("Pressed!");
+  //   onPress();
+  // }
 
   return (
     <View style={styles.buttonOuterContainer}>
@@ -12,7 +13,7 @@ const PrimaryButton = ({ children }: { children: string }): JSX.Element => {
         style={({ pressed }: { pressed: boolean }) =>
           pressed ? [styles.buttonInnerContainer, styles.pressed] : styles.buttonInnerContainer
         }
-        onPress={pressHandler}
+        onPress={onPress}
         android_ripple={{ color: "#640233" }}
       >
         <Text style={styles.buttonText}>{children}</Text>
