@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import StartGameScreen from "./screens/StartGameScreen";
@@ -26,8 +26,7 @@ export default function App(): JSX.Element {
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
       >
-        {/* <StartGameScreen /> */}
-        {screen}
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );

@@ -23,7 +23,6 @@ const StartGameScreen = ({ onPickNumber }: { onPickNumber: Function }): JSX.Elem
       ]);
       return;
     }
-    // console.log("Valid number!");
     onPickNumber(chosenNumber);
   }
 
