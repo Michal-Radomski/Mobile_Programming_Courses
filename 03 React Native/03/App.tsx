@@ -16,7 +16,7 @@ export default function App(): JSX.Element {
   let screen: JSX.Element = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = <GameScreen userNumber={userNumber} />;
   }
 
   return (

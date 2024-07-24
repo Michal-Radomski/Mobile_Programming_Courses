@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
-import Colors from "../constants/colors";
+import Colors from "../../constants/colors";
 
 function Title({ children }: { children: React.ReactNode }): JSX.Element {
   return (
@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: Colors.accent500,
+    color: Colors.colorWhite,
     textAlign: "center",
     borderWidth: 2,
-    borderColor: Colors.accent500,
+    borderColor: Colors.colorWhite,
     padding: 12,
   },
 });
