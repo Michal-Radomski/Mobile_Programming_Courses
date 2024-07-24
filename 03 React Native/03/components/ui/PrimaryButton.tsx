@@ -1,6 +1,6 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Colors from "../../constants/colors";
 
 //* Custom Button
 const PrimaryButton = ({ children, onPress }: { children: string; onPress: () => void }): JSX.Element => {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonText: {
-    color: "white",
+    color: Colors.colorWhite,
     textAlign: "center",
   },
   pressed: {
