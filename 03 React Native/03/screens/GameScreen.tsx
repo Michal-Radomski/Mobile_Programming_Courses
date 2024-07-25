@@ -32,6 +32,11 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
     }
   }, [currentGuess, userNumber, onGameOver]);
 
+  React.useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
   function nextGuessHandler(direction: string): void {
     // direction => 'lower', 'greater'
     if ((direction === "lower" && currentGuess < userNumber) || (direction === "greater" && currentGuess > userNumber)) {

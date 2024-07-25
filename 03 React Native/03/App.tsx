@@ -14,8 +14,9 @@ export interface ObjectI {
 }
 
 export default function App(): JSX.Element {
-  const [userNumber, setUserNumber] = React.useState<number>();
+  const [userNumber, setUserNumber] = React.useState<number | null>(null);
   const [gameIsOver, setGameIsOver] = React.useState<boolean>(true);
+  const [guessRounds, setGuessRounds] = React.useState<number>(0);
 
   const [fontsLoaded]: [boolean, Error | null] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -47,6 +48,11 @@ export default function App(): JSX.Element {
     setGameIsOver(true);
   }
 
+  function startNewGameHandler(): void {
+    setUserNumber(null);
+    setGuessRounds(0);
+  }
+
   let screen: JSX.Element = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
   if (userNumber) {
@@ -54,7 +60,7 @@ export default function App(): JSX.Element {
   }
 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler} />;
   }
 
   return (

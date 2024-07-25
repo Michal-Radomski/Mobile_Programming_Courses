@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import Colors from "../../constants/colors";
 
 //* Custom Button
-const PrimaryButton = ({ children, onPress }: { children: React.ReactNode; onPress?: () => void }): JSX.Element => {
+const PrimaryButton = ({ children, onPress }: { children: React.ReactNode; onPress: () => void }): JSX.Element => {
   // function pressHandler(): void {
   //   // console.log("Pressed!");
   //   onPress();
