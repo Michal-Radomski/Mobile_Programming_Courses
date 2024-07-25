@@ -18,10 +18,16 @@ function generateRandomBetween(min: number, max: number, exclude: number): numbe
 let minBoundary: number = 1;
 let maxBoundary: number = 100;
 
-const GameScreen = ({ userNumber }: { userNumber: number }): JSX.Element => {
-  const initialGuess = generateRandomBetween(minBoundary, maxBoundary, userNumber);
+const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver: Function }): JSX.Element => {
+  const initialGuess = generateRandomBetween(1, 100, userNumber);
 
   const [currentGuess, setCurrentGuess] = React.useState<number>(initialGuess);
+
+  React.useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGameOver();
+    }
+  }, [currentGuess, userNumber, onGameOver]);
 
   function nextGuessHandler(direction: string): void {
     // direction => 'lower', 'greater'
