@@ -17,10 +17,11 @@ export default function App(): JSX.Element {
   const [userNumber, setUserNumber] = React.useState<number>();
   const [gameIsOver, setGameIsOver] = React.useState<boolean>(true);
 
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded]: [boolean, Error | null] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
+  // console.log({ fontsLoaded });
 
   React.useEffect(() => {
     if (!fontsLoaded) return;
@@ -57,16 +58,20 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <LinearGradient colors={[Colors.primary700, Colors.accent500, Colors.colorOrangeRed]} style={styles.rootScreen}>
-      <ImageBackground
-        source={require("./assets/images/background.png")}
-        resizeMode="cover"
-        style={styles.rootScreen}
-        imageStyle={styles.backgroundImage}
-      >
-        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+    <React.Fragment>
+      {fontsLoaded ? (
+        <LinearGradient colors={[Colors.primary700, Colors.accent500, Colors.colorOrangeRed]} style={styles.rootScreen}>
+          <ImageBackground
+            source={require("./assets/images/background.png")}
+            resizeMode="cover"
+            style={styles.rootScreen}
+            imageStyle={styles.backgroundImage}
+          >
+            <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+          </ImageBackground>
+        </LinearGradient>
+      ) : null}
+    </React.Fragment>
   );
 }
 
