@@ -6,6 +6,7 @@ const Colors = {
   accent500: "#ddb52f",
   colorOrangeRed: "orangered",
   colorWhite: "white",
+  colorBlack: "black",
 };
 
 export default Colors;

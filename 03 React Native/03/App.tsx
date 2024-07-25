@@ -7,6 +7,10 @@ import GameScreen from "./screens/GameScreen";
 import Colors from "./constants/colors";
 import GameOverScreen from "./screens/GameOverScreen";
 
+export interface ObjectI {
+  [key: string]: string | number;
+}
+
 export default function App(): JSX.Element {
   const [userNumber, setUserNumber] = React.useState<number>();
   const [gameIsOver, setGameIsOver] = React.useState<boolean>(true);
