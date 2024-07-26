@@ -44,8 +44,9 @@ export default function App(): JSX.Element {
     setGameIsOver(false);
   }
 
-  function gameOverHandler(): void {
+  function gameOverHandler(numberOfRounds: number) {
     setGameIsOver(true);
+    setGuessRounds(numberOfRounds);
   }
 
   function startNewGameHandler(): void {
