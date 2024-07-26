@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     elevation: 4,
-    shadowColor: "black",
+    shadowColor: Colors.colorBlack,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.25,
     shadowRadius: 3,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Alert, Text } from "react-native";
+import { View, StyleSheet, Alert, FlatList, ListRenderItemInfo } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -7,7 +7,8 @@ import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
-// import GuessLogItem from "../components/game/GuessLogItem";
+import GuessLogItem from "../components/game/GuessLogItem";
+import Colors from "../constants/colors";
 
 function generateRandomBetween(min: number, max: number, exclude: number): number {
   const rndNum: number = Math.floor(Math.random() * (max - min)) + min;
@@ -69,31 +70,28 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-              <Ionicons name="remove" size={24} color="white" />
+              <Ionicons name="remove" size={24} color={Colors.colorWhite} />
             </PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
             <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
-              <Ionicons name="add" size={24} color="white" />
+              <Ionicons name="add" size={24} color={Colors.colorWhite} />
             </PrimaryButton>
           </View>
         </View>
       </Card>
       <View style={styles.listContainer}>
-        {guessRounds.map((guessRound: number, index: number) => (
+        {/* {guessRounds.map((guessRound: number, index: number) => (
           <Text key={`${guessRound}_${index}`}>{guessRound}</Text>
-        ))}
+        ))} */}
 
-        {/* <FlatList
+        <FlatList
           data={guessRounds}
           renderItem={(itemData: ListRenderItemInfo<number>) => (
-            <GuessLogItem
-              roundNumber={guessRoundsListLength - itemData.index}
-              guess={itemData.item}
-            />
+            <GuessLogItem roundNumber={guessRoundsListLength - itemData.index} guess={itemData.item} />
           )}
-          keyExtractor={(item) => item}
-        /> */}
+          keyExtractor={(item) => item.toString()}
+        />
       </View>
     </View>
   );

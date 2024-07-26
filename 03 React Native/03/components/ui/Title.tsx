@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans-bold",
     fontSize: 24,
     // fontWeight: "bold",
-    color: "white",
+    color: Colors.colorWhite,
     textAlign: "center",
     borderWidth: 2,
-    borderColor: "white",
+    borderColor: Colors.colorWhite,
     padding: 12,
   },
 });
