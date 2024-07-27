@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Platform } from "react-native";
 
 import Colors from "../../constants/colors";
 
@@ -13,14 +13,18 @@ function Title({ children }: { children: React.ReactNode }): JSX.Element {
 
 export default Title;
 
+// console.log("Platform:", Platform);
+
 const styles = StyleSheet.create({
   title: {
     fontFamily: "open-sans-bold",
     fontSize: 24,
-    // fontWeight: "bold",
+    // fontWeight: 'bold',
     color: Colors.colorWhite,
     textAlign: "center",
-    borderWidth: 2,
+    // borderWidth: 2, //* Alternatively target files: Title.android.tsx and Title.ios.tsx
+    // borderWidth: Platform.OS === "android" ? 2 : 0,
+    borderWidth: Platform.select({ ios: 0, android: 2 }),
     borderColor: Colors.colorWhite,
     padding: 12,
     maxWidth: "80%",
