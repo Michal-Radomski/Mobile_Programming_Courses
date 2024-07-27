@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Alert, FlatList, ListRenderItemInfo } from "react-native";
+import { View, StyleSheet, Alert, FlatList, ListRenderItemInfo, useWindowDimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -28,6 +28,8 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
 
   const [currentGuess, setCurrentGuess] = React.useState<number>(initialGuess);
   const [guessRounds, setGuessRounds] = React.useState<number[]>([initialGuess]);
+
+  const { width } = useWindowDimensions();
 
   const guessRoundsListLength = guessRounds?.length;
 
@@ -61,9 +63,8 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
     setGuessRounds((prevGuessRounds: number[]) => [newRndNumber, ...prevGuessRounds]);
   }
 
-  return (
-    <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
+  let content = (
+    <React.Fragment>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
         <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
@@ -80,6 +81,33 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
           </View>
         </View>
       </Card>
+    </React.Fragment>
+  );
+
+  if (width > 500) {
+    content = (
+      <React.Fragment>
+        <View style={styles.buttonsContainerWide}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+              <Ionicons name="remove" size={24} color={Colors.colorWhite} />
+            </PrimaryButton>
+          </View>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+              <Ionicons name="add" size={24} color={Colors.colorWhite} />
+            </PrimaryButton>
+          </View>
+        </View>
+      </React.Fragment>
+    );
+  }
+
+  return (
+    <View style={styles.screen}>
+      <Title>Opponent's Guess</Title>
+      {content}
       <View style={styles.listContainer}>
         {/* {guessRounds.map((guessRound: number, index: number) => (
           <Text key={`${guessRound}_${index}`}>{guessRound}</Text>
@@ -87,7 +115,7 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
 
         <FlatList
           data={guessRounds}
-          renderItem={(itemData: ListRenderItemInfo<number>) => (
+          renderItem={(itemData) => (
             <GuessLogItem roundNumber={guessRoundsListLength - itemData.index} guess={itemData.item} />
           )}
           keyExtractor={(item) => item.toString()}
@@ -113,6 +141,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  buttonsContainerWide: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   listContainer: {
     flex: 1,
