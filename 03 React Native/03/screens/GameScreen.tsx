@@ -115,7 +115,7 @@ const GameScreen = ({ userNumber, onGameOver }: { userNumber: number; onGameOver
 
         <FlatList
           data={guessRounds}
-          renderItem={(itemData) => (
+          renderItem={(itemData: ListRenderItemInfo<number>) => (
             <GuessLogItem roundNumber={guessRoundsListLength - itemData.index} guess={itemData.item} />
           )}
           keyExtractor={(item) => item.toString()}
