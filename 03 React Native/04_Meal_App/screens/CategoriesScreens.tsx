@@ -5,7 +5,7 @@ import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { CATEGORIES } from "../data/dummy-data";
 import Category from "../models/category";
 
-function CategoriesScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }) {
+function CategoriesScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }): JSX.Element {
   function renderCategoryItem(itemData: { item: Category }) {
     function pressHandler() {
       navigation.navigate("MealsOverview", {
