@@ -8,7 +8,9 @@ import Category from "../models/category";
 function CategoriesScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }) {
   function renderCategoryItem(itemData: { item: Category }) {
     function pressHandler() {
-      navigation.navigate("MealsOverview");
+      navigation.navigate("MealsOverview", {
+        categoryId: itemData.item.id,
+      });
     }
 
     return <CategoryGridTile title={itemData.item.title} color={itemData.item.color} onPress={pressHandler} />;
