@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack"; //* Can be replaced with: "@react-navigation/stack"
 
 import CategoriesScreen from "./screens/CategoriesScreens";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
@@ -14,7 +14,7 @@ export default function App(): JSX.Element {
     <React.Fragment>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="MealsCategories">
           <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
         </Stack.Navigator>
