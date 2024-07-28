@@ -10,7 +10,12 @@ function renderCategoryItem(itemData: { item: Category }): JSX.Element {
 
 function CategoriesScreen(): JSX.Element {
   return (
-    <FlatList data={CATEGORIES} keyExtractor={(item: Category) => item.id} renderItem={renderCategoryItem} numColumns={2} />
+    <FlatList
+      data={CATEGORIES as Category[]}
+      keyExtractor={(item: Category) => item.id}
+      renderItem={renderCategoryItem}
+      numColumns={2}
+    />
   );
 }
 
