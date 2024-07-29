@@ -1,11 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
+import { ParamListBase, NavigationProp } from "@react-navigation/native";
 
-function UserScreen(): JSX.Element {
+function UserScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }): JSX.Element {
+  function openDrawerHandler(): void {
+    (navigation as any).toggleDrawer();
+  }
+
   return (
     <View style={styles.rootContainer}>
       <Text>
         This is the <Text style={styles.highlight}>"User"</Text> screen!
       </Text>
+      <Button title="Open Drawer" onPress={openDrawerHandler} />
     </View>
   );
 }
