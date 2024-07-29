@@ -1,5 +1,6 @@
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-import { RouteProp, ParamListBase } from "@react-navigation/native";
+import React from "react";
+import { View, Text, Image, StyleSheet, ScrollView, Button } from "react-native";
+import { RouteProp, ParamListBase, NavigationProp } from "@react-navigation/native";
 
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
@@ -7,10 +8,28 @@ import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import Meal from "../models/meal";
 
-function MealDetailScreen({ route }: { route: RouteProp<ParamListBase, "MealDetail"> }): JSX.Element {
+function MealDetailScreen({
+  route,
+  navigation,
+}: {
+  route: RouteProp<ParamListBase, "MealDetail">;
+  navigation: NavigationProp<ParamListBase>;
+}): JSX.Element {
   const mealId = (route?.params as any)?.mealId as string;
 
   const selectedMeal = MEALS.find((meal: Meal) => meal.id === mealId) as Meal;
+
+  function headerButtonPressHandler(): void {
+    console.log("Pressed!");
+  }
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return <Button title="Tap me" onPress={headerButtonPressHandler} />;
+      },
+    });
+  }, [navigation, headerButtonPressHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>

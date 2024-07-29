@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 
-function Subtitle({ children }: { children: React.ReactNode }): JSX.Element {
+function Subtitle({ children }: { children: string }): JSX.Element {
   return (
     <View style={styles.subtitleContainer}>
       <Text style={styles.subtitle}>{children}</Text>
