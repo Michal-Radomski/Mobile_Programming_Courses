@@ -1,11 +1,10 @@
 import React from "react";
-import { View, StyleSheet, FlatList } from "react-native";
 import { useRoute, RouteProp, ParamListBase, NavigationProp } from "@react-navigation/native";
 
 import { CATEGORIES, MEALS } from "../data/dummy-data";
 import Meal from "../models/meal";
-import MealItem from "../components/MealItem";
 import Category from "../models/category";
+import MealsList from "../components/MealList/MealList";
 
 function MealsOverviewScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }): JSX.Element {
   const route: RouteProp<ParamListBase> = useRoute();
@@ -23,32 +22,7 @@ function MealsOverviewScreen({ navigation }: { navigation: NavigationProp<ParamL
     });
   }, [catId, navigation]);
 
-  function renderMealItem(itemData: { item: Meal }): JSX.Element {
-    const item: Meal = itemData.item;
-
-    const mealItemProps = {
-      id: item.id,
-      title: item.title,
-      imageUrl: item.imageUrl,
-      affordability: item.affordability,
-      complexity: item.complexity,
-      duration: item.duration,
-    };
-    return <MealItem {...mealItemProps} />;
-  }
-
-  return (
-    <View style={styles.container}>
-      <FlatList data={displayedMeals} keyExtractor={(item: Meal) => item.id} renderItem={renderMealItem} />
-    </View>
-  );
+  return <MealsList items={displayedMeals} />;
 }
 
 export default MealsOverviewScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});

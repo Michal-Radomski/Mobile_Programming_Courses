@@ -17,21 +17,21 @@ function MealDetailScreen({
   route: RouteProp<ParamListBase, "MealDetail">;
   navigation: NavigationProp<ParamListBase>;
 }): JSX.Element {
-  const favoriteMealsCtx: ContextProps = React.useContext<ContextProps>(
-    FavoritesContext as unknown as React.Context<ContextProps>
-  );
+  const favoriteMealsCtx: ContextProps = React.useContext(FavoritesContext as any);
 
   const mealId = (route?.params as any)?.mealId as string;
+  // console.log({ mealId });
 
-  const selectedMeal = MEALS.find((meal: Meal) => meal.id === mealId) as Meal;
+  const selectedMeal = MEALS?.find((meal: Meal) => meal?.id === mealId) as Meal;
 
-  const mealIsFavorite: boolean = favoriteMealsCtx.ids.includes(mealId);
+  const mealIsFavorite: boolean = favoriteMealsCtx?.ids?.includes(mealId);
+  console.log({ mealIsFavorite });
 
   function changeFavoriteStatusHandler(): void {
     if (mealIsFavorite) {
-      favoriteMealsCtx.removeFavorite(mealId);
+      favoriteMealsCtx?.removeFavorite(mealId);
     } else {
-      favoriteMealsCtx.addFavorite(mealId);
+      favoriteMealsCtx?.addFavorite(mealId);
     }
   }
 
