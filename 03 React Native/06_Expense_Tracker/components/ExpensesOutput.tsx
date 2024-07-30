@@ -41,7 +41,7 @@ function ExpensesOutput({ expenses, expensesPeriod }: { expenses: ObjectI[]; exp
   return (
     <View>
       <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
-      <ExpensesList />
+      <ExpensesList expenses={expenses} />
     </View>
   );
 }
