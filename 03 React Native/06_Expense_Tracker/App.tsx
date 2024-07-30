@@ -31,7 +31,7 @@ function ExpensesOverview(): JSX.Element {
             icon="add"
             size={24}
             color={tintColor as string}
-            onPress={() => {
+            onPress={(): void => {
               navigation.navigate("ManageExpense");
             }}
           />
@@ -65,9 +65,20 @@ export default function App(): React.JSX.Element {
     <React.Fragment>
       <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+            headerTintColor: "white",
+          }}
+        >
           <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{ headerShown: false }} />
-          <Stack.Screen name="ManageExpense" component={ManageExpenses} />
+          <Stack.Screen
+            name="ManageExpense"
+            component={ManageExpenses}
+            options={{
+              presentation: "modal",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </React.Fragment>
