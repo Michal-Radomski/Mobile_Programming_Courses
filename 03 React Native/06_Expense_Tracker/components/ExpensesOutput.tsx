@@ -4,7 +4,7 @@ import ExpensesSummary from "./ExpensesSummary";
 import ExpensesList from "./ExpensesList";
 import { ObjectI } from "../App";
 
-const DUMMY_EXPENSES: ObjectI[] = [
+export const DUMMY_EXPENSES: ObjectI[] = [
   {
     id: "e1",
     description: "A pair of shoes",
@@ -37,10 +37,10 @@ const DUMMY_EXPENSES: ObjectI[] = [
   },
 ];
 
-function ExpensesOutput({ expensesPeriod }: { expensesPeriod: string }): JSX.Element {
+function ExpensesOutput({ expenses, expensesPeriod }: { expenses: ObjectI[]; expensesPeriod: string }): JSX.Element {
   return (
     <View>
-      <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={expensesPeriod} />
+      <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
       <ExpensesList />
     </View>
   );
