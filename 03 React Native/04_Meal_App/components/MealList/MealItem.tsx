@@ -2,9 +2,22 @@ import { View, Pressable, Text, Image, StyleSheet, Platform } from "react-native
 import { useNavigation } from "@react-navigation/native";
 
 import MealDetails from "../MealDetails";
-import Meal from "../../models/meal";
 
-function MealItem({ id, title, imageUrl, duration, complexity, affordability }: Meal): JSX.Element {
+function MealItem({
+  id,
+  title,
+  imageUrl,
+  duration,
+  complexity,
+  affordability,
+}: {
+  id: string;
+  title: string;
+  imageUrl: string;
+  duration: number;
+  complexity: string;
+  affordability: string;
+}): JSX.Element {
   const navigation = useNavigation<{
     navigate(arg0: string, arg1: { mealId: string }): unknown;
   }>();

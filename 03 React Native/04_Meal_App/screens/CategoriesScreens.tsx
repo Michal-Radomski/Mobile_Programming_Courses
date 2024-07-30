@@ -7,7 +7,7 @@ import Category from "../models/category";
 
 function CategoriesScreen({ navigation }: { navigation: NavigationProp<ParamListBase> }): JSX.Element {
   function renderCategoryItem(itemData: { item: Category }) {
-    function pressHandler() {
+    function pressHandler(): void {
       navigation.navigate("MealsOverview", {
         categoryId: itemData.item.id,
       });

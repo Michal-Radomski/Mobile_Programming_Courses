@@ -10,7 +10,7 @@ function MealsOverviewScreen({ navigation }: { navigation: NavigationProp<ParamL
   const route: RouteProp<ParamListBase> = useRoute();
   const catId = (route?.params as any)?.categoryId as string;
 
-  const displayedMeals: Meal[] = MEALS.filter((mealItem: Meal) => {
+  const displayedMeals: Meal[] = MEALS?.filter((mealItem: Meal) => {
     return mealItem.categoryIds.indexOf(catId) >= 0;
   });
 

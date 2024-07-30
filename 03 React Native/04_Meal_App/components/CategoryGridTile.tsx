@@ -5,7 +5,7 @@ function CategoryGridTile({ title, color, onPress }: { title: string; color: str
     <View style={styles.gridItem}>
       <Pressable
         android_ripple={{ color: "#ccc" }}
-        style={({ pressed }: { pressed: boolean }) => [styles.button, pressed ? styles.buttonPressed : null]}
+        style={({ pressed }) => [styles.button, pressed ? styles.buttonPressed : null]}
         onPress={onPress}
       >
         <View style={[styles.innerContainer, { backgroundColor: color }]}>

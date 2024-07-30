@@ -15,7 +15,7 @@ function MealsList({ items }: { items: Meal[] }): JSX.Element {
       complexity: item.complexity,
       duration: item.duration,
     };
-    return <MealItem {...(mealItemProps as Meal)} />;
+    return <MealItem {...mealItemProps} />;
   }
 
   return (

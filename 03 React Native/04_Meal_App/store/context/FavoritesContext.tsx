@@ -6,13 +6,9 @@ export interface ContextProps {
   removeFavorite: Function;
 }
 
-export const FavoritesContext = React.createContext({
-  ids: [] as string[],
-  addFavorite: (id: string) => {},
-  removeFavorite: (id: string) => {},
-} as ContextProps);
+export const FavoritesContext = React.createContext({} as ContextProps);
 
-const FavoritesContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }): JSX.Element => {
+export const FavoritesContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }): JSX.Element => {
   const [favoriteMealIds, setFavoriteMealIds] = React.useState<string[]>([] as string[]);
 
   function addFavorite(id: string): void {
@@ -31,5 +27,3 @@ const FavoritesContextProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 };
-
-export default FavoritesContextProvider;

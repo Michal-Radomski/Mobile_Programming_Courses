@@ -8,7 +8,7 @@ import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import Meal from "../models/meal";
 import IconButton from "../components/IconButton";
-import FavoritesContext, { ContextProps } from "../store/context/FavoritesContext";
+import { FavoritesContext, ContextProps } from "../store/context/FavoritesContext";
 
 function MealDetailScreen({
   route,
@@ -17,15 +17,14 @@ function MealDetailScreen({
   route: RouteProp<ParamListBase, "MealDetail">;
   navigation: NavigationProp<ParamListBase>;
 }): JSX.Element {
-  const favoriteMealsCtx: ContextProps = React.useContext(FavoritesContext as any);
+  const favoriteMealsCtx = React.useContext(FavoritesContext) as ContextProps;
+  // console.log({ favoriteMealsCtx });
 
   const mealId = (route?.params as any)?.mealId as string;
-  // console.log({ mealId });
 
   const selectedMeal = MEALS?.find((meal: Meal) => meal?.id === mealId) as Meal;
 
   const mealIsFavorite: boolean = favoriteMealsCtx?.ids?.includes(mealId);
-  console.log({ mealIsFavorite });
 
   function changeFavoriteStatusHandler(): void {
     if (mealIsFavorite) {
