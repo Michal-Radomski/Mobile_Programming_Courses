@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { RouteProp, ParamListBase, NavigationProp } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
@@ -8,7 +9,11 @@ import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import Meal from "../models/meal";
 import IconButton from "../components/IconButton";
-import { FavoritesContext, ContextProps } from "../store/context/FavoritesContext";
+// import { FavoritesContext, ContextProps } from "../store/context/FavoritesContext";
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
+import { store } from "../store/redux/store";
+
+export type RootState = ReturnType<typeof store.getState>;
 
 function MealDetailScreen({
   route,
@@ -17,20 +22,36 @@ function MealDetailScreen({
   route: RouteProp<ParamListBase, "MealDetail">;
   navigation: NavigationProp<ParamListBase>;
 }): JSX.Element {
-  const favoriteMealsCtx = React.useContext(FavoritesContext) as ContextProps;
+  const mealId = (route?.params as any)?.mealId as string;
+  //* Context
+  // const favoriteMealsCtx = React.useContext(FavoritesContext) as ContextProps;
   // console.log({ favoriteMealsCtx });
 
-  const mealId = (route?.params as any)?.mealId as string;
+  // const selectedMeal = MEALS?.find((meal: Meal) => meal?.id === mealId) as Meal;
 
-  const selectedMeal = MEALS?.find((meal: Meal) => meal?.id === mealId) as Meal;
+  // const mealIsFavorite: boolean = favoriteMealsCtx?.ids?.includes(mealId);
 
-  const mealIsFavorite: boolean = favoriteMealsCtx?.ids?.includes(mealId);
+  // function changeFavoriteStatusHandler(): void {
+  //   if (mealIsFavorite) {
+  //     favoriteMealsCtx?.removeFavorite(mealId);
+  //   } else {
+  //     favoriteMealsCtx?.addFavorite(mealId);
+  //   }
+  // }
+
+  //* Redux-Toolkit
+  const dispatch = useDispatch();
+  const favoriteMealIds: string[] = useSelector((state: RootState) => state.favoriteMeals.ids);
+
+  const selectedMeal = MEALS.find((meal: Meal) => meal.id === mealId) as Meal;
+
+  const mealIsFavorite: boolean = favoriteMealIds.includes(mealId);
 
   function changeFavoriteStatusHandler(): void {
     if (mealIsFavorite) {
-      favoriteMealsCtx?.removeFavorite(mealId);
+      dispatch(removeFavorite({ id: mealId }));
     } else {
-      favoriteMealsCtx?.addFavorite(mealId);
+      dispatch(addFavorite({ id: mealId }));
     }
   }
 
