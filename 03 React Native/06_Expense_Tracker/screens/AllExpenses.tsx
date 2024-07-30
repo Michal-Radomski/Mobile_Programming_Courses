@@ -1,10 +1,11 @@
 import React from "react";
-import { Text } from "react-native";
+
+import ExpensesOutput from "../components/ExpensesOutput";
 
 const AllExpenses = (): JSX.Element => {
   return (
     <React.Fragment>
-      <Text>AllExpenses</Text>
+      <ExpensesOutput expensesPeriod="Total" />;
     </React.Fragment>
   );
 };

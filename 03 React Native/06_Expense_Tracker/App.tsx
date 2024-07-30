@@ -13,6 +13,10 @@ import { GlobalStyles } from "./constants/styles";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
+export interface ObjectI {
+  [key: string]: string | number | Date;
+}
+
 function ExpensesOverview(): React.JSX.Element {
   return (
     <BottomTabs.Navigator
