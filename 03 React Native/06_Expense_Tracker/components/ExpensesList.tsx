@@ -1,4 +1,5 @@
 import { FlatList, Text } from "react-native";
+
 import { ObjectI } from "../App";
 
 function renderExpenseItem(itemData: { item: ObjectI }): JSX.Element {
