@@ -1,11 +1,11 @@
 import React from "react";
 
-import ExpensesOutput, { DUMMY_EXPENSES } from "../components/ExpensesOutput";
+import ExpensesOutput from "../components/ExpensesOutput";
 
 const AllExpenses = (): JSX.Element => {
   return (
     <React.Fragment>
-      <ExpensesOutput expensesPeriod="Total" expenses={DUMMY_EXPENSES} />
+      <ExpensesOutput expensesPeriod="Total" expenses={[]} />
     </React.Fragment>
   );
 };

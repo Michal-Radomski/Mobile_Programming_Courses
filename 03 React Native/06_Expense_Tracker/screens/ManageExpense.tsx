@@ -23,11 +23,17 @@ function ManageExpense({
     });
   }, [navigation, isEditing]);
 
-  function deleteExpenseHandler() {}
+  function deleteExpenseHandler(): void {
+    navigation.goBack();
+  }
 
-  function cancelHandler() {}
+  function cancelHandler(): void {
+    navigation.goBack();
+  }
 
-  function confirmHandler() {}
+  function confirmHandler(): void {
+    navigation.goBack();
+  }
 
   return (
     <View style={styles.container}>
