@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import ManageExpenses from "./screens/ManageExpenses";
+import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
@@ -74,7 +74,7 @@ export default function App(): React.JSX.Element {
           <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{ headerShown: false }} />
           <Stack.Screen
             name="ManageExpense"
-            component={ManageExpenses}
+            component={ManageExpense}
             options={{
               presentation: "modal",
             }}
