@@ -4,11 +4,21 @@ import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/
 import { GlobalStyles } from "../constants/styles";
 import { getFormattedDate } from "../util/date";
 
-function ExpenseItem({ description, amount, date }: { description?: string; amount?: number; date?: Date }): JSX.Element {
+function ExpenseItem({
+  id,
+  description,
+  amount,
+  date,
+}: {
+  id?: string;
+  description?: string;
+  amount?: number;
+  date?: Date;
+}): JSX.Element {
   const navigation = useNavigation() as NavigationProp<ParamListBase>;
 
   function expensePressHandler(): void {
-    navigation.navigate("ManageExpense");
+    navigation.navigate("ManageExpense", { expenseId: id });
   }
 
   return (
