@@ -5,6 +5,7 @@ import { RouteProp, ParamListBase, NavigationProp } from "@react-navigation/nati
 import { GlobalStyles } from "../constants/styles";
 import IconButton from "../components/IconButton";
 import Button from "../components/Button";
+import { ContextI, ExpensesContext } from "../store/expensesContext";
 
 function ManageExpense({
   route,
@@ -13,6 +14,8 @@ function ManageExpense({
   route: RouteProp<ParamListBase>;
   navigation: NavigationProp<ParamListBase>;
 }): JSX.Element {
+  const expensesCtx: ContextI = React.useContext(ExpensesContext);
+
   const editedExpenseId = (route.params as any)?.expenseId;
   const isEditing: boolean = !!editedExpenseId;
   // console.log({ editedExpenseId, isEditing });
@@ -24,6 +27,7 @@ function ManageExpense({
   }, [navigation, isEditing]);
 
   function deleteExpenseHandler(): void {
+    expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
 
@@ -32,6 +36,19 @@ function ManageExpense({
   }
 
   function confirmHandler(): void {
+    if (isEditing) {
+      expensesCtx.updateExpense(editedExpenseId, {
+        description: "Test!!!!",
+        amount: 29.99,
+        date: new Date("2022-05-20"),
+      });
+    } else {
+      expensesCtx.addExpense({
+        description: "Test",
+        amount: 19.99,
+        date: new Date("2022-05-19"),
+      });
+    }
     navigation.goBack();
   }
 
