@@ -7,10 +7,12 @@ function Input({
   label,
   textInputConfig,
   style,
+  invalid,
 }: {
   label: string;
   textInputConfig: ObjectI;
   style?: ObjectI;
+  invalid: boolean;
 }): JSX.Element {
   const inputStyles = [styles.input];
 
@@ -18,9 +20,13 @@ function Input({
     inputStyles.push(styles.inputMultiline);
   }
 
+  if (invalid) {
+    inputStyles.push(styles.invalidInput);
+  }
+
   return (
     <View style={[styles.inputContainer, style]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, invalid && styles.invalidLabel]}>{label}</Text>
       <TextInput style={inputStyles} {...textInputConfig} />
     </View>
   );
@@ -48,5 +54,11 @@ const styles = StyleSheet.create({
   inputMultiline: {
     minHeight: 100,
     textAlignVertical: "top",
+  },
+  invalidLabel: {
+    color: GlobalStyles.colors.error500,
+  },
+  invalidInput: {
+    backgroundColor: GlobalStyles.colors.error50,
   },
 });
