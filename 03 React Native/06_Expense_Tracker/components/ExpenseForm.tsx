@@ -3,8 +3,16 @@ import { StyleSheet, Text, View } from "react-native";
 
 import Input from "./Input";
 import { ObjectI } from "../App";
+import Button from "./Button";
 
-function ExpenseForm(this: Window): JSX.Element {
+function ExpenseForm(
+  this: Global,
+  {
+    submitButtonLabel,
+    onCancel,
+    onSubmit,
+  }: { submitButtonLabel: string; onCancel: () => void; onSubmit: (arg0: ObjectI) => void }
+): JSX.Element {
   // console.log("this:", this, typeof this);
 
   const [inputValues, setInputValues] = React.useState<ObjectI>({
@@ -20,6 +28,16 @@ function ExpenseForm(this: Window): JSX.Element {
         [inputIdentifier]: enteredValue,
       };
     });
+  }
+
+  function submitHandler(): void {
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date as string),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
   }
 
   return (
@@ -49,12 +67,21 @@ function ExpenseForm(this: Window): JSX.Element {
       <Input
         label="Description"
         textInputConfig={{
+          multiline: true,
           // autoCapitalize: 'none'
           // autoCorrect: false // default is true
           onChangeText: inputChangedHandler.bind(this, "description"),
           value: inputValues.description,
         }}
       />
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={submitHandler}>
+          {submitButtonLabel}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -78,5 +105,14 @@ const styles = StyleSheet.create({
   },
   rowInput: {
     flex: 1,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
 });

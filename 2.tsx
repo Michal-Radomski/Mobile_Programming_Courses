@@ -1,4 +1,4 @@
-// LoginForm.tsx (context reduder redux) + window in native
+// LoginForm.tsx
 import React from "react";
 import useForm from "./useForm";
 
