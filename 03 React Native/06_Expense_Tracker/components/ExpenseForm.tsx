@@ -26,8 +26,8 @@ function ExpenseForm(): JSX.Element {
         label="Description"
         textInputConfig={{
           multiline: true,
-          // autoCapitalize: 'none'
-          // autoCorrect: false // default is true
+          autoCapitalize: "none",
+          autoCorrect: false, // default is true
         }}
       />
     </View>
