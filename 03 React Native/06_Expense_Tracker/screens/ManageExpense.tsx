@@ -39,12 +39,12 @@ function ManageExpense({
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData: ObjectI): void {
+  async function confirmHandler(expenseData: ObjectI): Promise<void> {
     if (isEditing) {
       expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      storeExpense(expenseData);
-      expensesCtx.addExpense(expenseData);
+      const id = await storeExpense(expenseData);
+      expensesCtx.addExpense({ ...expenseData, id });
     }
     navigation.goBack();
   }

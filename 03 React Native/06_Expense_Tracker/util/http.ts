@@ -5,11 +5,15 @@ import { ObjectI } from "../App";
 import { REACT_APP_FIREBASE_URL } from "@env";
 // console.log("REACT_APP_FIREBASE_URL:", REACT_APP_FIREBASE_URL);
 
-export function storeExpense(expenseData: ObjectI): void {
-  axios
-    .post(`${REACT_APP_FIREBASE_URL}/expenses.json`, expenseData)
-    .then((res) => console.log("res?.status:", res?.status))
-    .catch((err) => console.log("err:", err));
+export async function storeExpense(expenseData: ObjectI): Promise<string | undefined> {
+  try {
+    const response = await axios.post(`${REACT_APP_FIREBASE_URL}/expenses.json`, expenseData);
+    await console.log("response?.status:", response?.status);
+    const id: string = response.data.name;
+    return id;
+  } catch (error) {
+    console.log("error:", error);
+  }
 }
 
 export async function fetchExpenses(): Promise<ObjectI[] | undefined> {

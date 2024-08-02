@@ -16,7 +16,7 @@ function RecentExpenses(): JSX.Element {
     })();
   }, []);
 
-  const recentExpenses = expensesCtx.expenses.filter((expense: ObjectI) => {
+  const recentExpenses: ObjectI[] = expensesCtx.expenses.filter((expense: ObjectI) => {
     const today = new Date();
     const date7DaysAgo: Date = getDateMinusDays(today, 7);
 
