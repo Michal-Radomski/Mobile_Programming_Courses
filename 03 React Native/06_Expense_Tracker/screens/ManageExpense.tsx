@@ -6,6 +6,7 @@ import { GlobalStyles } from "../constants/styles";
 import IconButton from "../components/IconButton";
 import { ContextI, ExpensesContext } from "../store/expensesContext";
 import ExpenseForm from "../components/ExpenseForm";
+import { ObjectI } from "../App";
 
 function ManageExpense({
   route,
@@ -19,6 +20,8 @@ function ManageExpense({
   const editedExpenseId = (route.params as any)?.expenseId;
   const isEditing: boolean = !!editedExpenseId;
   // console.log({ editedExpenseId, isEditing });
+
+  const selectedExpense = expensesCtx.expenses.find((expense: ObjectI) => expense.id === editedExpenseId) as ObjectI;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,26 +38,23 @@ function ManageExpense({
     navigation.goBack();
   }
 
-  function confirmHandler(): void {
+  function confirmHandler(expenseData: ObjectI): void {
     if (isEditing) {
-      expensesCtx.updateExpense(editedExpenseId, {
-        description: "Test!!!!",
-        amount: 29.99,
-        date: new Date("2022-05-20"),
-      });
+      expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      expensesCtx.addExpense({
-        description: "Test",
-        amount: 19.99,
-        date: new Date("2022-05-19"),
-      });
+      expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
-      <ExpenseForm submitButtonLabel={isEditing ? "Update" : "Add"} onSubmit={confirmHandler} onCancel={cancelHandler} />
+      <ExpenseForm
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onSubmit={confirmHandler}
+        onCancel={cancelHandler}
+        defaultValues={selectedExpense}
+      />
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={deleteExpenseHandler} />

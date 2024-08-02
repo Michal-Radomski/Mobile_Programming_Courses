@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Input from "./Input";
 import { ObjectI } from "../App";
 import Button from "./Button";
+import { getFormattedDate } from "../util/date";
 
 function ExpenseForm(
   this: Global,
@@ -11,14 +12,15 @@ function ExpenseForm(
     submitButtonLabel,
     onCancel,
     onSubmit,
-  }: { submitButtonLabel: string; onCancel: () => void; onSubmit: (arg0: ObjectI) => void }
+    defaultValues,
+  }: { submitButtonLabel: string; onCancel: () => void; onSubmit: (arg0: ObjectI) => void; defaultValues: ObjectI }
 ): JSX.Element {
   // console.log("this:", this, typeof this);
 
   const [inputValues, setInputValues] = React.useState<ObjectI>({
-    amount: "",
-    date: "",
-    description: "",
+    amount: defaultValues ? defaultValues.amount.toString() : "",
+    date: defaultValues ? getFormattedDate(defaultValues.date as Date) : "",
+    description: defaultValues ? defaultValues.description : "",
   });
 
   function inputChangedHandler(inputIdentifier: string, enteredValue: string): void {
@@ -32,7 +34,7 @@ function ExpenseForm(
 
   function submitHandler(): void {
     const expenseData = {
-      amount: +inputValues.amount,
+      amount: +inputValues.amount as number,
       date: new Date(inputValues.date as string),
       description: inputValues.description,
     };
