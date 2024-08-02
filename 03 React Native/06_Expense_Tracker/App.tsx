@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 export interface ObjectI {
-  [key: string]: string | number | Date;
+  [key: string]: string | number | Date | Function | boolean;
 }
 
 function ExpensesOverview(): JSX.Element {
