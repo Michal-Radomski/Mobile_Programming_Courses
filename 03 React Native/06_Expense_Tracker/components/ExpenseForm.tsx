@@ -1,9 +1,26 @@
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import Input from "./Input";
+import { ObjectI } from "../App";
 
-function ExpenseForm(): JSX.Element {
-  function amountChangedHandler() {}
+function ExpenseForm(this: Window): JSX.Element {
+  // console.log("this:", this, typeof this);
+
+  const [inputValues, setInputValues] = React.useState<ObjectI>({
+    amount: "",
+    date: "",
+    description: "",
+  });
+
+  function inputChangedHandler(inputIdentifier: string, enteredValue: string): void {
+    setInputValues((curInputValues: ObjectI) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredValue,
+      };
+    });
+  }
 
   return (
     <View style={styles.form}>
@@ -14,7 +31,8 @@ function ExpenseForm(): JSX.Element {
           label="Amount"
           textInputConfig={{
             keyboardType: "decimal-pad",
-            onChangeText: amountChangedHandler,
+            onChangeText: inputChangedHandler.bind(this, "amount"),
+            value: inputValues.amount,
           }}
         />
         <Input
@@ -23,16 +41,18 @@ function ExpenseForm(): JSX.Element {
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
-            onChangeText: () => {},
+            onChangeText: inputChangedHandler.bind(this, "date"),
+            value: inputValues.date,
           }}
         />
       </View>
       <Input
         label="Description"
         textInputConfig={{
-          multiline: true,
-          // autoCapitalize: "none",
-          // autoCorrect: false, // default is true
+          // autoCapitalize: 'none'
+          // autoCorrect: false // default is true
+          onChangeText: inputChangedHandler.bind(this, "description"),
+          value: inputValues.description,
         }}
       />
     </View>
