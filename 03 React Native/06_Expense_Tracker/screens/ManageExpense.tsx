@@ -7,6 +7,7 @@ import IconButton from "../components/IconButton";
 import { ContextI, ExpensesContext } from "../store/expensesContext";
 import ExpenseForm from "../components/ExpenseForm";
 import { ObjectI } from "../App";
+import { storeExpense } from "../util/http";
 
 function ManageExpense({
   route,
@@ -42,6 +43,7 @@ function ManageExpense({
     if (isEditing) {
       expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
+      storeExpense(expenseData);
       expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
