@@ -4,9 +4,17 @@ import { ContextI, ExpensesContext } from "../store/expensesContext";
 import ExpensesOutput from "../components/ExpensesOutput";
 import { getDateMinusDays } from "../util/date";
 import { ObjectI } from "../App";
+import { fetchExpenses } from "../util/http";
 
 function RecentExpenses(): JSX.Element {
   const expensesCtx: ContextI = React.useContext(ExpensesContext);
+
+  React.useEffect(() => {
+    (async function getExpenses(): Promise<void> {
+      const expenses = (await fetchExpenses()) as ObjectI[];
+      expensesCtx.setExpenses(expenses as ObjectI[]);
+    })();
+  }, []);
 
   const recentExpenses = expensesCtx.expenses.filter((expense: ObjectI) => {
     const today = new Date();

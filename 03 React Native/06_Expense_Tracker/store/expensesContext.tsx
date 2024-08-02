@@ -61,6 +61,7 @@ const DUMMY_EXPENSES: ObjectI[] = [
 ];
 
 export interface ContextI {
+  setExpenses: Function;
   expenses: ObjectI[];
   addExpense: Function;
   deleteExpense: Function;
@@ -74,6 +75,8 @@ function expensesReducer(state: ObjectI[], action: { type: string; payload: Root
     case "ADD":
       const id = new Date().toString() + Math.random().toString();
       return [{ ...action.payload, id: id }, ...state];
+    case "SET":
+      return action.payload;
     case "UPDATE":
       const updatableExpenseIndex: number = state.findIndex((expense: ObjectI) => expense.id === action.payload.id);
       const updatableExpense = state[updatableExpenseIndex];
@@ -104,7 +107,17 @@ function ExpensesContextProvider({ children }: { children: React.ReactNode }): J
     dispatch({ type: "UPDATE", payload: { id: id, data: expenseData } });
   }
 
-  const contextValue = { expenses: expensesState, addExpense, deleteExpense, updateExpense } as ContextI;
+  function setExpenses(expenses: ObjectI[]): void {
+    dispatch({ type: "SET", payload: expenses });
+  }
+
+  const contextValue = {
+    expenses: expensesState,
+    addExpense,
+    deleteExpense,
+    updateExpense,
+    setExpenses,
+  } as unknown as ContextI;
 
   return <ExpensesContext.Provider value={contextValue}>{children}</ExpensesContext.Provider>;
 }
