@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import { ObjectI } from "../App";
 // @ts-ignore
@@ -33,6 +33,26 @@ export async function fetchExpenses(): Promise<ObjectI[] | undefined> {
       expenses.push(expenseObj);
     }
     return expenses;
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
+export async function updateExpense(id: string, expenseData: ObjectI): Promise<AxiosResponse | undefined> {
+  try {
+    const res = await axios.put(`${REACT_APP_FIREBASE_URL}/expenses/${id}.json`, expenseData);
+    console.log("res.status:", res.status);
+    return res;
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
+export async function deleteExpense(id: string): Promise<AxiosResponse | undefined> {
+  try {
+    const res = await axios.delete(`${REACT_APP_FIREBASE_URL}/expenses/${id}.json`);
+    console.log("res.status:", res.status);
+    return res;
   } catch (error) {
     console.log("error:", error);
   }
