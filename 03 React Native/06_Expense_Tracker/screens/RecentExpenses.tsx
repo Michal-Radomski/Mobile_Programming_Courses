@@ -20,6 +20,7 @@ function RecentExpenses(): JSX.Element {
         const expenses = (await fetchExpenses()) as ObjectI[];
         expensesCtx.setExpenses(expenses as ObjectI[]);
       } catch (error) {
+        console.log("error:", error);
         setError("Could not fetch expenses!");
       }
       setIsFetching(false);
