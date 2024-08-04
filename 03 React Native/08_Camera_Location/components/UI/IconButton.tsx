@@ -10,6 +10,8 @@ type IconProps = {
 };
 
 const IconButton = ({ icon, size, color, onPress }: IconProps): JSX.Element => {
+  // console.log("color:", color);
+
   return (
     <React.Fragment>
       <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={onPress}>
