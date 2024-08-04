@@ -4,7 +4,7 @@ import { launchCameraAsync, useCameraPermissions, PermissionStatus, ImagePickerR
 function ImagePicker(): JSX.Element {
   const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
-  async function verifyPermissions() {
+  async function verifyPermissions(): Promise<boolean> {
     if (cameraPermissionInformation?.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestPermission();
 
@@ -20,7 +20,7 @@ function ImagePicker(): JSX.Element {
   }
 
   async function takeImageHandler(): Promise<void> {
-    const hasPermission = await verifyPermissions();
+    const hasPermission: boolean = await verifyPermissions();
 
     if (!hasPermission) {
       return;
