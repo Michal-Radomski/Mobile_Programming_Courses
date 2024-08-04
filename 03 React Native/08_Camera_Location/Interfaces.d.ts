@@ -3,7 +3,7 @@ interface PlaceI {
   imageUri: string;
   title: string;
   address: string;
-  Location?: LocationI;
+  location?: LocationI;
 }
 
 interface LocationI {

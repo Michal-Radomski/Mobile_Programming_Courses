@@ -4,7 +4,8 @@ class Place implements PlaceI {
   imageUri: string;
   address: string;
   location?: LocationI;
-  constructor(title: string, imageUri: string, address: string, location: LocationI) {
+  // constructor(title: string, imageUri: string, address: string, location: LocationI) {
+  constructor({ title, imageUri, address, location }: PlaceI) {
     this.title = title;
     this.imageUri = imageUri;
     this.address = address;

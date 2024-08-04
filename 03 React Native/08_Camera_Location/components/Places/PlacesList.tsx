@@ -13,7 +13,11 @@ const PlacesList = ({ places }: { places: PlaceI[] }): JSX.Element => {
 
   return (
     <React.Fragment>
-      <FlatList data={places} keyExtractor={(item) => item.id} renderItem={({ item }) => <PlaceItem place={item} />} />
+      <FlatList
+        data={places}
+        keyExtractor={(item: PlaceI) => item.id}
+        renderItem={({ item }: { item: PlaceI }) => <PlaceItem place={item} />}
+      />
     </React.Fragment>
   );
 };
