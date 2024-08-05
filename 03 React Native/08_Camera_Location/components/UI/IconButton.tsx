@@ -2,11 +2,12 @@ import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-type IconProps = {
+export type IconProps = {
   icon: keyof typeof Ionicons.glyphMap;
   color?: string;
   onPress: () => void;
-  size: number;
+  size?: number;
+  children?: React.ReactNode;
 };
 
 const IconButton = ({ icon, size, color, onPress }: IconProps): JSX.Element => {
