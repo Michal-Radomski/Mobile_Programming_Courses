@@ -46,7 +46,7 @@ function LocationPicker(): JSX.Element {
     });
   }
 
-  function pickOnMapHandler() {
+  function pickOnMapHandler(): void {
     navigation.navigate("Map");
   }
 
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-    // borderRadius: 4
+    borderRadius: 4,
   },
 });
