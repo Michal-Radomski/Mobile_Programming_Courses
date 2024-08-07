@@ -5,6 +5,8 @@ import MapView, { MapPressEvent, Marker } from "react-native-maps";
 import IconButton from "../components/UI/IconButton";
 
 function Map({ navigation }: { navigation: any }): JSX.Element {
+  // console.log("navigation:", navigation);
+
   const [selectedLocation, setSelectedLocation] = React.useState<LocationI | null>(null);
 
   const region = {
@@ -35,15 +37,16 @@ function Map({ navigation }: { navigation: any }): JSX.Element {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: ({ tintColor }: { tintColor: string }) => (
-        <IconButton icon="save" size={24} color={tintColor} onPress={savePickedLocationHandler} />
-      ),
+      headerRight: ({ tintColor }: { tintColor: string }) => {
+        // console.log({ tintColor });
+        return <IconButton icon="save" size={24} color={tintColor} onPress={savePickedLocationHandler} />;
+      },
     });
   }, [navigation, savePickedLocationHandler]);
 
   return (
     <MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler}>
-      {selectedLocation && (
+      {selectedLocation ? (
         <Marker
           title="Picked Location"
           coordinate={{
@@ -51,7 +54,7 @@ function Map({ navigation }: { navigation: any }): JSX.Element {
             longitude: selectedLocation.lng,
           }}
         />
-      )}
+      ) : null}
     </MapView>
   );
 }
