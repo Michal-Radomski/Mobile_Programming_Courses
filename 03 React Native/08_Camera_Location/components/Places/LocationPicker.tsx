@@ -7,7 +7,7 @@ import { Colors } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
 import { getMapPreview } from "../../util/location";
 
-function LocationPicker(): JSX.Element {
+function LocationPicker({ onPickLocation }: { onPickLocation: Function }): JSX.Element {
   const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
 
   const navigation = useNavigation<{

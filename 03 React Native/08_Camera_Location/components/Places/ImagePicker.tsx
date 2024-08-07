@@ -5,7 +5,7 @@ import { launchCameraAsync, useCameraPermissions, PermissionStatus, ImagePickerR
 import OutlinedButton from "../UI/OutlinedButton";
 import { Colors } from "../../constants/colors";
 
-function ImagePicker(): JSX.Element {
+function ImagePicker({ onTakeImage }: { onTakeImage: (imageUri: string) => void }): JSX.Element {
   const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
 
   const [pickedImage, setPickedImage] = React.useState<string>("");
