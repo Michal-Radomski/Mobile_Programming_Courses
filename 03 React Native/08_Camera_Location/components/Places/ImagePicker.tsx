@@ -39,6 +39,7 @@ function ImagePicker({ onTakeImage }: { onTakeImage: (imageUri: string) => void 
     });
     // console.log("image:", JSON.stringify(image));
     setPickedImage(image.assets?.[0]?.uri as string);
+    onTakeImage(image.assets?.[0]?.uri as string);
   }
 
   let imagePreview = <Text>No image taken yet.</Text>;
