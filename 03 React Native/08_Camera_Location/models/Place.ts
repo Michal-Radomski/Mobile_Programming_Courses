@@ -1,15 +1,15 @@
-class Place implements PlaceI {
+// Todo: refactor!
+export class Place {
   id: string;
   title: string;
   imageUri: string;
   address: string;
-  location?: LocationI;
-  // constructor(title: string, imageUri: string, address: string, location: LocationI) {
-  constructor({ title, imageUri, address, location }: PlaceI) {
+  location: { lat: number; lng: number };
+  constructor(title: string, imageUri: string, location: PlaceI) {
     this.title = title;
     this.imageUri = imageUri;
-    this.address = address;
-    this.location = location; // { lat: 0.141241, lng: 127.121 }
+    this.address = location.address;
+    this.location = { lat: location.lat, lng: location.lng }; // { lat: 0.141241, lng: 127.121 }
     this.id = new Date().toString() + Math.random().toString();
   }
 }

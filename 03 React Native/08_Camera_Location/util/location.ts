@@ -7,16 +7,21 @@ export function getMapPreview(lat: number, lng: number): string {
   return imagePreviewUrl;
 }
 
-export async function getAddress(lat: number, lng: number): Promise<string> {
+export async function getAddress(lat: number, lng: number): Promise<string | undefined> {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${REACT_APP_GOOGLE_API_KEY}`;
-  const response = await fetch(url);
-  // console.log("response:", response);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch address!");
+  try {
+    const response = await fetch(url);
+    // console.log("response:", response);
+
+    // if (!response.ok) {
+    //   throw new Error("Failed to fetch address!");
+    // }
+
+    const data = await response.json();
+    const address = (await data.results[0].formatted_address) as string;
+    return address;
+  } catch (error) {
+    console.log("error:", error);
   }
-
-  const data = await response.json();
-  const address = data.results[0].formatted_address as string;
-  return address;
 }

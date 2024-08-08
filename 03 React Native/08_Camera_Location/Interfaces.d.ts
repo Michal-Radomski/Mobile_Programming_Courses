@@ -1,9 +1,11 @@
 interface PlaceI {
+  // Todo: refactor!
   id: string;
   imageUri: string;
   title: string;
   address: string;
-  location?: LocationI;
+  lat: number;
+  lng: number;
 }
 
 interface LocationI {
