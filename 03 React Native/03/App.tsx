@@ -25,6 +25,7 @@ export default function App(): JSX.Element {
   });
   // console.log({ fontsLoaded });
 
+  // Todo: fix!
   React.useEffect(() => {
     if (!fontsLoaded) return;
 
