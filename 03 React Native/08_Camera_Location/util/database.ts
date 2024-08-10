@@ -34,3 +34,18 @@ export async function insertPlace(place: Place): Promise<SQLite.SQLiteRunResult 
     console.log("error:", error);
   }
 }
+
+export async function fetchPlaces(): Promise<PlaceI[] | undefined> {
+  try {
+    const res = (await database.getAllAsync(`SELECT * FROM places;`)) as PlaceI[];
+    // console.log("res:", res);
+
+    const places = [];
+    for (const row of res) {
+      places.push(row);
+    }
+    return places;
+  } catch (error) {
+    console.error({ error });
+  }
+}

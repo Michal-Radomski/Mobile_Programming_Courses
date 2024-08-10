@@ -7,9 +7,7 @@ import { Place } from "../models/Place";
 const AddPlace = ({ navigation }: { navigation: any }): JSX.Element => {
   async function createPlaceHandler(place: Place): Promise<void> {
     await insertPlace(place);
-    navigation.navigate("AllPlaces", {
-      place: place,
-    });
+    navigation.navigate("AllPlaces");
   }
 
   return (
