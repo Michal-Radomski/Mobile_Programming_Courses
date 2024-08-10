@@ -40,7 +40,7 @@ export async function fetchPlaces(): Promise<PlaceI[] | undefined> {
     const res = (await database.getAllAsync(`SELECT * FROM places;`)) as PlaceI[];
     // console.log("res:", res);
 
-    const places = [];
+    const places = [] as PlaceI[];
     for (const row of res) {
       places.push(row);
     }

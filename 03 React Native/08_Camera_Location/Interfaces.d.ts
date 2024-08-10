@@ -3,12 +3,14 @@ interface PlaceI {
   id: string;
   imageUri: string;
   title: string;
-  address: string;
-  lat: number;
-  lng: number;
+  // address: string;
+  // lat: number;
+  // lng: number;
+  location: LocationI;
 }
 
 interface LocationI {
+  address: string;
   lat: number;
   lng: number;
 }
