@@ -49,3 +49,13 @@ export async function fetchPlaces(): Promise<PlaceI[] | undefined> {
     console.error({ error });
   }
 }
+
+export async function fetchPlaceDetails(id: string): Promise<PlaceI | undefined> {
+  try {
+    const res = (await database.getFirstAsync("SELECT * FROM places WHERE id = ?", [id])) as PlaceI;
+    // console.log("res:", res);
+    return res;
+  } catch (error) {
+    console.error({ error });
+  }
+}

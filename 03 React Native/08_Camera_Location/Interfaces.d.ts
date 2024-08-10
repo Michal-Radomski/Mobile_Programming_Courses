@@ -1,4 +1,5 @@
 interface PlaceI {
+  address: string;
   // Todo: refactor!
   id: string;
   imageUri: string;
