@@ -5,8 +5,8 @@ interface PlaceI {
   imageUri: string;
   title: string;
   // address: string;
-  // lat: number;
-  // lng: number;
+  lat?: number;
+  lng?: number;
   location: LocationI;
 }
 

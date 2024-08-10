@@ -22,8 +22,8 @@ function LocationPicker({ onPickLocation }: { onPickLocation: Function }): JSX.E
   React.useEffect(() => {
     if (isFocused && route.params) {
       const mapPickedLocation = {
-        lat: (route.params as any).pickedLat as number,
-        lng: (route.params as any).pickedLng as number,
+        lat: (route.params as any)?.pickedLat as number,
+        lng: (route.params as any)?.pickedLng as number,
       };
       setPickedLocation(mapPickedLocation);
     }

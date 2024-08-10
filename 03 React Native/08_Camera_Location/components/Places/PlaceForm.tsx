@@ -28,7 +28,7 @@ const PlaceForm = ({ onCreatePlace }: { onCreatePlace: Function }): JSX.Element 
     // console.log("enteredTitle:", enteredTitle);
     // console.log("selectedImage:", selectedImage);
     // console.log("pickedLocation:", pickedLocation);
-    const placeData = new Place(enteredTitle, selectedImage, pickedLocation!);
+    const placeData = new Place(enteredTitle, selectedImage, pickedLocation! as LocationI);
     // console.log("placeData:", placeData);
     onCreatePlace(placeData);
   }

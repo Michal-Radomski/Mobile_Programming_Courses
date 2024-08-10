@@ -9,9 +9,12 @@ function PlaceDetails({ route, navigation }: any): JSX.Element {
   const [fetchedPlace, setFetchedPlace] = React.useState<PlaceI>();
 
   function showOnMapHandler(): void {
+    // console.log("fetchedPlace:", fetchedPlace);
     navigation.navigate("Map", {
-      initialLat: fetchedPlace?.location.lat,
-      initialLng: fetchedPlace?.location.lng,
+      // initialLat: fetchedPlace?.location?.lat,
+      // initialLng: fetchedPlace?.location?.lng,
+      initialLat: fetchedPlace?.lat,
+      initialLng: fetchedPlace?.lng,
     });
   }
 

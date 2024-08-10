@@ -4,19 +4,26 @@ import MapView, { MapPressEvent, Marker } from "react-native-maps";
 
 import IconButton from "../components/UI/IconButton";
 
-function Map({ navigation }: { navigation: any }): JSX.Element {
+function Map({ navigation, route }: { navigation: any; route: any }): JSX.Element {
   // console.log("navigation:", navigation);
 
-  const [selectedLocation, setSelectedLocation] = React.useState<LocationI | null>(null);
+  const initialLocation = route.params && {
+    lat: route.params.initialLat,
+    lng: route.params.initialLng,
+  };
+
+  const [selectedLocation, setSelectedLocation] = React.useState<LocationI>(initialLocation);
 
   const region = {
-    latitude: 37.78,
-    longitude: -122.43,
+    latitude: initialLocation ? initialLocation.lat : 37.78,
+    longitude: initialLocation ? initialLocation.lng : -122.43,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   function selectLocationHandler(event: MapPressEvent): void {
+    if (initialLocation) return;
+
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
 
@@ -36,13 +43,17 @@ function Map({ navigation }: { navigation: any }): JSX.Element {
   }, [navigation, selectedLocation]);
 
   React.useLayoutEffect(() => {
+    if (initialLocation) {
+      return;
+    }
+
     navigation.setOptions({
       headerRight: ({ tintColor }: { tintColor: string }) => {
         // console.log({ tintColor });
         return <IconButton icon="save" size={24} color={tintColor} onPress={savePickedLocationHandler} />;
       },
     });
-  }, [navigation, savePickedLocationHandler]);
+  }, [navigation, savePickedLocationHandler, initialLocation]);
 
   return (
     <MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler}>

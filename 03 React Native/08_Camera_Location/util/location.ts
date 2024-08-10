@@ -19,7 +19,7 @@ export async function getAddress(lat: number, lng: number): Promise<string | und
     // }
 
     const data = await response.json();
-    const address = (await data.results[0].formatted_address) as string;
+    const address = (await data?.results[0]?.formatted_address) as string;
     return address;
   } catch (error) {
     console.log("error:", error);
