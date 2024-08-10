@@ -4,7 +4,7 @@ import { useIsFocused } from "@react-navigation/native";
 import PlacesList from "../components/Places/PlacesList";
 import { fetchPlaces } from "../util/database";
 
-const AllPlaces = ({ route }: { route: any }): JSX.Element => {
+const AllPlaces = (): JSX.Element => {
   const [loadedPlaces, setLoadedPlaces] = React.useState([] as PlaceI[]);
 
   const isFocused = useIsFocused();

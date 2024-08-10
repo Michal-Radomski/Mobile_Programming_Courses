@@ -15,7 +15,7 @@ function PlaceDetails({ route, navigation }: any): JSX.Element {
     });
   }
 
-  const selectedPlaceId = route.params.placeId;
+  const selectedPlaceId = route.params.placeId as string;
 
   React.useEffect(() => {
     async function loadPlaceData(): Promise<void> {
