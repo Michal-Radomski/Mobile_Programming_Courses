@@ -29,7 +29,9 @@ export default function App(): JSX.Element {
         return;
       }
 
-      const pushTokenData = await Notifications.getExpoPushTokenAsync({ projectId: "projectID" });
+      const pushTokenData = (await Notifications.getExpoPushTokenAsync({
+        projectId: "projectID",
+      })) as Notifications.ExpoPushToken;
       console.log({ pushTokenData });
 
       if (Platform.OS === "android") {
@@ -44,19 +46,21 @@ export default function App(): JSX.Element {
   }, []);
 
   React.useEffect(() => {
-    const subscription1 = Notifications.addNotificationReceivedListener((notification) => {
+    const subscription1 = Notifications.addNotificationReceivedListener((notification: Notifications.Notification) => {
       console.log("NOTIFICATION RECEIVED");
       console.log("notification:", notification);
       const userName = notification.request.content.data.userName;
       console.log({ userName });
-    });
+    }) as Notifications.Subscription;
 
-    const subscription2 = Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log("NOTIFICATION RESPONSE RECEIVED");
-      console.log({ response });
-      const userName = response.notification.request.content.data.userName;
-      console.log({ userName });
-    });
+    const subscription2 = Notifications.addNotificationResponseReceivedListener(
+      (response: Notifications.NotificationResponse) => {
+        console.log("NOTIFICATION RESPONSE RECEIVED");
+        console.log({ response });
+        const userName = response.notification.request.content.data.userName;
+        console.log({ userName });
+      }
+    ) as Notifications.Subscription;
 
     return () => {
       subscription1.remove();
@@ -64,7 +68,7 @@ export default function App(): JSX.Element {
     };
   }, []);
 
-  function scheduleNotificationHandler() {
+  function scheduleNotificationHandler(): void {
     Notifications.scheduleNotificationAsync({
       content: {
         title: "My first local notification",
